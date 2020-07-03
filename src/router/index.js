@@ -122,6 +122,7 @@ export const constantRoutes = [
       }
     ]
   },
+
   /* {
     path: '/wishlist',
     component: Layout,
@@ -485,10 +486,10 @@ export const asyncRoutes = [
         meta: { title: 'My Infomation' }
       },
       {
-        path: 'goodsInput',
-        component: () => import('@/views/mvo/mvo-goodsInput'),
-        name: 'goodsinput',
-        meta: { title: 'Goods Input' }
+        path: 'productInput',
+        component: () => import('@/views/mvo/mvo-productInput'),
+        name: 'productInput',
+        meta: { title: 'Product Input' }
       },
       {
         path: 'export-merge-header',
