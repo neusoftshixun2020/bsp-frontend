@@ -73,6 +73,9 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.$router.push({
+            path: '/mvo-company'
+          })
           /* 在这里进行跨域请求*/
           this.axios({
             method: 'post',
@@ -80,9 +83,6 @@ export default {
           })
             .then(function(res) {
               console.log(res)
-              this.$router.push({
-                path: '/mvo-company'
-              })
             })
             .catch(function(err) {
               console.log(err)
