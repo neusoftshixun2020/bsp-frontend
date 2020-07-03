@@ -122,7 +122,7 @@ export const constantRoutes = [
       }
     ]
   },
- /* {
+  /* {
     path: '/wishlist',
     component: Layout,
    // redirect: '/wishlist/list',
@@ -136,7 +136,7 @@ export const constantRoutes = [
       }
     ]
   },*/
-  /*{
+  /* {
     path: '/wishlist',
     component: () => import('@/views/bsp/wishList'),
     hidden: false
@@ -144,12 +144,12 @@ export const constantRoutes = [
   {
     path: '/wishlist',
     component: Layout,
-   // hidden: true,
+    // hidden: true,
     children: [{
       path: 'list',
-      component: ()=>import('@/views/bsp/wishList'),
+      component: () => import('@/views/bsp/wishList'),
       name: 'wishlist',
-      meta: { title: '心愿单', icon: 'list' }
+      meta: { title: 'Wishlist', icon: 'list' }
     }]
   },
   {
@@ -158,12 +158,54 @@ export const constantRoutes = [
     hidden: true,
     children: [{
       path: '',
-      component: ()=>import('@/views/bsp/components/product-detail'),
+      component: () => import('@/views/bsp/components/product-detail'),
       name: 'productDetail',
-     meta: { title: '产品详情', icon: 'list' }
+      meta: { title: 'Product Details', icon: 'list' }
+    }]
+  },
+  {
+    path: '/mywallet',
+    component: Layout,
+    children: [{
+      path: '/mywallet',
+      component: () => import('@/views/bvo/bvo-wallet/brand-wallerAccountRegister'),
+      name: 'mywallet',
+      meta: { title: 'My Wallet', icon: 'edit' }
+    }]
+  },
+  {
+    path: '/brand-gmcwallerAcount',
+    component: Layout,
+    hidden: true,
+    children: [{
+      path: '',
+      component: () => import('@/views/bvo/bvo-wallet/component/brand-gmcwallerAcount'),
+      name: '',
+      meta: { title: 'brand-gmcwallerAcount', icon: 'edit' }
     }]
   }
-
+  // {
+  //   path: '/goodsStore',
+  //   component: Layout,
+  //  // hidden: true,
+  //   children: [{
+  //     path: 'goodsStore',
+  //     component: ()=>import('@/views/bvo/bvo-store/bvo-myStore'),
+  //     name: 'goodsStore',
+  //     meta: { title: 'Goods Store', icon: 'list' }
+  //   }]
+  // },
+  // {
+  //   path: '/AddStore',
+  //   component: Layout,
+  //   hidden: true,
+  //   children: [{
+  //     path: '',
+  //     component: ()=>import('@/views/bvo/bvo-store/component/bvo-storeAdd'),
+  //     name: '',
+  //    meta: { title: 'AddStore', icon: 'list' }
+  //   }]
+  // }
 ]
 
 /**
@@ -426,7 +468,97 @@ export const asyncRoutes = [
   },
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  { path: '*', redirect: '/404', hidden: true },
+  {
+    path: '/mvo',
+    component: Layout,
+    name: 'MVO',
+    meta: {
+      title: 'MVO',
+      icon: 'excel'
+    },
+    children: [
+      {
+        path: 'myInfo',
+        component: () => import('@/views/mvo/mvo-myInfo'),
+        name: 'myinfo',
+        meta: { title: 'My Infomation' }
+      },
+      {
+        path: 'goodsInput',
+        component: () => import('@/views/mvo/mvo-goodsInput'),
+        name: 'goodsinput',
+        meta: { title: 'Goods Input' }
+      },
+      {
+        path: 'export-merge-header',
+        component: () => import('@/views/excel/merge-header'),
+        name: 'goodsinputpic',
+        meta: { title: 'Goods Input Pic' }
+      },
+      {
+        path: 'upload-excel1',
+        component: () => import('@/views/excel/upload-excel'),
+        name: 'ordermanagement',
+        meta: { title: 'Order Management' }
+      },
+      {
+        path: 'upload-excel2',
+        component: () => import('@/views/excel/upload-excel'),
+        name: 'mywallet',
+        meta: { title: 'My Wallet' }
+      }
+    ]
+  },
+  {
+    path: '/bvo',
+    component: Layout,
+    name: 'BVO',
+    meta: {
+      title: 'BVO',
+      icon: 'excel'
+    },
+    children: [
+      {
+        path: 'myInfo',
+        component: () => import('@/views/bvo/bvo-myinfo/bvo-myInfo'),
+        name: 'myInfo',
+        meta: { title: 'My Infomation' }
+      },
+      {
+        path: 'goodsStore',
+        component: () => import('@/views/bvo/bvo-store/bvo-myStore'),
+        name: 'goodsstore',
+        meta: { title: 'Goods Store' }
+      },
+      {
+        path: 'export-merge-header',
+        component: () => import('@/views/excel/merge-header'),
+        name: 'goodslist',
+        meta: { title: 'Goods List' }
+      },
+      {
+        path: 'wishlist',
+        component: () => import('@/views/bvo/bvo-wish/bvo-wishList'),
+        name: 'wishlist',
+        meta: { title: 'Wishlist' }
+        // meta: { title: 'Wishlist', icon: 'list' }
+      },
+      {
+        path: 'upload-excel1',
+        component: () => import('@/views/excel/upload-excel'),
+        name: 'ordermanagement',
+        meta: { title: 'Order Management' }
+      },
+      {
+        path: 'mywallet',
+        component: () => import('@/views/bvo/bvo-wallet/brand-wallerAccountRegister'),
+        name: 'mywallet',
+        meta: { title: 'My Wallet' }
+      }
+    ]
+  }
+
 ]
 
 const createRouter = () => new Router({

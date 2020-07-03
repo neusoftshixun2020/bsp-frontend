@@ -5,7 +5,7 @@
       <el-table-column type="selection" />
 
       <el-table-column align="center" label="image" width="160" prop="image">
-        <template scope="scope">
+        <template slot-scope="scope">
           <img :src="scope.row.image" width="100" height="100" @click="showDetail">
         </template>
       </el-table-column>
