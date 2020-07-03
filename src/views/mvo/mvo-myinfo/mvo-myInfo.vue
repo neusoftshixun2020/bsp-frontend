@@ -77,7 +77,6 @@ export default {
           this.axios({
             method: 'post',
             url: '/api/user/addOrUpdateManufacturer'
-
           })
             .then(function(res) {
               console.log(res)
