@@ -13,7 +13,7 @@
 
     <div style="width:90%;margin:0px auto">
 
-      <el-table :data="wishListData" width="100%">
+      <el-table :data="comanyInfo" width="100%">
         <el-table-column
           prop="man_id"
           label="Company ID"
@@ -130,6 +130,6 @@ export default {
     display: flex;
     height: 600px;
     flex-direction: column;
-     line-height: 40px;
+
 }
 </style>
