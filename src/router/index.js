@@ -183,6 +183,27 @@ export const constantRoutes = [
       name: '',
       meta: { title: 'brand-gmcwallerAcount', icon: 'edit' }
     }]
+  },
+  {
+    path: '/mvo-myInfo',
+    component: Layout,
+    children: [{
+      path: '/bvo-myInfo',
+      component: () => import('@/views/mvo/mvo-myinfo/mvo-myInfo'),
+      name: 'bvo-myInfo',
+      meta: { title: 'My Infomation' }
+    }]
+  },
+  {
+    path: '/mvo-company',
+    component: Layout,
+    hidden: true,
+    children: [{
+      path: '',
+      component: () => import('@/views/mvo/mvo-myinfo/component/mvo-company'),
+      name: '',
+      meta: { title: 'Company Information', icon: 'edit' }
+    }]
   }
   // {
   //   path: '/goodsStore',
@@ -480,7 +501,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'myInfo',
-        component: () => import('@/views/mvo/mvo-myInfo'),
+        component: () => import('@/views/mvo/mvo-myinfo/mvo-myInfo'),
         name: 'myinfo',
         meta: { title: 'My Infomation' }
       },
