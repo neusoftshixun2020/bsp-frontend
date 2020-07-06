@@ -232,8 +232,26 @@
             <div class="grid-content">
               <el-button
                 type="info"
-                @click.native="dialogVisible = false, addFormData = { SKU_CD: '', BRD_ID: '', MAN_ID: '', TITLE: '', UPC: '', EAN: '', MODEL: '',
-                                                                      RETAIL_PRICE: '', MININUM_RETAIL_PRICE: '', REMARK: '', STS_CD: '', REPLENISHMENT_PERIOD: '', WARRANTY_DAY: '',WARRANTY: ''}"
+                @click.native="dialogVisible = false, addFormData = { PRO_ID: '',
+                                                                      SKU_CD: '',
+                                                                      BRD_ID: '',
+                                                                      MAN_ID: '',
+                                                                      TITLE: '',
+                                                                      UPC: '',
+                                                                      EAN: '',
+                                                                      MODEL: '',
+                                                                      LENGTH: '',
+                                                                      WIDTH: '',
+                                                                      HEIGHT: '',
+                                                                      WEIGHT: '',
+                                                                      PRICE: '',
+                                                                      EFFETIVE_START_DATE: '',
+                                                                      EFFECTIVE_END_DATE: '',
+                                                                      REPLENISHMENT_PERIOD: '',
+                                                                      WARRANTY_DAY: '',
+                                                                      TIME_UNIT: '',
+                                                                      WARRANTY: '',
+                                                                      DESCRITION: ''}"
               >Close</el-button>
             </div>
           </el-col>
@@ -258,6 +276,7 @@ export default {
       dialogVisible: false,
       scondition: '',
       addFormData: {
+        PRO_ID: '',
         SKU_CD: '',
         BRD_ID: '',
         MAN_ID: '',
@@ -265,13 +284,18 @@ export default {
         UPC: '',
         EAN: '',
         MODEL: '',
-        RETAIL_PRICE: '',
-        MININUM_RETAIL_PRICE: '',
-        REMARK: '',
-        STS_CD: '',
+        LENGTH: '',
+        WIDTH: '',
+        HEIGHT: '',
+        WEIGHT: '',
+        PRICE: '',
+        EFFETIVE_START_DATE: '',
+        EFFECTIVE_END_DATE: '',
         REPLENISHMENT_PERIOD: '',
         WARRANTY_DAY: '',
+        TIME_UNIT: '',
         WARRANTY: '',
+        DESCRITION: '',
         operationFlag: 'add'
       },
       productRule: {
