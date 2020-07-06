@@ -15,55 +15,8 @@
         highlight-current-row
         width="80%"
       >
-     
-        <el-table-column align="center" prop = 'name_cn' label = 'Company Name(CN)'>
+      <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
         </el-table-column>
-        <el-table-column align="center" prop = 'name_en' label = 'Company Name(EN)'>
-        </el-table-column>
-        <el-table-column align="center" prop = 'gmc_report_type' label = 'GMC Report Type'>
-        </el-table-column>
-        <el-table-column align="center" prop = 'gmc_report_url' label = 'GMC Report Url'>
-        </el-table-column>
-         <el-table-column align="center"  label = 'Operations'>
-         <template slot-scope = 'scope'>
-           <el-button type = 'primary' size="small" @click = 'EditCompany(scope.row)'>Modify</el-button>         
-         </template>
-       </el-table-column>
-      </el-table>
-    </div>
-
-<!--品牌信息-->
-    <div style="margin:20px;margin-left:10px">
-      Brand Information
-    </div>
-    <div class="BrandTable">
-      <el-table
-        ref="multipleTable1"
-        :data="brandList"
-        element-loading-text="Loading"
-        fit
-        border
-        highlight-current-row
-        width="80%"
-      >
-     <template>
-  <div class="app-container">
-<!--公司信息-->
-    <el-col :span = '20' class = 'toolbar'>
-      <p v-text ='head'></p>
-    </el-col>
-
-    <div class="ProductTable">
-      <el-table
-        ref="multipleTable"
-        :data="companylist"
-        element-loading-text="Loading"
-        fit
-        border
-        highlight-current-row
-        width="80%"
-      >
-     
         <el-table-column align="center" prop = 'name_cn' label = 'Company Name(CN)'>
         </el-table-column>
         <el-table-column align="center" prop = 'name_en' label = 'Company Name(EN)'>
@@ -95,6 +48,8 @@
         width="80%"
       >
         <el-table-column type="selection" />
+        <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
+        </el-table-column>
          <el-table-column align="center" prop = 'brd_id' label = 'Brand ID'>
         </el-table-column>
          <el-table-column align="center" prop = 'name_en' label = 'Brand Name(EN)'>
@@ -197,6 +152,7 @@
 
       </el-form>
       <span slot = 'footer' class = 'dialog-footer'>
+        <!-- <el-button size='small' @click="resetForm('BrandData')">Reset</el-button> -->
           <el-button type = 'primary' size='small' @click="addBrand">Save</el-button>
           <el-button type = 'danger' size='small' @click.native = "dialogVisible1 = false, BrandData = {
                     name_en:'',           
@@ -207,11 +163,16 @@
 
 <!--修改brand弹窗-->
     <el-dialog title='Edit Brand' :visible.sync = 'dialogVisible2' width = '50%' :close-on-lick-modal = 'false'>
-      <el-form :model = 'BrandData1'  ref = 'BrandData1' label-width = '0px' class = ''>
-
+      <el-form :model = 'BrandData'  ref = 'BrandData' label-width = '0px' class = ''>
+        <el-form-item label="Company ID" label-width="130px"  prop='man_id'>
+          <el-col :span="8">
+            <el-input type='text' v-model='BrandData.man_id'  autocomplete='off' placeholder='Title'>
+            </el-input>
+          </el-col>
+        </el-form-item>
         <el-form-item label="Brand Name(EN)" label-width="130px"  prop='name_en'>
           <el-col :span="8">
-            <el-input type='text' v-model='BrandData1.name_en'  autocomplete='off' placeholder='Title'>
+            <el-input type='text' v-model='BrandData.name_en'  autocomplete='off' placeholder='Title'>
             </el-input>
           </el-col>
         </el-form-item>
@@ -221,7 +182,7 @@
         </el-form-item>
 
         <el-form-item label="Brand Logo" label-width="130px" prop='image_url'>    
-            <el-input type='text' v-model='BrandData1.image_url' autocomplete='off' placeholder='Image'>
+            <el-input type='text' v-model='BrandData.image_url' autocomplete='off' placeholder='Image'>
           </el-input>      
           <br>
             <el-button style="width:150px" >Choose Image</el-button>
@@ -230,6 +191,7 @@
 
       </el-form>
       <span slot = 'footer' class = 'dialog-footer'>
+         <!-- <el-button size='small' @click="resetForm('BrandData')">Reset</el-button> -->
           <el-button type = 'primary' size='small' @click="updateBrand">Save</el-button>
           <el-button type = 'danger' size='small' @click.native = "dialogVisible2 = false, BrandData = {
                     name_en:'',           
@@ -262,20 +224,14 @@ export default {
           decription:'',
           gmc_report_type:'',
           gmc_report_url:'',
-         // operationFlag:'add'
       },
        BrandData:{     
+          man_id:'',
           brd_id:'',
           name_en:''
          // image_url:'',
-         // operationFlag:'add'
-      },
-       BrandData1:{     
-          brd_id:'',
-          name_en:''
-         // image_url:'',
-         // operationFlag:'add'
-      },
+       
+      }
      }
   },
    mounted: function () {
@@ -308,7 +264,6 @@ export default {
     EditCompany(rowData){
       this.ProductData = Object.assign({}, rowData)
       this.dialogVisible = true
-     // this.BrandData.operationFlag="modify"
 
     },
     updateCompany(){
@@ -341,7 +296,6 @@ export default {
       this.dialogVisible1 = true
     },
     addBrand(){
-    // this.$refs.BrandData.resetFields()
     this.$refs.BrandData.validate(valid => {
         if(valid) {
           console.log('valid');
@@ -369,14 +323,14 @@ export default {
       })
     },
     EditBrand(rowData){
-      this.BrandData1 = Object.assign({}, rowData)
+      this.BrandData = Object.assign({}, rowData)
       this.dialogVisible2 = true
     },
     updateBrand(){
-    this.$refs.BrandData1.validate(valid => {
+    this.$refs.BrandData.validate(valid => {
         if(valid) {
           console.log('the parameter is invalid');
-          this.$store.dispatch('AddOrUpdateBrand',this.BrandData1.brd_id).then((result) => {
+          this.$store.dispatch('UpdateBrand',this.BrandData).then((result) => {
             if (result.code==200){
               this.$message({
                 type: 'info',
@@ -421,6 +375,10 @@ export default {
       }).catch(() => {
       });
     }
+    // ,
+    //  resetForm(formName) {
+    //   this.$refs[formName].resetFields()
+    // }
   }
 }
 </script>
