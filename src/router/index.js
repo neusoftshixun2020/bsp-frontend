@@ -122,7 +122,6 @@ export const constantRoutes = [
       }
     ]
   },
-
   /* {
     path: '/wishlist',
     component: Layout,
@@ -190,18 +189,19 @@ export const constantRoutes = [
     component: Layout,
     children: [{
       path: '/bvo-myInfo',
-      component: () => import('@/views/mvo/mvo-myinfo/mvo-myInfo'),
+      component: () => import('@/views/mvo/mvo-myInfo'),
       name: 'bvo-myInfo',
       meta: { title: 'My Infomation' }
     }]
   },
+
   {
-    path: '/mvo-company',
+    path: '/mvo-mycompany',
     component: Layout,
     hidden: true,
     children: [{
       path: '',
-      component: () => import('@/views/mvo/mvo-myinfo/component/mvo-company'),
+      component: () => import('@/views/mvo/component/mvo-mycompany'),
       name: '',
       meta: { title: 'Company Information', icon: 'edit' }
     }]
@@ -212,7 +212,7 @@ export const constantRoutes = [
   //  // hidden: true,
   //   children: [{
   //     path: 'goodsStore',
-  //     component: ()=>import('@/views/bvo/bvo-store/component/bvo-myStore'),
+  //     component: ()=>import('@/views/bvo/bvo-store/bvo-myStore'),
   //     name: 'goodsStore',
   //     meta: { title: 'Goods Store', icon: 'list' }
   //   }]
@@ -227,7 +227,7 @@ export const constantRoutes = [
   //     name: '',
   //    meta: { title: 'AddStore', icon: 'list' }
   //   }]
-  // },
+  // }
 ]
 
 /**
@@ -502,21 +502,21 @@ export const asyncRoutes = [
     children: [
       {
         path: 'myInfo',
-        component: () => import('@/views/mvo/mvo-myinfo/mvo-myInfo'),
+        component: () => import('@/views/mvo/mvo-myInfo'),
         name: 'myinfo',
         meta: { title: 'My Infomation' }
       },
       {
-        path: 'productInput',
-        component: () => import('@/views/mvo/product-input/component/mvo-productInput'),
-        name: 'productInput',
+        path: 'goodsInput',
+        component: () => import('@/views/mvo/mvo-productInput'),
+        name: 'goodsinput',
         meta: { title: 'Product Input' }
       },
       {
-        path: 'export-merge-header',
-        component: () => import('@/views/excel/merge-header'),
-        name: 'goodsinputpic',
-        meta: { title: 'Goods Input Pic' }
+        path: 'goodsCategory',
+        component: () => import('@/views/mvo/mvo-product-category'),
+        name: 'productCategory',
+        meta: { title: 'Product Category' }
       },
       {
         path: 'upload-excel1',
@@ -549,7 +549,7 @@ export const asyncRoutes = [
       },
       {
         path: 'goodsStore',
-        component: () => import('@/views/bvo/bvo-store/component/bvo-myStore'),
+        component: () => import('@/views/bvo/bvo-store/bvo-myStore'),
         name: 'goodsstore',
         meta: { title: 'Goods Store' }
       },
@@ -579,13 +579,6 @@ export const asyncRoutes = [
         meta: { title: 'My Wallet' }
       }
     ]
-  },
-  {
-    path: '/choosePlatform',
-    component: () => import('@/views/bvo/bvo-store/component/choose-platform'),
-    name: 'choosePlatform',
-    meta: { title: 'ChoosePlatform' },
-    hidden: true
   }
 
 ]
