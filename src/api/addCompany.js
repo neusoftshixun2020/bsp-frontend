@@ -55,7 +55,8 @@ export function deleteBrand(brd_id) {
   })
 }
 
-export function addBrand(man_,name_en,name_cn,created_by,creation_date,last_update_by,last_update_date,call_cnt,
+export function addBrand(man_id,name_en,name_cn,
+  created_by,creation_date,last_update_by,last_update_date,call_cnt,
   remark,sts_cd) {
   return request({
     url: 'brand/addBrand',
@@ -69,7 +70,8 @@ export function addBrand(man_,name_en,name_cn,created_by,creation_date,last_upda
       last_update_by,
       last_update_date,
       call_cnt,
-      remark,sts_cd
+      remark,
+      sts_cd
     }
   })
 }
@@ -89,7 +91,8 @@ export function updateBrand( man_id,name_en,name_cn,created_by,creation_date,las
       last_update_by,
       last_update_date,
       call_cnt,
-      remark,sts_cd
+      remark,
+      sts_cd
     }
   })
 }

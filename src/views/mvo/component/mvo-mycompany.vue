@@ -122,6 +122,12 @@
  <!--添加brand弹窗-->
     <el-dialog title='Add Brand' :visible.sync = 'dialogVisible1' width = '50%' :close-on-lick-modal = 'false'>
       <el-form :model = 'BrandData'  ref = 'BrandData' label-width = '0px' class = ''>
+         <el-form-item label="Company ID" label-width="130px"  prop='man_id'>
+          <el-col :span="8">
+            <el-input type='text' v-model='BrandData.man_id'  autocomplete='off' placeholder='Title'>
+            </el-input>
+          </el-col>
+        </el-form-item>
         <el-form-item label="Brand Name(EN)" label-width="130px"  prop='name_en'>
           <el-col :span="8">
             <el-input type='text' v-model='BrandData.name_en'  autocomplete='off' placeholder='Title'>
