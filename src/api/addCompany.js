@@ -78,13 +78,14 @@ export function addBrand(man_id,name_en,name_cn,
 }
 
 
-export function addOrUpdateBrand(man_id,name_en,name_cn,
+export function updateBrand(brd_id,man_id,name_en,name_cn,
   created_by,creation_date,last_update_by,last_update_date,call_cnt,
   remark,sts_cd) {
   return request({
-    url: 'brand/addOrUpdateBrand',
+    url: 'brand/updateBrand',
     method: 'post',
     data: {
+      brd_id,
       man_id,
       name_en,
       name_cn,
