@@ -548,10 +548,10 @@ export const asyncRoutes = [
         meta: { title: 'My Infomation' }
       },
       {
-        path: 'goodsStore',
-        component: () => import('@/views/bvo/bvo-store/bvo-myStore'),
-        name: 'goodsstore',
-        meta: { title: 'Goods Store' }
+        path: 'myStore',
+        component: () => import('@/views/bvo/bvo-store/component/bvo-myStore'),
+        name: 'mystore',
+        meta: { title: 'My Store' }
       },
       {
         path: 'export-merge-header',
@@ -579,7 +579,21 @@ export const asyncRoutes = [
         meta: { title: 'My Wallet' }
       }
     ]
-  }
+  },
+  {
+    path: 'choosePlatfrom',
+    component: () => import('@/views/bvo/bvo-store/component/bvo-choosePlatform'),
+    name: 'choosePlatfrom',
+    meta: { title: 'Choose Platfrom' },
+    hidden: true
+  },
+  {
+    path: 'addStore',
+    component: () => import('@/views/bvo/bvo-store/component/bvo-storeAdd'),
+    name: 'addStore',
+    meta: { title: 'Add Store' },
+    hidden: true
+  },
 
 ]
 
