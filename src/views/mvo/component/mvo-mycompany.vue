@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="app-container">
 <!--公司信息-->
     <el-col :span = '20' class = 'toolbar'>
@@ -15,7 +15,8 @@
         highlight-current-row
         width="80%"
       >
-     
+      <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
+        </el-table-column>
         <el-table-column align="center" prop = 'name_cn' label = 'Company Name(CN)'>
         </el-table-column>
         <el-table-column align="center" prop = 'name_en' label = 'Company Name(EN)'>
@@ -47,6 +48,8 @@
         width="80%"
       >
         <el-table-column type="selection" />
+        <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
+        </el-table-column>
          <el-table-column align="center" prop = 'brd_id' label = 'Brand ID'>
         </el-table-column>
          <el-table-column align="center" prop = 'name_en' label = 'Brand Name(EN)'>
@@ -95,7 +98,7 @@
       />
     </el-form-item>
 
-        <el-form-item label="GMC Report Type" label-width="130px"  prop='gmc_report_type'>
+        <el-form-item label="GMC Report Type(1-TUV , 2-UL)" label-width="130px"  prop='gmc_report_type'>
          <el-col :span="8">
             <el-input type='text' v-model='ProductData.gmc_report_type'  autocomplete='off' placeholder='Type'>
             </el-input>
@@ -149,6 +152,7 @@
 
       </el-form>
       <span slot = 'footer' class = 'dialog-footer'>
+        <!-- <el-button size='small' @click="resetForm('BrandData')">Reset</el-button> -->
           <el-button type = 'primary' size='small' @click="addBrand">Save</el-button>
           <el-button type = 'danger' size='small' @click.native = "dialogVisible1 = false, BrandData = {
                     name_en:'',           
@@ -160,7 +164,12 @@
 <!--修改brand弹窗-->
     <el-dialog title='Edit Brand' :visible.sync = 'dialogVisible2' width = '50%' :close-on-lick-modal = 'false'>
       <el-form :model = 'BrandData'  ref = 'BrandData' label-width = '0px' class = ''>
-
+        <el-form-item label="Company ID" label-width="130px"  prop='man_id'>
+          <el-col :span="8">
+            <el-input type='text' v-model='BrandData.man_id'  autocomplete='off' placeholder='Title'>
+            </el-input>
+          </el-col>
+        </el-form-item>
         <el-form-item label="Brand Name(EN)" label-width="130px"  prop='name_en'>
           <el-col :span="8">
             <el-input type='text' v-model='BrandData.name_en'  autocomplete='off' placeholder='Title'>
@@ -182,6 +191,7 @@
 
       </el-form>
       <span slot = 'footer' class = 'dialog-footer'>
+         <!-- <el-button size='small' @click="resetForm('BrandData')">Reset</el-button> -->
           <el-button type = 'primary' size='small' @click="updateBrand">Save</el-button>
           <el-button type = 'danger' size='small' @click.native = "dialogVisible2 = false, BrandData = {
                     name_en:'',           
@@ -214,14 +224,14 @@ export default {
           decription:'',
           gmc_report_type:'',
           gmc_report_url:'',
-         // operationFlag:'add'
       },
        BrandData:{     
+          man_id:'',
           brd_id:'',
           name_en:''
          // image_url:'',
-         // operationFlag:'add'
-      },
+       
+      }
      }
   },
    mounted: function () {
@@ -254,7 +264,6 @@ export default {
     EditCompany(rowData){
       this.ProductData = Object.assign({}, rowData)
       this.dialogVisible = true
-     // this.BrandData.operationFlag="modify"
 
     },
     updateCompany(){
@@ -296,6 +305,9 @@ export default {
                 type: 'info',
                 message: `add operation succeeded`
               })
+              this.loadData()
+              this.dialogVisible1 = false
+              this.$refs.BrandData.resetFields()
             }else{
               this.$message({
                 type: 'info',
@@ -318,7 +330,7 @@ export default {
     this.$refs.BrandData.validate(valid => {
         if(valid) {
           console.log('the parameter is invalid');
-          this.$store.dispatch('UpdateBrand',this.BrandData.brd_id).then((result) => {
+          this.$store.dispatch('UpdateBrand',this.BrandData).then((result) => {
             if (result.code==200){
               this.$message({
                 type: 'info',
@@ -330,7 +342,7 @@ export default {
                 message: `update operation failed`
               })
             }
-            this.dialogVisible = false
+            this.dialogVisible2 = false
             this.loadData()
           })
         } else {
@@ -364,16 +376,9 @@ export default {
       });
     }
     // ,
-    // formatJson(filterVal, jsonData) {
-    //   return jsonData.map(v => filterVal.map(j => {
-    //     if (j === 'timestamp') {
-    //       return parseTime(v[j])
-    //     } else {
-    //       return v[j]
-    //     }
-    //   }))
+    //  resetForm(formName) {
+    //   this.$refs[formName].resetFields()
     // }
-
   }
 }
 </script>

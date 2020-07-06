@@ -1,5 +1,5 @@
-import { addManufacturer ,updateManufacturer,deleteBrand,addBrand,updateBrand,getAllByFilter,
-  getBrandByFilter,getAll} from '../../api/addCompany'
+﻿import { addManufacturer ,updateManufacturer,deleteBrand,addBrand,updateBrand,getAllByFilter,
+  getBrandByFilter,addOrUpdateBrand} from '../../api/addCompany'
   
   const company = {
     actions: {
@@ -14,12 +14,10 @@ import { addManufacturer ,updateManufacturer,deleteBrand,addBrand,updateBrand,ge
             })
             })
         },
-
-
       UpdateManufacturer({ commit }, maninfo) {
-        console.log("进入UpdateManufacturer:name_en:"+maninfo.name_en+" "+maninfo.name_cn)
+        console.log("进入UpdateManufacturer:name_en: "+maninfo.name_en+" name_cn:"+maninfo.name_cn+" man_id: "+maninfo.man_id)
         return new Promise((resolve, reject) => {
-          updateManufacturer(maninfo.name_en, maninfo.name_cn, maninfo.gmc_report_type, maninfo.gmc_report_url,
+          updateManufacturer(maninfo.man_id,maninfo.name_en, maninfo.name_cn, maninfo.gmc_report_type, maninfo.gmc_report_url,
             maninfo.description, maninfo.created_by, maninfo.creation_date, maninfo.last_update_by, maninfo.last_update_date, maninfo.call_cnt, maninfo.remark, maninfo.sts_cd, maninfo.user_id).then(response => {
               commit('')
             resolve(response)
@@ -40,8 +38,9 @@ import { addManufacturer ,updateManufacturer,deleteBrand,addBrand,updateBrand,ge
         })
       },
       UpdateBrand({ commit }, brandinfo) {
+        console.log("进入UpdateBrand:name_en: "+brandinfo.name_en+" name_cn:"+brandinfo.name_cn+" man_id: "+brandinfo.man_id+"brandinfo.brd_id: "+brandinfo.brd_id)
         return new Promise((resolve, reject) => {
-          updateBrand(brandinfo.man_id,brandinfo.name_en,brandinfo.name_cn,brandinfo.created_by,
+          updateBrand(brandinfo.brd_id,brandinfo.man_id,brandinfo.name_en,brandinfo.name_cn,brandinfo.created_by,
             brandinfo.creation_date,brandinfo.last_update_by,brandinfo.last_update_date,brandinfo.call_cnt,
             brandinfo.remark,brandinfo.sts_cd).then(response => {
             commit('')
@@ -52,7 +51,9 @@ import { addManufacturer ,updateManufacturer,deleteBrand,addBrand,updateBrand,ge
         })
       },
 
+     
     AddBrand({ commit }, brandinfo) {
+      console.log("进入AddBrand:name_en: "+brandinfo.name_en+" name_cn:"+brandinfo.name_cn+" man_id: "+brandinfo.man_id)
       return new Promise((resolve, reject) => {
         addBrand(brandinfo.man_id,brandinfo.name_en,brandinfo.name_cn,brandinfo.created_by,
           brandinfo.creation_date,brandinfo.last_update_by,brandinfo.last_update_date,brandinfo.call_cnt,
@@ -74,7 +75,6 @@ import { addManufacturer ,updateManufacturer,deleteBrand,addBrand,updateBrand,ge
         })
       })
     },
-
 
     GetBrandByFilter({ commit }, man_id) {
       return new Promise((resolve, reject) => {
