@@ -1,5 +1,5 @@
 import { addManufacturer ,updateManufacturer,deleteBrand,addBrand,updateBrand,getAllByFilter,
-  getBrandByFilter,getAll} from '../../api/addCompany'
+  getBrandByFilter} from '../../api/addCompany'
   
   const company = {
     actions: {
@@ -14,10 +14,8 @@ import { addManufacturer ,updateManufacturer,deleteBrand,addBrand,updateBrand,ge
             })
             })
         },
-
-
       UpdateManufacturer({ commit }, maninfo) {
-        console.log("进入UpdateManufacturer:name_en:"+maninfo.name_en+"name_cn "+maninfo.name_cn+"man_id:"+maninfo.man_id)
+        console.log("进入UpdateManufacturer:name_en: "+maninfo.name_en+" name_cn:"+maninfo.name_cn+" man_id: "+maninfo.man_id)
         return new Promise((resolve, reject) => {
           updateManufacturer(maninfo.man_id,maninfo.name_en, maninfo.name_cn, maninfo.gmc_report_type, maninfo.gmc_report_url,
             maninfo.description, maninfo.created_by, maninfo.creation_date, maninfo.last_update_by, maninfo.last_update_date, maninfo.call_cnt, maninfo.remark, maninfo.sts_cd, maninfo.user_id).then(response => {
@@ -74,7 +72,6 @@ import { addManufacturer ,updateManufacturer,deleteBrand,addBrand,updateBrand,ge
         })
       })
     },
-
 
     GetBrandByFilter({ commit }, man_id) {
       return new Promise((resolve, reject) => {

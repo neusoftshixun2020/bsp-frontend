@@ -25,7 +25,7 @@ export function addManufacturer(name_en, name_cn, gmc_report_type, gmc_report_ur
 export function updateManufacturer(man_id,name_en, name_cn, gmc_report_type, gmc_report_url,
   description, created_by, creation_date, last_update_by, last_update_date, call_cnt, remark, sts_cd, user_id) {
   return request({
-    url: 'manufacturer/UpdateManufacturer',
+    url: 'manufacturer/updateManufacturer',
     method: 'post',
     data: {
       man_id,
@@ -78,10 +78,10 @@ export function addBrand(man_id,name_en,name_cn,
 }
 
 
-export function updateBrand( man_id,name_en,name_cn,created_by,creation_date,last_update_by,last_update_date,call_cnt,
-  remark,sts_cd) {
+export function updateBrand(man_id,name_en,name_cn,created_by,creation_date,last_update_by,last_update_date,call_cnt,
+  remark,sts_cd,brd_id) {
   return request({
-    url: 'brand/addOrUpdateBrand',
+    url: 'brand/updateBrand',
     method: 'post',
     data: {
       man_id,
@@ -93,7 +93,8 @@ export function updateBrand( man_id,name_en,name_cn,created_by,creation_date,las
       last_update_date,
       call_cnt,
       remark,
-      sts_cd
+      sts_cd,
+      brd_id
     }
   })
 }
@@ -109,14 +110,6 @@ export function getAllByFilter (man_id) {
   })
 }
 
-// export function getAll () {
-//   return request({
-//     url: 'manufacturer/getAll',
-//     method: 'post',
-//     data: {
-//     }
-//   })
-// }
 
 export function getBrandByFilter(man_id) {
   return request({
