@@ -212,7 +212,7 @@ export const constantRoutes = [
   //  // hidden: true,
   //   children: [{
   //     path: 'goodsStore',
-  //     component: ()=>import('@/views/bvo/bvo-store/bvo-myStore'),
+  //     component: ()=>import('@/views/bvo/bvo-store/component/bvo-myStore'),
   //     name: 'goodsStore',
   //     meta: { title: 'Goods Store', icon: 'list' }
   //   }]
@@ -227,7 +227,7 @@ export const constantRoutes = [
   //     name: '',
   //    meta: { title: 'AddStore', icon: 'list' }
   //   }]
-  // }
+  // },
 ]
 
 /**
@@ -508,7 +508,7 @@ export const asyncRoutes = [
       },
       {
         path: 'productInput',
-        component: () => import('@/views/mvo/mvo-productInput'),
+        component: () => import('@/views/mvo/product-input/component/mvo-productInput'),
         name: 'productInput',
         meta: { title: 'Product Input' }
       },
@@ -549,7 +549,7 @@ export const asyncRoutes = [
       },
       {
         path: 'goodsStore',
-        component: () => import('@/views/bvo/bvo-store/bvo-myStore'),
+        component: () => import('@/views/bvo/bvo-store/component/bvo-myStore'),
         name: 'goodsstore',
         meta: { title: 'Goods Store' }
       },
@@ -579,6 +579,13 @@ export const asyncRoutes = [
         meta: { title: 'My Wallet' }
       }
     ]
+  },
+  {
+    path: '/choosePlatform',
+    component: () => import('@/views/bvo/bvo-store/component/choose-platform'),
+    name: 'choosePlatform',
+    meta: { title: 'ChoosePlatform' },
+    hidden: true
   }
 
 ]
