@@ -19,8 +19,9 @@ export function getProductsByTitle(TITLE) {
   })
 }
 
-export function addAndupdateProduct(SKU_CD, BRD_ID, MAN_ID, TITLE, UPC, EAN, MODEL,
-  RETAIL_PRICE, MININUM_RETAIL_PRICE, REMARK, STS_CD, REPLENISHMENT_PERIOD, WARRANTY_DAY, WARRANTY, operationFlag) {
+export function addAndupdateProduct(SKU_CD, BRD_ID, MAN_ID, TITLE, UPC, EAN, MODEL, LENGTH, WIDTH, HEIGHT, WEIGHT,
+  PRICE, EFFETIVE_START_DATE, EFFECTIVE_END_DATE, REPLENISHMENT_PERIOD, WARRANTY_DAY,
+  TIME_UNIT, WARRANTY, DESCRITION, operationFlag) {
   return request({
     url: '/product/addAndUpdateProduct',
     method: 'post',
@@ -32,13 +33,18 @@ export function addAndupdateProduct(SKU_CD, BRD_ID, MAN_ID, TITLE, UPC, EAN, MOD
       UPC,
       EAN,
       MODEL,
-      RETAIL_PRICE,
-      MININUM_RETAIL_PRICE,
-      REMARK,
-      STS_CD,
+      LENGTH,
+      WIDTH,
+      HEIGHT,
+      WEIGHT,
+      PRICE,
+      EFFETIVE_START_DATE,
+      EFFECTIVE_END_DATE,
       REPLENISHMENT_PERIOD,
       WARRANTY_DAY,
+      TIME_UNIT,
       WARRANTY,
+      DESCRITION,
       operationFlag
     }
   })

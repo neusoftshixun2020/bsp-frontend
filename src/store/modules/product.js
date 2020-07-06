@@ -26,9 +26,10 @@ const product = {
     AddAndUpdateProduct({ commit }, productinfo) {
       return new Promise((resolve, reject) => {
         addAndupdateProduct(productinfo.SKU_CD, productinfo.BRD_ID, productinfo.MAN_ID, productinfo.TITLE,
-          productinfo.UPC, productinfo.EAN, productinfo.MODEL, productinfo.RETAIL_PRICE, productinfo.MININUM_RETAIL_PRICE,
-          productinfo.REMARK, productinfo.STS_CD, productinfo.REPLENISHMENT_PERIOD, productinfo.WARRANTY_DAY, productinfo.WARRANTY,
-          productinfo.operationFlag).then(response => {
+          productinfo.UPC, productinfo.EAN, productinfo.MODEL, productinfo.LENGTH, productinfo.WIDTH, productinfo.HEIGHT,
+          productinfo.WEIGHT, productinfo.PRICE, productinfo.EFFETIVE_START_DATE, productinfo.EFFECTIVE_END_DATE,
+          productinfo.REPLENISHMENT_PERIOD, productinfo.WARRANTY_DAY, productinfo.TIME_UNIT, productinfo.WARRANTY,
+          productinfo.DESCRITION, productinfo.operationFlag).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
