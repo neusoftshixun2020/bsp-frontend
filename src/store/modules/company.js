@@ -17,9 +17,9 @@ import { addManufacturer ,updateManufacturer,deleteBrand,addBrand,updateBrand,ge
 
 
       UpdateManufacturer({ commit }, maninfo) {
-        console.log("进入UpdateManufacturer:name_en:"+maninfo.name_en+" "+maninfo.name_cn)
+        console.log("进入UpdateManufacturer:name_en:"+maninfo.name_en+"name_cn "+maninfo.name_cn+"man_id:"+maninfo.man_id)
         return new Promise((resolve, reject) => {
-          updateManufacturer(maninfo.name_en, maninfo.name_cn, maninfo.gmc_report_type, maninfo.gmc_report_url,
+          updateManufacturer(maninfo.man_id,maninfo.name_en, maninfo.name_cn, maninfo.gmc_report_type, maninfo.gmc_report_url,
             maninfo.description, maninfo.created_by, maninfo.creation_date, maninfo.last_update_by, maninfo.last_update_date, maninfo.call_cnt, maninfo.remark, maninfo.sts_cd, maninfo.user_id).then(response => {
               commit('')
             resolve(response)
