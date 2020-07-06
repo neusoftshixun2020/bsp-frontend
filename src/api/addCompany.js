@@ -78,10 +78,11 @@ export function addBrand(man_id,name_en,name_cn,
 }
 
 
-export function updateBrand(man_id,name_en,name_cn,created_by,creation_date,last_update_by,last_update_date,call_cnt,
-  remark,sts_cd,brd_id) {
+export function addOrUpdateBrand(man_id,name_en,name_cn,
+  created_by,creation_date,last_update_by,last_update_date,call_cnt,
+  remark,sts_cd) {
   return request({
-    url: 'brand/updateBrand',
+    url: 'brand/addOrUpdateBrand',
     method: 'post',
     data: {
       man_id,
@@ -93,8 +94,7 @@ export function updateBrand(man_id,name_en,name_cn,created_by,creation_date,last
       last_update_date,
       call_cnt,
       remark,
-      sts_cd,
-      brd_id
+      sts_cd
     }
   })
 }

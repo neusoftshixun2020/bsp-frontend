@@ -508,15 +508,15 @@ export const asyncRoutes = [
       },
       {
         path: 'goodsInput',
-        component: () => import('@/views/mvo/mvo-goodsInput'),
+        component: () => import('@/views/mvo/mvo-productInput'),
         name: 'goodsinput',
-        meta: { title: 'Goods Input' }
+        meta: { title: 'Product Input' }
       },
       {
-        path: 'export-merge-header',
-        component: () => import('@/views/mvo/mvo-goods-input-pic'),
-        name: 'goodsinputpic',
-        meta: { title: 'Goods Input Pic' }
+        path: 'goodsCategory',
+        component: () => import('@/views/mvo/mvo-product-category'),
+        name: 'productCategory',
+        meta: { title: 'Product Category' }
       },
       {
         path: 'upload-excel1',

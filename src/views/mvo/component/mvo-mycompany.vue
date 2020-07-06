@@ -1,4 +1,52 @@
-<template>
+﻿<template>
+  <div class="app-container">
+<!--公司信息-->
+    <el-col :span = '20' class = 'toolbar'>
+      <p v-text ='head'></p>
+    </el-col>
+
+    <div class="ProductTable">
+      <el-table
+        ref="multipleTable"
+        :data="companylist"
+        element-loading-text="Loading"
+        fit
+        border
+        highlight-current-row
+        width="80%"
+      >
+     
+        <el-table-column align="center" prop = 'name_cn' label = 'Company Name(CN)'>
+        </el-table-column>
+        <el-table-column align="center" prop = 'name_en' label = 'Company Name(EN)'>
+        </el-table-column>
+        <el-table-column align="center" prop = 'gmc_report_type' label = 'GMC Report Type'>
+        </el-table-column>
+        <el-table-column align="center" prop = 'gmc_report_url' label = 'GMC Report Url'>
+        </el-table-column>
+         <el-table-column align="center"  label = 'Operations'>
+         <template slot-scope = 'scope'>
+           <el-button type = 'primary' size="small" @click = 'EditCompany(scope.row)'>Modify</el-button>         
+         </template>
+       </el-table-column>
+      </el-table>
+    </div>
+
+<!--品牌信息-->
+    <div style="margin:20px;margin-left:10px">
+      Brand Information
+    </div>
+    <div class="BrandTable">
+      <el-table
+        ref="multipleTable1"
+        :data="brandList"
+        element-loading-text="Loading"
+        fit
+        border
+        highlight-current-row
+        width="80%"
+      >
+     <template>
   <div class="app-container">
 <!--公司信息-->
     <el-col :span = '20' class = 'toolbar'>
@@ -95,7 +143,7 @@
       />
     </el-form-item>
 
-        <el-form-item label="GMC Report Type" label-width="130px"  prop='gmc_report_type'>
+        <el-form-item label="GMC Report Type(1-TUV , 2-UL)" label-width="130px"  prop='gmc_report_type'>
          <el-col :span="8">
             <el-input type='text' v-model='ProductData.gmc_report_type'  autocomplete='off' placeholder='Type'>
             </el-input>
@@ -159,11 +207,11 @@
 
 <!--修改brand弹窗-->
     <el-dialog title='Edit Brand' :visible.sync = 'dialogVisible2' width = '50%' :close-on-lick-modal = 'false'>
-      <el-form :model = 'BrandData'  ref = 'BrandData' label-width = '0px' class = ''>
+      <el-form :model = 'BrandData1'  ref = 'BrandData1' label-width = '0px' class = ''>
 
         <el-form-item label="Brand Name(EN)" label-width="130px"  prop='name_en'>
           <el-col :span="8">
-            <el-input type='text' v-model='BrandData.name_en'  autocomplete='off' placeholder='Title'>
+            <el-input type='text' v-model='BrandData1.name_en'  autocomplete='off' placeholder='Title'>
             </el-input>
           </el-col>
         </el-form-item>
@@ -173,7 +221,7 @@
         </el-form-item>
 
         <el-form-item label="Brand Logo" label-width="130px" prop='image_url'>    
-            <el-input type='text' v-model='BrandData.image_url' autocomplete='off' placeholder='Image'>
+            <el-input type='text' v-model='BrandData1.image_url' autocomplete='off' placeholder='Image'>
           </el-input>      
           <br>
             <el-button style="width:150px" >Choose Image</el-button>
@@ -217,6 +265,12 @@ export default {
          // operationFlag:'add'
       },
        BrandData:{     
+          brd_id:'',
+          name_en:''
+         // image_url:'',
+         // operationFlag:'add'
+      },
+       BrandData1:{     
           brd_id:'',
           name_en:''
          // image_url:'',
@@ -287,6 +341,7 @@ export default {
       this.dialogVisible1 = true
     },
     addBrand(){
+    // this.$refs.BrandData.resetFields()
     this.$refs.BrandData.validate(valid => {
         if(valid) {
           console.log('valid');
@@ -296,6 +351,9 @@ export default {
                 type: 'info',
                 message: `add operation succeeded`
               })
+              this.loadData()
+              this.dialogVisible1 = false
+              this.$refs.BrandData.resetFields()
             }else{
               this.$message({
                 type: 'info',
@@ -311,14 +369,14 @@ export default {
       })
     },
     EditBrand(rowData){
-      this.BrandData = Object.assign({}, rowData)
+      this.BrandData1 = Object.assign({}, rowData)
       this.dialogVisible2 = true
     },
     updateBrand(){
-    this.$refs.BrandData.validate(valid => {
+    this.$refs.BrandData1.validate(valid => {
         if(valid) {
           console.log('the parameter is invalid');
-          this.$store.dispatch('UpdateBrand',this.BrandData.brd_id).then((result) => {
+          this.$store.dispatch('AddOrUpdateBrand',this.BrandData1.brd_id).then((result) => {
             if (result.code==200){
               this.$message({
                 type: 'info',
@@ -330,7 +388,7 @@ export default {
                 message: `update operation failed`
               })
             }
-            this.dialogVisible = false
+            this.dialogVisible2 = false
             this.loadData()
           })
         } else {
