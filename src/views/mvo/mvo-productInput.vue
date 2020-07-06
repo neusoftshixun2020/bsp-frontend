@@ -4,7 +4,7 @@
     <br>
 
     <el-row :gutter="6">
-      <el-col :span="6">
+      <el-col :span="7">
         <div class="grid-content">
           <span style="color:#606266">
             Product Title
@@ -17,7 +17,7 @@
           <el-button type="success" icon="el-icon-search" circle @click="searchProduct" />
         </div>
       </el-col>
-      <el-col :span="15"><div class="grid-content" /></el-col>
+      <el-col :span="14"><div class="grid-content" /></el-col>
       <el-col :span="1">
         <div class="grid-content">
           <div class="grid-content"><el-button type="primary" plain icon="el-icon-plus" @click="addProduct">add</el-button></div>
