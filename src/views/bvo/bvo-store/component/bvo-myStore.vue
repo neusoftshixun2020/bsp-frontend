@@ -4,7 +4,8 @@
       <div>
         <p class="title">My Stores</p>
         <div class="store">
-          <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="amazonStoreList" :header-cell-style="{color: '#409EFF',fontSize:'18px',fontFamily:'Helvetica'}">
+          <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="amazonStoreList"
+                    :header-cell-style="{color: '#409EFF',fontSize:'18px',fontFamily:'Helvetica'}">
             <el-table-column prop="STORE_NAME" label="Amazon"/>
           </el-table>
         </div>
@@ -144,7 +145,8 @@ export default {
         TOKEN: ''
       }
       this.dialogVisible = true
-    }
+    },
+
   }
 
 }

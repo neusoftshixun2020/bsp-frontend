@@ -24,7 +24,7 @@
       </el-col>
     </el-row>
 
-    <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'16px'}" :data="productList" :header-cell-style="{background:'#eef1f6',color:'#606266',fontFamily:'Helvetica'}" style="width: 100%">
+    <el-table id="product_table" :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'16px'}" :data="productList" :header-cell-style="{background:'#eef1f6',color:'#606266',fontFamily:'Helvetica'}" style="width: 100%">
       <el-table-column prop="PRO_ID" sortable label="Product ID" />
       <el-table-column prop="SKU_CD" label="SKU Code" />
       <el-table-column prop="TITLE" label="Title" />
@@ -48,7 +48,7 @@
             <el-pagination
               :page-size="20"
               layout="total, prev, pager, next"
-              :total="1000"
+              :total="200"
             />
           </div>
         </div></el-col>
@@ -265,7 +265,7 @@
   </div>
 </template>
 
-<script>
+<script type="javascript">
 export default {
   name: 'ProductInput',
   data() {
@@ -394,8 +394,10 @@ export default {
       }).catch(() => {
       })
     }
+
   }
 }
+
 
 </script>
 
