@@ -229,7 +229,7 @@
           </el-col>
           <el-col :span="2">
             <div class="grid-content">
-              <el-button
+              <el-button style="width: 80px"
                 type="info"
                 @click.native="dialogVisible = false, addFormData = { PRO_ID: '',
                                                                       SKU_CD: '',
@@ -255,7 +255,7 @@
           </el-col>
           <el-col :span="2">
             <div class="grid-content">
-              <el-button type="primary" @click.native="updateProduct">Submit</el-button>
+              <el-button style="width: 80px" type="primary" @click.native="updateProduct">Submit</el-button>
             </div>
           </el-col>
         </el-row>

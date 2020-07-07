@@ -20,54 +20,61 @@
           <el-button type="primary" @click="addStore">Add a new store</el-button>
         </div>
 
-        <el-dialog :visible.sync="dialogVisible" width="70%" :close-on-lick-modal="false">
+        <el-dialog :visible.sync="dialogVisible" width="35%" :close-on-lick-modal="false">
           <div>
             <el-form ref="addFormData" :model="addFormData" :rules="storeRule" label-width="100px" class="">
               <el-row>
                 <el-col>
                   <el-form-item label="Platform Type" label-width="160px">
-                    <el-input v-model="addFormData.PLATAEFORM_TYPE" style="width: 250px" type="text" autocomplete="off" clearable />
+                    <el-select v-model="addFormData.PLATAEFORM_TYPE" placeholder="Select Platform" style="width: 300px">
+                      <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                      </el-option>
+                    </el-select>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col>
                   <el-form-item label="Store Name" label-width="160px">
-                    <el-input v-model="addFormData.STORE_NAME" type="text" autocomplete="off" clearable />
+                    <el-input v-model="addFormData.STORE_NAME" type="text" autocomplete="off" clearable style="width: 300px"/>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col>
                   <el-form-item label="Seller ID" label-width="160px">
-                    <el-input v-model="addFormData.DSR_ID" type="text" autocomplete="off" clearable />
+                    <el-input v-model="addFormData.DSR_ID" type="text" autocomplete="off" clearable style="width: 300px"/>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col>
                   <el-form-item label="Marketplace ID" label-width="160px">
-                    <el-input v-model="addFormData.GOA_ID" type="text" autocomplete="off" clearable />
+                    <el-input v-model="addFormData.GOA_ID" type="text" autocomplete="off" clearable style="width: 300px"/>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col>
                   <el-form-item label="MWS Auth Token" label-width="160px">
-                    <el-input v-model="addFormData.TOKEN" type="text" autocomplete="off" clearable />
+                    <el-input v-model="addFormData.TOKEN" type="text" autocomplete="off" clearable style="width: 300px"/>
                   </el-form-item>
                 </el-col>
               </el-row>
 
             </el-form>
-            <el-row :gutter="20">
-              <el-col :span="20">
+            <el-row :gutter="30">
+              <el-col :span="8">
                 <div class="grid-content" />
               </el-col>
-              <el-col :span="2">
+              <el-col :span="4">
                 <div class="grid-content">
-                  <el-button type="info" @click.native="dialogVisible = false,
-                  addFormData = { PLATAEFORM_TYPE: '',
+                  <el-button style="width: 80px" type="info" @click.native="dialogVisible = false,
+                  addFormData = { PLATFORM_TYPE: '',
                                   STORE_NAME: '',
                                   DSR_ID: '',
                                   GOA_ID: '',
@@ -75,9 +82,9 @@
                                   }">Close</el-button>
                 </div>
               </el-col>
-              <el-col :span="2">
+              <el-col :span="4">
                 <div class="grid-content">
-                  <el-button type="primary" @click.native="updateProduct">Submit</el-button>
+                  <el-button style="width: 80px" type="primary" @click.native="updateProduct">Submit</el-button>
                 </div>
               </el-col>
             </el-row>
@@ -97,8 +104,15 @@ export default {
       amazonStoreList: [],
       ebayStoreList: [],
       dialogVisible: false,
+      options: [{
+        value: 'Option 1',
+        label: 'Amazon'
+      }, {
+        value: 'Option 2',
+        label: 'eBay'
+      }],
       addFormData: {
-        PLATAEFORM_TYPE: '',
+        PLATFORM_TYPE: '',
         STORE_NAME: '',
         DSR_ID: '',
         GOA_ID: '',
@@ -183,5 +197,20 @@ export default {
   font-family:  Arial;
   font-size: 18px;
 }
+.el-row {
+  margin-bottom: 20px;
+&:last-child {
+   margin-bottom: 0;
+ }
+}
+.el-col {
+  border-radius: 4px;
+}
+
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+
 
 </style>
