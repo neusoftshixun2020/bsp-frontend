@@ -7,17 +7,12 @@
           <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="amazonStoreList" :header-cell-style="{color: '#409EFF',fontSize:'18px',fontFamily:'Helvetica'}">
             <el-table-column prop="STORE_NAME" label="Amazon"/>
           </el-table>
-          <p class="p">store_001</p>
-          <p class="p">store_002</p>
-          <p class="p">store_003</p>
         </div>
         <div class="store">
           <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="ebayStoreList" :header-cell-style="{color: '#409EFF',fontSize:'18px',fontFamily:'Helvetica'}">
             <el-table-column prop="STORE_NAME" label="eBay"/>
           </el-table>
-          <p class="p">store_001</p>
-          <p class="p">store_002</p>
-          <p class="p">store_003</p>
+
         </div>
 
         <div style="text-align: right">
