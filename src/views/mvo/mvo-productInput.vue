@@ -270,7 +270,7 @@ export default {
   name: 'ProductInput',
   data() {
     return {
-      productList: [{PRO_ID:'aa',SKU_CD:'aa',TITLE:'aa',MODEL:'aa', PRICE:'aa', STOCK:'aa'}],
+      productList: [],
       dialogVisible: false,
       scondition: '',
       addFormData: {
