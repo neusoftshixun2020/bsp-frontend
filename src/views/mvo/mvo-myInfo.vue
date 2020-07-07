@@ -151,7 +151,7 @@ export default {
       rules: {
         name_cn: [{ required: true, message: 'Chinese name can not be null', trigger: 'blur' }],
         name_en: [{ required: true, message: 'English name can not be null', trigger: 'blur' }],
-        options: [{ required: true, message: 'options can not be null', trigger: 'blur' }]
+        gmc_report_type: [{ required: true, message: 'gmc_report_type can not be null', trigger: 'blur' }]
       }
 
     }

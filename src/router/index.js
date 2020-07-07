@@ -191,7 +191,7 @@ export const constantRoutes = [
       path: '/mvo-myInfo',
       component: () => import('@/views/mvo/mvo-myInfo'),
       name: 'mvo-myInfo',
-      meta: { title: 'My Infomation' }
+      meta: { title: 'My Infomation',icon: 'edit' }
     }]
   },
 
@@ -555,7 +555,7 @@ export const asyncRoutes = [
       },
       {
         path: 'export-merge-header',
-        component: () => import('@/views/excel/merge-header'),
+        component: () => import('@/views/bvo/bvo-productScan/bvo-productScan'),
         name: 'goodslist',
         meta: { title: 'Goods List' }
       },

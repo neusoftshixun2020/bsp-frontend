@@ -8,7 +8,7 @@
     <div class="ProductTable">
       <el-table
         ref="multipleTable"
-        :data="companylist"
+        :data="companylist.slice((currentPage-1)*pagesize,currentPage*pagesize)"
         element-loading-text="Loading"
         fit
         border
@@ -31,8 +31,14 @@
          </template>
        </el-table-column>
       </el-table>
+        <el-pagination
+        small
+        layout="prev, pager, next"
+        :total="total"
+        @current-change="current_change">
+      </el-pagination>
       <br>
-      <el-button type="primary" @click="showAddInfo" icon="el-icon-plus" style="margin-left:10px">Add</el-button>
+      <el-button type="primary" @click="showAddInfo" plain icon="el-icon-plus" style="margin-left:10px">Add</el-button>
     </div>
 
 <!--品牌信息-->
@@ -42,7 +48,7 @@
     <div class="BrandTable">
       <el-table
         ref="multipleTable1"
-        :data="brandList"
+         :data="brandList.slice((currentPage-1)*pagesize,currentPage*pagesize)"
         element-loading-text="Loading"
         fit
         border
@@ -61,14 +67,20 @@
         </el-table-column>
            <el-table-column align="center"  label = 'Operations'>
           <template slot-scope="scope">
-            <el-button type = 'info' size="mini" icon="el-icon-edit" @click.native ='EditBrand(scope.row)'>edit</el-button>
+            <el-button type = 'info' size="mini" icon="el-icon-edit" @click.native ='EditBrand(scope.row)'>Modify</el-button>
             <el-button type = 'danger' size="mini" icon="el-icon-delete" @click.native ='deleteBrand(scope.row)'>delete</el-button>
           </template>
         </el-table-column>
       </el-table>
+        <el-pagination
+        small
+        layout="prev, pager, next"
+        :total="total"
+        @current-change="current_change">
+      </el-pagination>
     </div>
         <br>
-      <el-button type="primary" @click="showaddBrand" icon="el-icon-plus" style="margin-left:90px">Add</el-button>
+      <el-button type="primary" @click="showaddBrand" plain icon="el-icon-plus" style="margin-left:90px">Add</el-button>
 
 
     <!--修改company弹窗-->
@@ -223,6 +235,9 @@ export default {
       head:'Company Information',
       dialogImageUrl: '',
       img_id: '',
+      total:0,//默认数据总数
+      pagesize:4,//每页的数据条数
+      currentPage:1,//默认开始页面
 
       ProductData:{
           man_id:'',
@@ -251,6 +266,9 @@ export default {
   // chooseImage:{
 
   // },
+   current_change:function(currentPage){
+        this.currentPage = currentPage;
+      },
     loadData () {
       this.$store.dispatch('GetAllByFilter',this.ProductData.man_id).then((result) => {
         // console.log("result.data-----companylist")

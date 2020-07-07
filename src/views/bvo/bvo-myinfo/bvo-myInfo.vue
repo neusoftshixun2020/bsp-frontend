@@ -12,26 +12,26 @@
     </el-header>
     <el-main>
 
-    <!-- <el-form ref="ruleForm" :model="ruleForm" status-icon :rules="rules" class="ruleForm">
-      <el-form-item label="Name" prop="username" style="margin-left:20px;">
+    <el-form ref="ruleForm" :model="ruleForm" status-icon :rules="rules" class="ruleForm">
+      <el-form-item label="User Name" prop="username" style="margin-left:400px;">
       <el-input v-model="ruleForm.username" style="width:200px" />
     </el-form-item>
-    <el-form-item label="Name" prop="name" style="margin-left:20px;">
+    <el-form-item label="Name" prop="name" style="margin-left:434px;">
       <el-input v-model="ruleForm.name" style="width:200px" />
     </el-form-item>
-    <el-form-item label="Email" prop="email" style="margin-left:20px;">
+    <el-form-item label="Email" prop="email" style="margin-left:434px;">
       <el-input v-model="ruleForm.email" style="width:200px" />
     </el-form-item>
 
-    <el-form-item label="Phone" prop="phone" style="margin-left:20px;">
+    <el-form-item label="Phone" prop="phone" style="margin-left:429px;">
       <el-input v-model="ruleForm.phone" style="width:200px" />
     </el-form-item>
-    <el-form-item style="margin-left:20px;">
+    <el-form-item style="margin-left:430px;">
       <el-button style="width:150px" type="danger" icon="el-icon-document" @click.native = 'submitForm'>save</el-button>
-      <el-button type="info" @lick="myshop">My Stores</el-button>
+      <el-button type="info" @click="myshop">My Stores</el-button>
     </el-form-item>
-  </el-form> -->
-      <el-main class="inputName">
+  </el-form>
+      <!-- <el-main class="inputName">
         <div style="margin-bottom: 40px">Username</div>
         <div>
           <label class="green" value="11">Name:</label>
@@ -52,62 +52,63 @@
         <br>
         <br>
         <el-button type="info" @click="save()">save</el-button>
-        <el-button type="info" @lick="myshop()">My Stores</el-button>
+        <el-button type="info" @lick="myshop()">My Stores</el-button> -->
       </el-main>
     
   </el-container>
 </template>
 
 <script>
-// import {updateUser} from "@/api/user"
-// export default {
-// data() {
-//     return {
-//       ruleForm: {
-//         username: '',
-//         name: '',
-//         email: '',
-//         phone: ''
-//       }
-//     }   
-//  },
+import {updateUser} from "@/api/user"
+export default {
+data() {
+    return {
+      ruleForm: {
+        username: '',
+        name: '',
+        email: '',
+        phone: ''
+      }
+    }   
+ },
 //  mounted: function () {
 //     this.loadData()
 //   },
-//   methods: {
+  methods: {
      
-//        submitForm(){
-//        this.$refs.ruleForm.validate(valid => {
-//         if(valid) {
-//           // console.log('valid');
-//           updateUser(this.ruleForm).then((result) => {
-//             // console.log(result.code)
-//             if (result.code==200){
-//               this.$message({
-//                 type: 'info',
-//                 message: `add operation succeeded`
-//               })
-//                this.$router.push({path: '/bvo-mystore'})
-//             }else{
-//               this.$message({
-//                 type: 'info',
-//                 message: `add operation failed`
-//               })
-//             }
+       submitForm(){
+       this.$refs.ruleForm.validate(valid => {
+        if(valid) {
+          // console.log('valid');
+          updateUser(this.ruleForm).then((result) => {
+            // console.log(result.code)
+            if (result.code==200){
+              this.$message({
+                type: 'info',
+                message: `add operation succeeded`
+              })
+             //     this.loadData()
+            }else{
+              this.$message({
+                type: 'info',
+                message: `add operation failed`
+              })
+            }
 
-//           })
-//         } else {
-//           // console.log('the parameter is invalid');
-//           return false
-//         }
-//       })
-//     }
-//     ,
-//     myshop() {
-
-//     }
-//   }
-// }
+          })
+        } else {
+          // console.log('the parameter is invalid');
+          return false
+        }
+      })
+    }
+    ,
+    myshop() {
+      console.log("go to my store")
+    this.$router.push({path: '/bvo-myStore'})
+    }
+  }
+}
 </script>
 
 <style>

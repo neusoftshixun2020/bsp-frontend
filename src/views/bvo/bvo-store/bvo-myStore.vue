@@ -42,13 +42,13 @@ export default {
   background: #fff;
   padding: 8px 20px 24px;
 }
-.el-main {
+/* .el-main {
   padding-bottom: 0;
   background-color: #e4e6e9;
   font-family: "Open Sans";
   font-size: 13px;
   min-height: 100%;
-}
+} */
 .store {
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -94,7 +94,7 @@ input, button, select, textarea {
     font-size: 13px;
     min-height: 100%;
 }
-.el-button{
+/* .el-button{
     color: #2283c5;
-}
+} */
 </style>
