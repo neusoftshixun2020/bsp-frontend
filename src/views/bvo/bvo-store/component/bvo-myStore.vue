@@ -17,7 +17,7 @@
         </div>
 
         <div style="text-align: right">
-          <el-button type="primary" @click="addStore">Add a new store</el-button>
+          <el-button type="primary" @click="clickAdd">Add a new store</el-button>
         </div>
 
         <el-dialog :visible.sync="dialogVisible" width="35%" :close-on-lick-modal="false">
@@ -26,7 +26,7 @@
               <el-row>
                 <el-col>
                   <el-form-item label="Platform Type" label-width="160px">
-                    <el-select v-model="addFormData.PLATAEFORM_TYPE" placeholder="Select Platform" style="width: 300px">
+                    <el-select v-model="addFormData.PLATFORM_TYPE" placeholder="Select Platform" style="width: 300px">
                       <el-option
                         v-for="item in options"
                         :key="item.value"
@@ -84,7 +84,7 @@
               </el-col>
               <el-col :span="4">
                 <div class="grid-content">
-                  <el-button style="width: 80px" type="primary" @click.native="updateProduct">Submit</el-button>
+                  <el-button style="width: 80px" type="primary" @click.native="addStore">Submit</el-button>
                 </div>
               </el-col>
             </el-row>
@@ -150,15 +150,36 @@ export default {
       })
 
     },
-    addStore() {
+    clickAdd(rowData){
       this.addFormData = {
-        PLATAEFORM_TYPE: '',
+        PLATFORM_TYPE: '',
         STORE_NAME: '',
         DSR_ID: '',
         GOA_ID: '',
         TOKEN: ''
       }
       this.dialogVisible = true
+    },
+    addStore(rowData) {
+      this.$refs.addFormData.validate(valid => {
+        if (valid) {
+          this.$store.dispatch('AddStore', this.addFormData).then((result) => {
+            if (result.data.data) {
+              this.$message({
+                type: 'info',
+                message: `Add Succeeded`
+              })
+            } else {
+              this.$message({
+                type: 'info',
+                message: `Add Failed`
+              })
+            }
+            this.dialogVisible = false
+            this.loadData()
+          })
+        }
+      })
     },
 
   }
