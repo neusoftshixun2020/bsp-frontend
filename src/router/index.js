@@ -188,9 +188,9 @@ export const constantRoutes = [
     path: '/mvo-myInfo',
     component: Layout,
     children: [{
-      path: '/bvo-myInfo',
+      path: '/mvo-myInfo',
       component: () => import('@/views/mvo/mvo-myInfo'),
-      name: 'bvo-myInfo',
+      name: 'mvo-myInfo',
       meta: { title: 'My Infomation' }
     }]
   },
@@ -201,7 +201,7 @@ export const constantRoutes = [
     hidden: true,
     children: [{
       path: '',
-      component: () => import('@/views/mvo/component/mvo-mycompany'),
+      component: () => import('@/views/mvo/mvo-mycompany'),
       name: '',
       meta: { title: 'Company Information', icon: 'edit' }
     }]

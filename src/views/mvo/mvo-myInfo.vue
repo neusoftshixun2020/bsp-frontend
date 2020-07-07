@@ -12,7 +12,7 @@
     </el-header>
     <el-main>
     <el-form ref="ruleForm" :model="ruleForm" status-icon :rules="rules" class="ruleForm">
-    
+
     <el-form-item label="Company Name(Chinese)" prop="name_cn" style="margin-left:20px;">
       <el-input v-model="ruleForm.name_cn" style="width:200px" />
     </el-form-item>
@@ -75,13 +75,13 @@ export default {
 
     }
   },
-  methods: { 
+  methods: {
     submitForm(){
        this.$refs.ruleForm.validate(valid => {
         if(valid) {
-          console.log('valid');
+          // console.log('valid');
           this.$store.dispatch('AddManufacturer',this.ruleForm).then((result) => {
-            console.log(result.code)
+            // console.log(result.code)
             if (result.code==200){
               this.$message({
                 type: 'info',
@@ -94,10 +94,10 @@ export default {
                 message: `add operation failed`
               })
             }
-           
+
           })
         } else {
-          console.log('the parameter is invalid');
+          // console.log('the parameter is invalid');
           return false
         }
       })
@@ -105,6 +105,7 @@ export default {
    ,
     resetForm(formName) {
       this.$refs[formName].resetFields()
+      this.$router.push({path: '/mvo-mycompany'})
     }
   }
 
