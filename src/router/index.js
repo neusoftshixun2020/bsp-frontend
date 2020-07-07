@@ -579,22 +579,7 @@ export const asyncRoutes = [
         meta: { title: 'My Wallet' }
       }
     ]
-  },
-  {
-    path: 'choosePlatfrom',
-    component: () => import('@/views/bvo/bvo-store/component/bvo-choosePlatform'),
-    name: 'choosePlatfrom',
-    meta: { title: 'Choose Platfrom' },
-    hidden: true
-  },
-  {
-    path: 'addStore',
-    component: () => import('@/views/bvo/bvo-store/component/bvo-storeAdd'),
-    name: 'addStore',
-    meta: { title: 'Add Store' },
-    hidden: true
-  },
-
+  }
 ]
 
 const createRouter = () => new Router({

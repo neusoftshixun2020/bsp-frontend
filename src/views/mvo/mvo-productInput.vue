@@ -3,21 +3,20 @@
     <br>
     <br>
 
-    <el-row :gutter="6">
-      <el-col :span="7">
+    <el-row :gutter="90">
+      <el-col :span="5">
         <div class="grid-content">
           <span style="color:#606266">
-            Product Title
-            <el-input v-model="scondition" autocomplete="off" style="width:280px" placeholder="please enter product title" />
+            <el-input v-model="scondition" autocomplete="off" style="width:280px" placeholder="Please Enter Product Title" />
           </span>
         </div>
       </el-col>
       <el-col :span="1">
         <div class="grid-content">
-          <el-button type="success" icon="el-icon-search" circle @click="searchProduct" />
+          <el-button type="success" plain icon="el-icon-search" @click="searchProduct">Search</el-button>
         </div>
       </el-col>
-      <el-col :span="14"><div class="grid-content" /></el-col>
+      <el-col :span="13"><div class="grid-content" /></el-col>
       <el-col :span="1">
         <div class="grid-content">
           <div class="grid-content"><el-button type="primary" plain icon="el-icon-plus" @click="addProduct">add</el-button></div>
@@ -25,7 +24,7 @@
       </el-col>
     </el-row>
 
-    <el-table :data="productList" style="width: 100%">
+    <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'16px'}" :data="productList" :header-cell-style="{background:'#eef1f6',color:'#606266',fontFamily:'Helvetica'}" style="width: 100%">
       <el-table-column prop="PRO_ID" sortable label="Product ID" />
       <el-table-column prop="SKU_CD" label="SKU Code" />
       <el-table-column prop="TITLE" label="Title" />
@@ -251,8 +250,7 @@
                                                                       WARRANTY_DAY: '',
                                                                       TIME_UNIT: '',
                                                                       WARRANTY: '',
-                                                                      DESCRITION: ''}"
-              >Close</el-button>
+                                                                      DESCRITION: ''}">Close</el-button>
             </div>
           </el-col>
           <el-col :span="2">
@@ -272,7 +270,7 @@ export default {
   name: 'ProductInput',
   data() {
     return {
-      productList: [],
+      productList: [{PRO_ID:'aa',SKU_CD:'aa',TITLE:'aa',MODEL:'aa', PRICE:'aa', STOCK:'aa'}],
       dialogVisible: false,
       scondition: '',
       addFormData: {
@@ -301,7 +299,7 @@ export default {
       productRule: {
         TITLE: [{
           required: true,
-          message: "Title shouldn't be null.",
+          message: "Title can't be null.",
           trigger: 'blur'
         }]
       }

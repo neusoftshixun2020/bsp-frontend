@@ -1,15 +1,21 @@
-
 <template>
-  <div id="page-content" class="clearfix">
-    <h3 class="header smaller lighter red">Add a new store</h3>
-    <div class="content">
-      <div class="gray shop">Set up API connection with your store by account authorisation</div>
+  <el-container>
+    <el-header></el-header>
+    <el-header></el-header>
+    <el-main>
+      <div class="content">
+        <p class="title">Please Select A Platform For Your New Store</p><br><br>
+        <p class="title"></p><br><br>
+        <el-button type="primary" class="button">Amazon</el-button><br><br><br>
+        <el-button type="primary" class="button">eBay</el-button>
 
-      <button class="btn btn-primary btn-block shop">Amazon</button><br>
-      <button class="btn btn-primary btn-block shop">eBay</button>
+      </div>
+    </el-main>
+  </el-container>
+<!--  <div id="page-content" class="clearfix">-->
+<!--    <h3 class="header smaller lighter red">Add a new store</h3>-->
 
-    </div>
-  </div>
+<!--  </div>-->
 
 </template>
 
@@ -21,21 +27,27 @@ export default {
 </script>
 
 <style scoped>
-
-body,html{
-  width: 100%;
-  height: 100%;
-  background: #fff;
+.el-container{
+  height:100%;
 }
+.el-header{
+   color: #333;
+   text-align: center;
+   line-height: 60px;
+ }
+.el-main {
 
-.content{
-  width: 50%;
-  margin:20px auto;
+  color: #333;
+  text-align: center;
 }
-.shop{
-  width: 80%;
-  margin-top: 50px;
-
+.title{
+  font-family: "Microsoft YaHei";
+  font-size: 20px;
+  color: #2d2f33;
+  font-style: italic;
+}
+.button{
+  size:40px;
 }
 
 </style>
