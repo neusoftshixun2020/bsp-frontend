@@ -1,18 +1,46 @@
 <template>
   <el-container id="main-content" class="clearfix">
     <el-main id="page-content" iv class="clearfix">
-      <div>
+      <div style="margin-left:20%; margin-right:20%">
         <p class="title">My Stores</p>
         <div class="store">
           <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="amazonStoreList"
                     :header-cell-style="{color: '#409EFF',fontSize:'18px',fontFamily:'Helvetica'}">
             <el-table-column prop="STORE_NAME" label="Amazon"/>
           </el-table>
+          <el-row :gutter="20">
+            <el-col :span="9"><div class="grid-content" /></el-col>
+            <el-col :span="8">
+              <div class="grid-content">
+                <div class="block">
+                  <el-pagination
+                    layout="total, prev, pager, next"
+                    :total="10"
+                    :page-count="6"
+                    :page-size="5"/>
+                </div>
+              </div></el-col>
+            <el-col :span="6"><div class="grid-content" /></el-col>
+          </el-row>
         </div>
         <div class="store">
           <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="ebayStoreList" :header-cell-style="{color: '#409EFF',fontSize:'18px',fontFamily:'Helvetica'}">
             <el-table-column prop="STORE_NAME" label="eBay"/>
           </el-table>
+          <el-row :gutter="20">
+            <el-col :span="9"><div class="grid-content" /></el-col>
+            <el-col :span="8">
+              <div class="grid-content">
+                <div class="block">
+                  <el-pagination
+                    layout="total, prev, pager, next"
+                    :total="10"
+                    :page-count="6"
+                    :page-size="5"/>
+                </div>
+              </div></el-col>
+            <el-col :span="6"><div class="grid-content" /></el-col>
+          </el-row>
 
         </div>
 
