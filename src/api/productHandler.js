@@ -19,43 +19,21 @@ export function getProductsByTitle(TITLE) {
   })
 }
 
-export function addAndupdateProduct(SKU_CD, BRD_ID, MAN_ID, TITLE, UPC, EAN, MODEL, LENGTH, WIDTH, HEIGHT, WEIGHT,
-  PRICE, EFFETIVE_START_DATE, EFFECTIVE_END_DATE, REPLENISHMENT_PERIOD, WARRANTY_DAY,
-  TIME_UNIT, WARRANTY, DESCRITION, operationFlag) {
+export function addAndupdateProduct(pdata, flag) {
   return request({
     url: '/product/addAndUpdateProduct',
     method: 'post',
-    data: {
-      SKU_CD,
-      BRD_ID,
-      MAN_ID,
-      TITLE,
-      UPC,
-      EAN,
-      MODEL,
-      LENGTH,
-      WIDTH,
-      HEIGHT,
-      WEIGHT,
-      PRICE,
-      EFFETIVE_START_DATE,
-      EFFECTIVE_END_DATE,
-      REPLENISHMENT_PERIOD,
-      WARRANTY_DAY,
-      TIME_UNIT,
-      WARRANTY,
-      DESCRITION,
-      operationFlag
+    data: pdata,
+    params: {
+      'operationFlag': flag
     }
   })
 }
 
-export function deleteProduct(pro_id) {
+export function deleteProduct(data) {
   return request({
     url: '/product/deleteProduct',
     method: 'post',
-    data: {
-      pro_id
-    }
+    data
   })
 }

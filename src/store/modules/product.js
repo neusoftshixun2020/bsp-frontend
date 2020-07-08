@@ -13,9 +13,9 @@ const product = {
         })
       })
     },
-    GetProductByTitle({ commit }, title) {
+    GetProductByTitle({ commit }, TITLE) {
       return new Promise((resolve, reject) => {
-        getProductsByTitle(title).then(response => {
+        getProductsByTitle(TITLE).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
@@ -23,13 +23,9 @@ const product = {
         })
       })
     },
-    AddAndUpdateProduct({ commit }, productinfo) {
+    AddAndUpdateProduct({ commit }, data) {
       return new Promise((resolve, reject) => {
-        addAndupdateProduct(productinfo.sku_cd, productinfo.brd_id, productinfo.man_id, productinfo.title,
-          productinfo.upc, productinfo.ean, productinfo.model, productinfo.length, productinfo.width, productinfo.height,
-          productinfo.WEIGHT, productinfo.price, productinfo.effetive_start_date, productinfo.effective_end_date,
-          productinfo.replenishment_period, productinfo.warranty_day, productinfo.time_unit, productinfo.warranty,
-          productinfo.descrition, productinfo.operationFlag).then(response => {
+        addAndupdateProduct(data.product, data.operationFlag).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
@@ -37,9 +33,9 @@ const product = {
         })
       })
     },
-    DeleteProduct({ commit }, pro_id) {
+    DeleteProduct({ commit }, data) {
       return new Promise((resolve, reject) => {
-        deleteProduct(pro_id).then(response => {
+        deleteProduct(data).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {

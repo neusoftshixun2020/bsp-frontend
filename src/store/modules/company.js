@@ -1,6 +1,6 @@
 ﻿import { addManufacturer ,updateManufacturer,deleteBrand,addBrand,updateBrand,getAllByFilter,
   getBrandByFilter,addOrUpdateBrand} from '../../api/addCompany'
-  
+
   const company = {
     actions: {
         AddManufacturer({ commit }, maninfo) {
@@ -38,11 +38,9 @@
         })
       },
       UpdateBrand({ commit }, brandinfo) {
-        console.log("进入UpdateBrand:name_en: "+brandinfo.name_en+" name_cn:"+brandinfo.name_cn+" man_id: "+brandinfo.man_id+"brandinfo.brd_id: "+brandinfo.brd_id)
+        console.log("进入UpdateBrand:",brandinfo)
         return new Promise((resolve, reject) => {
-          updateBrand(brandinfo.brd_id,brandinfo.man_id,brandinfo.name_en,brandinfo.name_cn,brandinfo.created_by,
-            brandinfo.creation_date,brandinfo.last_update_by,brandinfo.last_update_date,brandinfo.call_cnt,
-            brandinfo.remark,brandinfo.sts_cd).then(response => {
+          updateBrand(brandinfo.brd_id,brandinfo.man_id,brandinfo.name_en,brandinfo.name_cn, brandinfo.img_url).then(response => {
             commit('')
             resolve(response)
           }).catch(error => {
@@ -51,13 +49,11 @@
         })
       },
 
-     
+
     AddBrand({ commit }, brandinfo) {
       console.log("进入AddBrand:name_en: "+brandinfo.name_en+" name_cn:"+brandinfo.name_cn+" man_id: "+brandinfo.man_id)
       return new Promise((resolve, reject) => {
-        addBrand(brandinfo.man_id,brandinfo.name_en,brandinfo.name_cn,brandinfo.created_by,
-          brandinfo.creation_date,brandinfo.last_update_by,brandinfo.last_update_date,brandinfo.call_cnt,
-          brandinfo.remark,brandinfo.sts_cd).then(response => {
+        addBrand(brandinfo.man_id,brandinfo.name_en,brandinfo.name_cn, brandinfo.img_url).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
