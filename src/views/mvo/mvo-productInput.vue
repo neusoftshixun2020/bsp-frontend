@@ -3,29 +3,22 @@
     <br>
     <br>
 
-    <el-row :gutter="6">
-      <el-col :span="7">
+    <el-row :gutter="0">
+      <el-col :span="6">
         <div class="grid-content">
           <span style="color:#606266">
-            Product Title
-            <el-input v-model="scondition" autocomplete="off" style="width:280px" placeholder="please enter product title" />
+            <el-input v-model="scondition" autocomplete="off" style="width:315px" placeholder="Please enter your search condition" />
           </span>
         </div>
       </el-col>
-      <el-col :span="1">
+      <el-col :span="2" >
         <div class="grid-content">
-          <el-button type="success" icon="el-icon-search" circle @click="searchProduct" />
-        </div>
-      </el-col>
-      <el-col :span="14"><div class="grid-content" /></el-col>
-      <el-col :span="1">
-        <div class="grid-content">
-          <div class="grid-content"><el-button type="primary" plain icon="el-icon-plus" @click="addProduct">add</el-button></div>
+          <div class="grid-content"><el-button plain type="primary" icon="el-icon-plus" @click="addProduct">add</el-button></div>
         </div>
       </el-col>
     </el-row>
 
-    <el-table :data="filteredProductData" style="width: 100%">
+    <el-table  :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'15px'}" :data="filteredProductData" :header-cell-style="{background:'#f0f9eb', fontFamily:'Helvetica',fontSize:'14px', _transparentize:'80%'}" style="width: 100%">
       <el-table-column prop="pro_id" sortable label="Product ID" />
       <el-table-column prop="sku_cd" label="SKU Code" />
       <el-table-column prop="title" label="Title" />
@@ -34,8 +27,8 @@
 
       <el-table-column label="Operation">
         <template slot-scope="scope">
-          <el-button type="primary" icon="el-icon-edit" circle @click="modifyProduct(scope.row)" />
-          <el-button type="danger" icon="el-icon-delete" circle @click="deleteProduct(scope.row)" />
+          <el-button type="primary" icon="el-icon-edit" plain circle @click="modifyProduct(scope.row)" />
+          <el-button type="danger" icon="el-icon-delete" plain circle @click="deleteProduct(scope.row)" />
         </template>
       </el-table-column>
     </el-table>
