@@ -86,7 +86,7 @@ export function updateBrand(brd_id,man_id,name_en,name_cn, img_url) {
 }
 
 
-export function getAllByFilter (man_id) {
+export function getManByFilter (man_id) {
   return request({
     url: 'manufacturer/getManByFilter',
     method: 'post',

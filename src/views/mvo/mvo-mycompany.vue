@@ -101,8 +101,6 @@
           </el-col>
         </el-form-item>
 
-        
-
         <el-form-item label="GMC Report Type(1-TUV , 2-UL)" label-width="130px"  prop='gmc_report_type'>
          <el-col :span="8">
             <el-input type='text' v-model='ProductData.gmc_report_type'  autocomplete='off' placeholder='Type'>
@@ -270,10 +268,10 @@ export default {
         this.currentPage = currentPage;
       },
     loadData () {
-      this.$store.dispatch('GetAllByFilter',this.ProductData.man_id).then((result) => {
+      this.$store.dispatch('GetManByFilter',this.ProductData.man_id).then((result) => {
         // console.log("result.data-----companylist")
         // console.log(result.data)
-        // console.log("result.data.list-----companylist")
+         console.log("result.data.list-----companylist")
         this.companylist = result.data.list
         // console.log(result.data.list)
       })
