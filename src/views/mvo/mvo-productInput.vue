@@ -18,7 +18,8 @@
       </el-col>
     </el-row>
 
-    <el-table  :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'15px'}" :data="filteredProductData" :header-cell-style="{background:'#f0f9eb', fontFamily:'Helvetica',fontSize:'14px', _transparentize:'80%'}" style="width: 100%">
+    <el-table  :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'15px'}" :data="filteredProductData"
+               :header-cell-style="{background:'#f0f9eb', fontFamily:'Helvetica',fontSize:'14px'}" style="width: 100%">
       <el-table-column prop="pro_id" sortable label="Product ID" />
       <el-table-column prop="sku_cd" label="SKU Code" />
       <el-table-column prop="title" label="Title" />
