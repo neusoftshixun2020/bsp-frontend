@@ -24,16 +24,16 @@
       </el-col>
     </el-row>
 
-    <el-table id="product_table" :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'16px'}" :data="productList" :header-cell-style="{background:'#eef1f6',color:'#606266',fontFamily:'Helvetica'}" style="width: 100%">
-      <el-table-column prop="PRO_ID" sortable label="Product ID" />
-      <el-table-column prop="SKU_CD" label="SKU Code" />
-      <el-table-column prop="TITLE" label="Title" />
-      <el-table-column prop="MODEL" label="Model" />
-      <el-table-column prop="PRICE" label="Price" />
-      <el-table-column prop="STOCK" label="Stock" />
+    <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'16px'}" :data="productList" :header-cell-style="{background:'#eef1f6',color:'#606266',fontFamily:'Helvetica'}" style="width: 100%">
+      <el-table-column prop="pro_id" sortable label="Product ID" />
+      <el-table-column prop="sku_cd" label="SKU Code" />
+      <el-table-column prop="title" label="Title" />
+      <el-table-column prop="model" label="Model" />
+      <el-table-column prop="price" label="Price" />
+      <el-table-column prop="stock" label="Stock" />
 
       <el-table-column label="Operation">
-        <template>
+        <template slot-scope = 'scope'>
           <el-button type="primary" icon="el-icon-edit" circle @click="modifyProduct(scope.row)" />
           <el-button type="danger" icon="el-icon-delete" circle @click="deleteProduct(scope.row)" />
         </template>
@@ -61,49 +61,49 @@
           <el-row>
             <el-col>
               <el-form-item label="SKU Code" label-width="160px">
-                <el-input v-model="addFormData.SKU_CD" type="text" autocomplete="off" clearable />
+                <el-input v-model="addFormData.sku_cd" type="text" autocomplete="off" clearable />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col>
               <el-form-item label="Brand ID" label-width="160px">
-                <el-input v-model="addFormData.BRD_ID" type="text" autocomplete="off" clearable />
+                <el-input v-model="addFormData.brd_id" type="text" autocomplete="off" clearable />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col>
               <el-form-item label="Manufacturer ID" label-width="160px">
-                <el-input v-model="addFormData.MAN_ID" type="text" autocomplete="off" clearable />
+                <el-input v-model="addFormData.man_id" type="text" autocomplete="off" clearable />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col>
               <el-form-item label="Title" label-width="160px">
-                <el-input v-model="addFormData.TITLE" type="text" autocomplete="off" clearable />
+                <el-input v-model="addFormData.title" type="text" autocomplete="off" clearable />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col>
               <el-form-item label="UPC Code" label-width="160px">
-                <el-input v-model="addFormData.UPC" type="text" autocomplete="off" clearable />
+                <el-input v-model="addFormData.upc" type="text" autocomplete="off" clearable />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col>
               <el-form-item label="ENA Code" label-width="160px">
-                <el-input v-model="addFormData.EAN" type="text" autocomplete="off" clearable />
+                <el-input v-model="addFormData.ean" type="text" autocomplete="off" clearable />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col>
               <el-form-item label="Model" label-width="160px">
-                <el-input v-model="addFormData.MODEL" type="text" autocomplete="off" clearable />
+                <el-input v-model="addFormData.model" type="text" autocomplete="off" clearable />
               </el-form-item>
             </el-col>
           </el-row>
@@ -111,14 +111,14 @@
             <el-col :span="6">
               <div class="grid-content">
                 <el-form-item label="Length(cm)" label-width="160px">
-                  <el-input v-model="addFormData.LENGTH" style="width:150px" type="text" autocomplete="off" clearable />
+                  <el-input v-model="addFormData.length" style="width:150px" type="text" autocomplete="off" clearable />
                 </el-form-item>
               </div>
             </el-col>
             <el-col :span="6">
               <div class="grid-content">
                 <el-form-item label="Width(cm)" label-width="140px">
-                  <el-input v-model="addFormData.WIDTH" style="width:150px" type="text" autocomplete="off" clearable />
+                  <el-input v-model="addFormData.width" style="width:150px" type="text" autocomplete="off" clearable />
                 </el-form-item>
               </div>
             </el-col>
@@ -126,14 +126,14 @@
             <el-col :span="6">
               <div class="grid-content">
                 <el-form-item label="Height(cm)" label-width="130px">
-                  <el-input v-model="addFormData.HEIGHT" style="width:150px" type="text" autocomplete="off" clearable />
+                  <el-input v-model="addFormData.height" style="width:150px" type="text" autocomplete="off" clearable />
                 </el-form-item>
               </div>
             </el-col>
             <el-col :span="6">
               <div class="grid-content">
                 <el-form-item label="Weight(kg)" label-width="130px">
-                  <el-input v-model="addFormData.WEIGHT" style="width:150px" type="text" autocomplete="off" clearable />
+                  <el-input v-model="addFormData.weight" style="width:150px" type="text" autocomplete="off" clearable />
                 </el-form-item>
               </div>
             </el-col>
@@ -142,7 +142,7 @@
             <el-col :span="6">
               <div class="grid-content">
                 <el-form-item label="Retail Price" label-width="160px">
-                  <el-input v-model="addFormData.PRICE" style="width: 150px" type="text" autocomplete="off" clearable />
+                  <el-input v-model="addFormData.price" style="width: 150px" type="text" autocomplete="off" clearable />
                 </el-form-item>
               </div>
             </el-col>
@@ -150,7 +150,7 @@
               <div class="grid-content">
                 <el-form-item label="Effective Start Date" label-width="195px">
                   <el-date-picker
-                    v-model="addFormData.EFFETIVE_START_DATE"
+                    v-model="addFormData.effetive_start_date"
                     type="date"
                     placeholder="选择日期"
                   />
@@ -161,7 +161,7 @@
               <div class="grid-content">
                 <el-form-item label="Effective End Date" label-width="180px">
                   <el-date-picker
-                    v-model="addFormData.EFFECTIVE_END_DATE"
+                    v-model="addFormData.effective_end_date"
                     type="date"
                     placeholder="选择日期"
                   />
@@ -172,7 +172,7 @@
           <el-row>
             <el-col>
               <el-form-item label="Replenishment Peroid" label-width="160px">
-                <el-input v-model="addFormData.REPLENISHMENT_PERIOD" type="text" autocomplete="off" clearable />
+                <el-input v-model="addFormData.replenishment_period" type="text" autocomplete="off" clearable />
               </el-form-item>
             </el-col>
           </el-row>
@@ -180,14 +180,14 @@
             <el-col :span="6">
               <div class="grid-content">
                 <el-form-item label="Warranty day" label-width="160px">
-                  <el-input v-model="addFormData.WARRANTY_DAY" style="width: 150px" type="text" autocomplete="off" clearable />
+                  <el-input v-model="addFormData.warranty_day" style="width: 150px" type="text" autocomplete="off" clearable />
                 </el-form-item>
               </div>
             </el-col>
             <el-col :span="6">
               <div class="grid-content">
                 <el-form-item label="Time Unit" label-width="140px">
-                  <el-input v-model="addFormData.TIME_UNIT" style="width: 150px" type="text" autocomplete="off" clearable />
+                  <el-input v-model="addFormData.time_unit" style="width: 150px" type="text" autocomplete="off" clearable />
                 </el-form-item>
               </div>
             </el-col>
@@ -196,7 +196,7 @@
             <el-col>
               <el-form-item label="Warranty Policy" label-width="160px">
                 <el-input
-                  v-model="addFormData.WARRANTY"
+                  v-model="addFormData.warranty"
                   type="textarea"
                   :autosize="{ minRows: 5, maxRows: 10}"
                   maxlength="1200"
@@ -211,7 +211,7 @@
             <el-col>
               <el-form-item label="Description" label-width="160px">
                 <el-input
-                  v-model="addFormData.DESCRITION"
+                  v-model="addFormData.descrition"
                   type="textarea"
                   autocomplete="off"
                   :autosize="{ minRows: 5, maxRows: 10}"
@@ -231,26 +231,26 @@
             <div class="grid-content">
               <el-button style="width: 80px"
                 type="info"
-                @click.native="dialogVisible = false, addFormData = { PRO_ID: '',
-                                                                      SKU_CD: '',
-                                                                      BRD_ID: '',
-                                                                      MAN_ID: '',
-                                                                      TITLE: '',
-                                                                      UPC: '',
-                                                                      EAN: '',
-                                                                      MODEL: '',
-                                                                      LENGTH: '',
-                                                                      WIDTH: '',
-                                                                      HEIGHT: '',
-                                                                      WEIGHT: '',
-                                                                      PRICE: '',
-                                                                      EFFETIVE_START_DATE: '',
-                                                                      EFFECTIVE_END_DATE: '',
-                                                                      REPLENISHMENT_PERIOD: '',
-                                                                      WARRANTY_DAY: '',
-                                                                      TIME_UNIT: '',
-                                                                      WARRANTY: '',
-                                                                      DESCRITION: ''}">Close</el-button>
+                @click.native="dialogVisible = false, addFormData = { pro_id: '',
+                                                                      sku_cd: '',
+                                                                      brd_id: '',
+                                                                      man_id: '',
+                                                                      title: '',
+                                                                      upc: '',
+                                                                      ean: '',
+                                                                      model: '',
+                                                                      length: '',
+                                                                      width: '',
+                                                                      height: '',
+                                                                      weight: '',
+                                                                      price: '',
+                                                                      effetive_start_date: '',
+                                                                      effective_end_date: '',
+                                                                      replenishment_period: '',
+                                                                      warranty_day: '',
+                                                                      time_unit: '',
+                                                                      warranty: '',
+                                                                      descrition: ''}">Close</el-button>
             </div>
           </el-col>
           <el-col :span="2">
@@ -274,26 +274,26 @@ export default {
       dialogVisible: false,
       scondition: '',
       addFormData: {
-        PRO_ID: '',
-        SKU_CD: '',
-        BRD_ID: '',
-        MAN_ID: '',
-        TITLE: '',
-        UPC: '',
-        EAN: '',
-        MODEL: '',
-        LENGTH: '',
-        WIDTH: '',
-        HEIGHT: '',
-        WEIGHT: '',
-        PRICE: '',
-        EFFETIVE_START_DATE: '',
-        EFFECTIVE_END_DATE: '',
-        REPLENISHMENT_PERIOD: '',
-        WARRANTY_DAY: '',
-        TIME_UNIT: '',
-        WARRANTY: '',
-        DESCRITION: '',
+        pro_id: '',
+        sku_cd: '',
+        brd_id: '',
+        man_id: '',
+        title: '',
+        upc: '',
+        ean: '',
+        model: '',
+        length: '',
+        width: '',
+        height: '',
+        weight: '',
+        price: '',
+        effetive_start_date: '',
+        effective_end_date: '',
+        replenishment_period: '',
+        warranty_day: '',
+        time_unit: '',
+        warranty: '',
+        descrition: '',
         operationFlag: 'add'
       },
       productRule: {
@@ -316,26 +316,26 @@ export default {
     },
     addProduct(rowData) {
       this.addFormData = {
-        PRO_ID: '',
-        SKU_CD: '',
-        BRD_ID: '',
-        MAN_ID: '',
-        TITLE: '',
-        UPC: '',
-        EAN: '',
-        MODEL: '',
-        LENGTH: '',
-        WIDTH: '',
-        HEIGHT: '',
-        WEIGHT: '',
-        PRICE: '',
-        EFFETIVE_START_DATE: '',
-        EFFECTIVE_END_DATE: '',
-        REPLENISHMENT_PERIOD: '',
-        WARRANTY_DAY: '',
-        TIME_UNIT: '',
-        WARRANTY: '',
-        DESCRITION: '',
+        pro_id: '',
+        sku_cd: '',
+        brd_id: '',
+        man_id: '',
+        title: '',
+        upc: '',
+        ean: '',
+        model: '',
+        length: '',
+        width: '',
+        height: '',
+        weight: '',
+        price: '',
+        effective_start_date: '',
+        effective_end_date: '',
+        replenishment_period: '',
+        warranty_day: '',
+        time_unit: '',
+        warranty: '',
+        descrition: '',
         operationFlag: ''
       }
       this.dialogVisible = true

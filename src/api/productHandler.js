@@ -50,12 +50,12 @@ export function addAndupdateProduct(SKU_CD, BRD_ID, MAN_ID, TITLE, UPC, EAN, MOD
   })
 }
 
-export function deleteProduct(PRO_ID) {
+export function deleteProduct(pro_id) {
   return request({
     url: '/product/deleteProduct',
     method: 'post',
     data: {
-      PRO_ID
+      pro_id
     }
   })
 }
