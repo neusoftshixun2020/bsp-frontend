@@ -54,49 +54,49 @@
             <el-form ref="addFormData" :model="addFormData"  label-width="100px" class="">
               <el-row>
                 <el-col>
-                  <el-form-item label="SKU Code" label-width="160px">
+                  <el-form-item label="SKU Code" label-width="14%">
                     <el-input v-model="addFormData.product.sku_cd" type="text" autocomplete="off" clearable />
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col>
-                  <el-form-item label="Brand ID" label-width="160px">
+                  <el-form-item label="Brand ID" label-width="14%">
                     <el-input v-model="addFormData.product.brd_id" type="text" autocomplete="off" clearable />
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col>
-                  <el-form-item label="Manufacturer ID" label-width="160px">
+                  <el-form-item label="Manufacturer ID" label-width="14%">
                     <el-input v-model="addFormData.product.man_id" type="text" autocomplete="off" clearable />
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col>
-                  <el-form-item label="Title" label-width="160px">
+                  <el-form-item label="Title" label-width="14%">
                     <el-input v-model="addFormData.product.title" type="text" autocomplete="off" clearable />
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col>
-                  <el-form-item label="UPC Code" label-width="160px">
+                  <el-form-item label="UPC Code" label-width="14%">
                     <el-input v-model="addFormData.product.upc" type="text" autocomplete="off" clearable />
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col>
-                  <el-form-item label="ENA Code" label-width="160px">
+                  <el-form-item label="ENA Code" label-width="14%">
                     <el-input v-model="addFormData.product.ean" type="text" autocomplete="off" clearable />
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col>
-                  <el-form-item label="Model" label-width="160px">
+                  <el-form-item label="Model" label-width="14%">
                     <el-input v-model="addFormData.product.model" type="text" autocomplete="off" clearable />
                   </el-form-item>
                 </el-col>
@@ -104,30 +104,30 @@
               <el-row :gutter="2">
                 <el-col :span="6">
                   <div class="grid-content">
-                    <el-form-item label="Length(cm)" label-width="160px">
-                      <el-input v-model="addFormData.product.packageInfo.length" style="width:150px" type="text" autocomplete="off" clearable />
+                    <el-form-item label="Length(cm)" label-width="56%">
+                      <el-input v-model="addFormData.product.packageInfo.length" style="width:120%" type="text" autocomplete="off" clearable />
                     </el-form-item>
                   </div>
                 </el-col>
                 <el-col :span="6">
                   <div class="grid-content">
-                    <el-form-item label="Width(cm)" label-width="140px">
-                      <el-input v-model="addFormData.product.packageInfo.width" style="width:150px" type="text" autocomplete="off" clearable />
+                    <el-form-item label="Width(cm)" label-width="50%">
+                      <el-input v-model="addFormData.product.packageInfo.width" style="width:110%" type="text" autocomplete="off" clearable />
                     </el-form-item>
                   </div>
                 </el-col>
 
                 <el-col :span="6">
                   <div class="grid-content">
-                    <el-form-item label="Height(cm)" label-width="130px">
-                      <el-input v-model="addFormData.product.packageInfo.height" style="width:150px" type="text" autocomplete="off" clearable />
+                    <el-form-item label="Height(cm)" label-width="45%">
+                      <el-input v-model="addFormData.product.packageInfo.height" style="width:100%" type="text" autocomplete="off" clearable />
                     </el-form-item>
                   </div>
                 </el-col>
                 <el-col :span="6">
                   <div class="grid-content">
-                    <el-form-item label="Weight(kg)" label-width="130px">
-                      <el-input v-model="addFormData.product.packageInfo.weight" style="width:150px" type="text" autocomplete="off" clearable />
+                    <el-form-item label="Weight(kg)" label-width="40%">
+                      <el-input v-model="addFormData.product.packageInfo.weight" style="width:100%" type="text" autocomplete="off" clearable />
                     </el-form-item>
                   </div>
                 </el-col>
@@ -135,14 +135,14 @@
               <el-row :gutter="40">
                 <el-col :span="6">
                   <div class="grid-content">
-                    <el-form-item label="Retail Price" label-width="160px">
-                      <el-input v-model="addFormData.product.price.price" style="width: 150px" type="text" autocomplete="off" clearable />
+                    <el-form-item label="Retail Price" label-width="63%">
+                      <el-input v-model="addFormData.product.price.price" style="width: 155%" type="text" autocomplete="off" clearable />
                     </el-form-item>
                   </div>
                 </el-col>
                 <el-col :span="9">
                   <div class="grid-content">
-                    <el-form-item label="Effective Start Date" label-width="195px">
+                    <el-form-item label="Effective Start Date" label-width="49%">
                       <el-date-picker
                         v-model="addFormData.product.price.effective_start_date"
                         type="date"
@@ -153,7 +153,7 @@
                 </el-col>
                 <el-col :span="9">
                   <div class="grid-content">
-                    <el-form-item label="Effective End Date" label-width="180px">
+                    <el-form-item label="Effective End Date" label-width="45%">
                       <el-date-picker
                         v-model="addFormData.product.price.effective_end_date"
                         type="date"
@@ -165,7 +165,7 @@
               </el-row>
               <el-row>
                 <el-col>
-                  <el-form-item label="Replenishment Peroid" label-width="160px">
+                  <el-form-item label="Replenishment Peroid" label-width="14%">
                     <el-input v-model="addFormData.product.replenishment_period" type="text" autocomplete="off" clearable />
                   </el-form-item>
                 </el-col>
@@ -173,22 +173,22 @@
               <el-row :gutter="20">
                 <el-col :span="6">
                   <div class="grid-content">
-                    <el-form-item label="Warranty day" label-width="160px">
-                      <el-input v-model="addFormData.product.warranty_day" style="width: 150px" type="text" autocomplete="off" clearable />
+                    <el-form-item label="Warranty day" label-width="59%">
+                      <el-input v-model="addFormData.product.warranty_day" style="width: 138%" type="text" autocomplete="off" clearable />
                     </el-form-item>
                   </div>
                 </el-col>
                 <el-col :span="6">
                   <div class="grid-content">
-                    <el-form-item label="Time Unit" label-width="140px">
-                      <el-input v-model="addFormData.product.time_unit" style="width: 150px" type="text" autocomplete="off" clearable />
+                    <el-form-item label="Time Unit" label-width="51%">
+                      <el-input v-model="addFormData.product.time_unit" style="width: 125%" type="text" autocomplete="off" clearable />
                     </el-form-item>
                   </div>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col>
-                  <el-form-item label="Warranty Policy" label-width="160px">
+                  <el-form-item label="Warranty Policy" label-width="14%">
                     <el-input
                       v-model="addFormData.product.warranty"
                       type="textarea"
@@ -203,7 +203,7 @@
               </el-row>
               <el-row>
                 <el-col>
-                  <el-form-item label="Description" label-width="160px">
+                  <el-form-item label="Description" label-width="14%">
                     <el-input
                       v-model="addFormData.product.productDescription.description"
                       type="textarea"
@@ -217,13 +217,13 @@
                 </el-col>
               </el-row>
             </el-form>
-            <el-row :gutter="20">
-              <el-col :span="20">
+            <el-row :gutter="60">
+              <el-col :span="19">
                 <div class="grid-content" />
               </el-col>
               <el-col :span="2">
                 <div class="grid-content">
-                  <el-button
+                  <el-button style="width: 220%"
                     type="info"
                     @click.native="closeDialog"
                   >Close</el-button>
@@ -231,7 +231,7 @@
               </el-col>
               <el-col :span="2">
                 <div class="grid-content">
-                  <el-button type="primary" @click.native="addOrUpdateProduct">Submit</el-button>
+                  <el-button style="width: 220%" type="primary" @click.native="addOrUpdateProduct">Submit</el-button>
                 </div>
               </el-col>
             </el-row>

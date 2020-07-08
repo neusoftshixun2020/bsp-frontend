@@ -6,7 +6,7 @@
         <div class="store">
           <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="amazonStoreList"
                     :header-cell-style="{color: '#409EFF',fontSize:'18px',fontFamily:'Helvetica'}">
-            <el-table-column prop="STORE_NAME" label="Amazon"/>
+            <el-table-column prop="store_name" label="Amazon"/>
           </el-table>
           <el-row :gutter="20">
             <el-col :span="9"><div class="grid-content" /></el-col>
@@ -24,8 +24,9 @@
           </el-row>
         </div>
         <div class="store">
-          <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="ebayStoreList" :header-cell-style="{color: '#409EFF',fontSize:'18px',fontFamily:'Helvetica'}">
-            <el-table-column prop="STORE_NAME" label="eBay"/>
+          <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="ebayStoreList"
+                    :header-cell-style="{color: '#409EFF',fontSize:'18px',fontFamily:'Helvetica'}">
+            <el-table-column prop="store_name" label="eBay"/>
           </el-table>
           <el-row :gutter="20">
             <el-col :span="9"><div class="grid-content" /></el-col>
@@ -54,7 +55,7 @@
               <el-row>
                 <el-col>
                   <el-form-item label="Platform Type" label-width="160px">
-                    <el-select v-model="addFormData.PLATFORM_TYPE" placeholder="Select Platform" style="width: 300px">
+                    <el-select v-model="addFormData.platform_type" placeholder="Select Platform" style="width: 300px">
                       <el-option
                         v-for="item in options"
                         :key="item.value"
@@ -68,51 +69,51 @@
               <el-row>
                 <el-col>
                   <el-form-item label="Store Name" label-width="160px">
-                    <el-input v-model="addFormData.STORE_NAME" type="text" autocomplete="off" clearable style="width: 300px"/>
+                    <el-input v-model="addFormData.store_name" type="text" autocomplete="off" clearable style="width: 300px"/>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col>
                   <el-form-item label="Seller ID" label-width="160px">
-                    <el-input v-model="addFormData.DSR_ID" type="text" autocomplete="off" clearable style="width: 300px"/>
+                    <el-input v-model="addFormData.dsr_id" type="text" autocomplete="off" clearable style="width: 300px"/>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col>
                   <el-form-item label="Marketplace ID" label-width="160px">
-                    <el-input v-model="addFormData.GOA_ID" type="text" autocomplete="off" clearable style="width: 300px"/>
+                    <el-input v-model="addFormData.goa_id" type="text" autocomplete="off" clearable style="width: 300px"/>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col>
                   <el-form-item label="MWS Auth Token" label-width="160px">
-                    <el-input v-model="addFormData.TOKEN" type="text" autocomplete="off" clearable style="width: 300px"/>
+                    <el-input v-model="addFormData.token" type="text" autocomplete="off" clearable style="width: 300px"/>
                   </el-form-item>
                 </el-col>
               </el-row>
 
             </el-form>
-            <el-row :gutter="30">
-              <el-col :span="8">
+            <el-row :gutter="100">
+              <el-col :span="7">
                 <div class="grid-content" />
               </el-col>
               <el-col :span="4">
                 <div class="grid-content">
-                  <el-button style="width: 80px" type="info" @click.native="dialogVisible = false,
-                  addFormData = { PLATFORM_TYPE: '',
-                                  STORE_NAME: '',
-                                  DSR_ID: '',
-                                  GOA_ID: '',
-                                  TOKEN: ''
+                  <el-button style="width: 1230%" type="info" @click.native="dialogVisible = false,
+                  addFormData = { platform_type: '',
+                                  store_name: '',
+                                  dsr_id: '',
+                                  goa_id: '',
+                                  token: ''
                                   }">Close</el-button>
                 </div>
               </el-col>
               <el-col :span="4">
                 <div class="grid-content">
-                  <el-button style="width: 80px" type="primary" @click.native="addStore">Submit</el-button>
+                  <el-button style="width: 1230%" type="primary" @click.native="addStore">Submit</el-button>
                 </div>
               </el-col>
             </el-row>
@@ -140,11 +141,11 @@ export default {
         label: 'eBay'
       }],
       addFormData: {
-        PLATFORM_TYPE: '',
-        STORE_NAME: '',
-        DSR_ID: '',
-        GOA_ID: '',
-        TOKEN: ''
+        platform_type: '',
+        store_name: '',
+        dsr_id: '',
+        goa_id: '',
+        token: ''
       },
       storeRule: {
         STORE_NAME: [{
@@ -180,11 +181,11 @@ export default {
     },
     clickAdd(rowData){
       this.addFormData = {
-        PLATFORM_TYPE: '',
-        STORE_NAME: '',
-        DSR_ID: '',
-        GOA_ID: '',
-        TOKEN: ''
+        platform_type: '',
+        store_name: '',
+        dsr_id: '',
+        goa_id: '',
+        token: ''
       }
       this.dialogVisible = true
     },
