@@ -24,6 +24,7 @@
       </el-col>
     </el-row>
 
+<<<<<<< Updated upstream
     <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'16px'}" :data="productList" :header-cell-style="{background:'#eef1f6',color:'#606266',fontFamily:'Helvetica'}" style="width: 100%">
       <el-table-column prop="pro_id" sortable label="Product ID" />
       <el-table-column prop="sku_cd" label="SKU Code" />
@@ -31,6 +32,15 @@
       <el-table-column prop="model" label="Model" />
       <el-table-column prop="price" label="Price" />
       <el-table-column prop="stock" label="Stock" />
+=======
+    <el-table  id="product_table" :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'16px'}" :data="productList" :header-cell-style="{background:'#eef1f6',color:'#606266',fontFamily:'Helvetica'}" style="width: 100%">
+      <el-table-column prop="PRO_ID" sortable label="Product ID" />
+      <el-table-column prop="SKU_CD" label="SKU Code" />
+      <el-table-column prop="TITLE" label="Title" />
+      <el-table-column prop="MODEL" label="Model" />
+      <el-table-column prop="PRICE" label="Price" />
+      <el-table-column prop="STOCK" label="Stock" />
+>>>>>>> Stashed changes
 
       <el-table-column label="Operation">
         <template slot-scope = 'scope'>
