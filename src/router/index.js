@@ -548,10 +548,10 @@ export const asyncRoutes = [
         meta: { title: 'My Infomation' }
       },
       {
-        path: 'goodsStore',
-        component: () => import('@/views/bvo/bvo-store/bvo-myStore'),
-        name: 'goodsstore',
-        meta: { title: 'Goods Store' }
+        path: 'myStore',
+        component: () => import('@/views/bvo/bvo-store/component/bvo-myStore'),
+        name: 'mystore',
+        meta: { title: 'My Store' }
       },
       {
         path: 'export-merge-header',
@@ -580,7 +580,6 @@ export const asyncRoutes = [
       }
     ]
   }
-
 ]
 
 const createRouter = () => new Router({

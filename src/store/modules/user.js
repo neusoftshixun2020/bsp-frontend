@@ -6,6 +6,7 @@ const state = {
   role: '',
   username: '',
   response_status: '',
+  userid: '',
   token: ''
 }
 
@@ -23,6 +24,9 @@ const mutations = {
   },
   SET_ROLE: (state) => {
     state.role = state.token
+  },
+  SET_USERID: (state, user_id) => {
+    state.user_id = user_id
   }
 }
 
@@ -35,6 +39,7 @@ const actions = {
         const { data } = response
         console.log(data)
         commit('SET_TOKEN', data.role_id)
+        commit('SET_USERID', data.user_id)
         resolve()
       }).catch(error => {
         reject(error)
