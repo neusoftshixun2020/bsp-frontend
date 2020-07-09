@@ -34,6 +34,6 @@ export function deleteProduct(data) {
   return request({
     url: '/product/deleteProduct',
     method: 'post',
-    data
+    data: data
   })
 }

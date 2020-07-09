@@ -8,11 +8,11 @@ export function fetchList() {
   })
 }
 
-export function deleteRecord(PRC_ID) {
+export function deleteRecord(data) {
   return request({
-    url: '/productcategory/deleteRecord',
+    url: '/productCategory/deleteProductCategory',
     method: 'post',
-    params: PRC_ID
+    data
   })
 }
 
@@ -64,5 +64,23 @@ export function changeState(PRC_ID,state) {
       PRC_ID,
       state
     }
+  })
+}
+
+export function addAndUpdateProductCategory(data, operationFlag) {
+  return request({
+    url: '/productCategory/addOrUpdateProductCategory',
+    method: 'post',
+    data: data,
+    params: {
+      'operationFlag': operationFlag
+    }
+  })
+}
+
+export function getAllProductCategory() {
+  return request({
+    url: '/productCategory/getAllCategory',
+    method: 'post',
   })
 }

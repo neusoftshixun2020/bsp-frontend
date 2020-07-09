@@ -3,15 +3,15 @@
     <el-col :span = '20' class = 'toolbar'>
       <p v-text ='head'></p>
       <el-input type='text' v-model='sCondition' autocomplete='off' placeholder='please enter the product name' style='width:20%' ></el-input>
-      <el-button type = 'primary' size="small" @click="search(sCondition)">Search</el-button>
-      <el-button type = 'primary' size="small" @click = 'addBtn'>添加</el-button>
+      <el-button type = 'primary' size="small" @click="search">Search</el-button>
+      <el-button type = 'primary' size="small" @click="addBtn">添加</el-button>
     </el-col>
 
     <div class="ProductTable">
       <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        :data="list.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+        :data="filteredProductCategoryData"
         element-loading-text="Loading"
         fit
         border
@@ -20,34 +20,28 @@
       >
         <el-table-column type="selection" />
 
-        <el-table-column align="center" label="Product ID" >
-          <template slot-scope="scope" >
-            {{ scope.row.PRC_ID }}
-          </template>
-        </el-table-column>
-
-        <el-table-column align="center" label="Product Name" >
-          <template slot-scope="scope" >
-            {{ scope.row.TITLE }}
+        <el-table-column align="center" label="Product Name">
+          <template slot-scope="scope">
+            {{ scope.row.product.title }}
           </template>
         </el-table-column>
 
         <el-table-column  align="center" label="Category">
           <template slot-scope="scope">
-            {{ scope.row.CATEGORY_NAME }}
+            {{ scope.row.category_name }}
           </template>
         </el-table-column>
 
         <el-table-column align="center" label="image"  >
           <template slot-scope="scope">
-            <img :src="scope.row.image" width="30" height="30" >
+            <img :src="scope.row.img_url" width="80" height="80" >
           </template>
         </el-table-column>
 
         <el-table-column label="state"  align="center">
           <template slot-scope="scope">
             <el-tag>
-              {{ scope.row.state }}
+              {{ scope.row.product_status }}
             </el-tag>
           </template>
         </el-table-column>
@@ -57,11 +51,11 @@
             <el-button type = 'info' size="mini" @click="edit(scope.row)">edit</el-button>
             <el-button type = 'danger' size="mini" @click ='deleteRecord(scope.row,scope.$index)'>delete</el-button>
 
-            <el-button v-if="scope.row.state==='待入仓'" type = 'primary' size="mini" round @click="changeState(scope.row)">入仓</el-button>
+            <el-button v-if="scope.row.product_status==='待入仓'" type="primary" size="mini" round @click="changeState(scope.row)">入仓</el-button>
 
-            <el-button v-else-if="scope.row.state==='待上架'" type = 'primary' size="mini" round  @click="changeState(scope.row)">上架</el-button>
+            <el-button v-else-if="scope.row.product_status==='待上架'" type="primary" size="mini" round  @click="changeState(scope.row)">上架</el-button>
 
-            <el-button v-else-if="scope.row.state==='上架中'" type = 'primary' size="mini" round @click="changeState(scope.row)">下架</el-button>
+            <el-button v-else-if="scope.row.product_status==='已上架'" type="primary" size="mini" round @click="changeState(scope.row)">下架</el-button>
 
             <el-button v-else type = 'primary' size="mini" round :style="{ display: 'none' }"></el-button>
 
@@ -80,46 +74,49 @@
     </div>
 
     <!--添加信息弹窗-->
-    <el-dialog title='添加商品' :visible.sync = 'visible' width = '50%' :close-on-lick-modal = 'false'>
-      <el-form :model = 'ProductData'  ref = 'ProductData' label-width = '0px' class = ''>
+    <el-dialog title='Add Product Category' :visible.sync = 'visible' width = '50%' :close-on-lick-modal = 'false'>
+      <el-form :model='productCategoryFormData'  ref='productCategoryFormData' label-width='0px' class=''>
 
-        <el-form-item label="Product Title" label-width="130px"  prop='sid'>
+        <el-form-item label="product" label-width="130px" prop="sid">
           <el-col :span="8">
-            <el-input type='text' v-model='ProductData.TITLE'  autocomplete='off' placeholder='Title'>
+            <el-input type="text" v-model="productCategoryFormData.productCategory.product.title" autocomplete="off" placeholder="Product Name">
             </el-input>
           </el-col>
         </el-form-item>
 
-        <el-form-item label="Category" label-width="130px" >
-          <el-cascader
-            :options="options"
-            v-model='ProductData.CATEGORY_NAME'
-            @change="handleChange"></el-cascader>
-          <el-cascader
-            :options="options2"
-            v-model='ProductData.SECOND_CATEGORY'
-            @change="handleChange"></el-cascader>
+        <el-form-item label="category" label-width="130px"  prop='sid'>
+          <el-col :span="8">
+            <el-cascader
+              :options="options"
+              v-model='productCategoryFormData.productCategory.category_name'
+              ></el-cascader>
+          </el-col>
         </el-form-item>
 
-        <el-form-item label="Main Picture" label-width="130px" >
-          <el-input v-model="ProductData.image" v-if="false"></el-input>
+        <el-form-item label="platform type" label-width="130px"  prop='sid'>
+          <el-col :span="8">
+            <el-cascader
+            :options="platform_options"
+            v-model='productCategoryFormData.productCategory.plateform_type'
+            ></el-cascader>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="Main Pricture" label-width="130px">
           <el-upload
-            class="avatar-uploader"
-            ref="upload"
-            :show-file-list="false"
-            action="/index/upload"
-            :before-upload="beforeUpload"
-            :on-change="handleChange"
-            :auto-upload="false"
-            :data="ProductData">
-            <img v-if="ProductData.image" :src="ProductData.image" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            action="http://localhost:8088/image/uploadImage"
+            list-type="picture-card"
+            :on-preview="handlePictureCardPreview"
+            :on-success="handleUploadSuccess"
+            :on-remove="handleRemove">
+            <i class="el-icon-plus"></i>
           </el-upload>
+          <img height="100px" width="100px" :src="dialogImageUrl" alt="" style="float: left">
         </el-form-item>
 
       </el-form>
       <span slot = 'footer' class = 'dialog-footer'>
-          <el-button type = 'primary' size='small' @click="saveBtn">Save</el-button>
+        <el-button type = 'primary' size='small' @click="addProductCategory">Save</el-button>
         <el-button type = 'danger' size='small' @click.native = "visible = false, ProductData = {
                     TITLE:'',
                     CATEGORY_NAME:'',
@@ -137,12 +134,15 @@
     name: 'ProductCategory',
     data() {
       return {
-        list: [],
-       // listLoading: true,
+        resultList: [],
+        listLoading: false,
         downloadLoading: false,
         sCondition:'',
         head:'Product Name',
         operation:'',
+        img_id: '',
+        dialogImageUrl: '',
+        dialogVisible: false,
 
         total:0,//默认数据总数
         pagesize:7,//每页的数据条数
@@ -150,51 +150,52 @@
 
         visible: false,
 
-        ProductData:{
-          PRC_ID:'',
-          TITLE:'',
-          CATEGORY_NAME:'',
-          SECOND_CATEGORY:'',
-          state:'',
-          image:'',
-          width:'',
-          height:'',
-          imageName:'',
-          operationFlag:'add'
+        productCategoryFormData:{
+          productCategory: {
+            category_name: '',
+            plateform_type: '',
+            product_status: '',
+            img_url: '',
+            product: {
+              title: ''
+            }
+          },
+          operationFlag: 'add'
         },
 
-        options:[{
-          value:'electronic product',
-          label:'electronic product'},
+        options:[
+          {
+            value:'electronic product',
+            label:'electronic product'
+          },
           {
             value:'drinks',
-            label:'drinks'},
+            label:'drinks'
+          },
           {
             value:'food',
-            label:'food'},
+            label:'food'
+          },
           {
             value:'electric appliance',
             label:'electric appliance'
           }
         ],
         value2:'',
-        options2:[{
-          value:'electronic product',
-          label:'electronic product'},
+        platform_options:[{
+          value:'Ebay',
+          label:'Ebay'},
           {
-            value:'drinks',
-            label:'drinks'},
-          {
-            value:'food',
-            label:'food'}
+            value:'Amazon',
+            label:'Amazon'}
         ]
       }
     },
     created() {
-      this.fetchData()
+      this.loadData()
     },
     mounted() {
-      this.fetchData();
+      this.loadData()
     },
     methods: {
       current_change:function(currentPage){
@@ -202,63 +203,27 @@
       },
       loadData() {
         this.listLoading = true;
-        this.$store.dispatch('FetchList').then((result) => {
-          this.list = result.data;
-          this.total = this.list.length;
+        this.$store.dispatch('getAllProductCategory').then((result) => {
+          console.log(result)
+          this.resultList = result.data;
+          this.total = this.resultList.length;
           this.listLoading = false
         })
       },
       fetchData() {
-        this.$store.dispatch('FetchList').then((result) => {
-          this.list = result.data
-        })
+        // this.$store.dispatch('getProductCategory').then((result) => {
+        //   this.list = result.data
+        // })
+        this.loadData()
       },
-      addBtn() {
-        this.ProductData = {
-          PRC_ID: '',
-          TITLE: '',
-          CATEGORY_NAME: '',
-          SECOND_CATEGORY:'',
-          image: '',
-          operationFlag: 'add'
-        },
-          this.visible = true
-      },
-      saveBtn() {
-        if (this.ProductData.operationFlag === 'add') {
-          this.$store.dispatch('AddRecord',this.ProductData).then((result) => {
-            if(result.data){
-              this.fetchData()
-            }else{
-              this.$message({
-                type:'info',
-                message:'未查询到相关记录！'
-              })
-            }
-          })
-        } else {
-          this.$store.dispatch('UpdateRecord',this.ProductData).then((result) => {
-            if(result.code===200){
-              this.fetchData()
-            }else{
-              this.$message({
-                type:'info',
-                message:'更新失败！'
-              })
-            }
-          })
 
-        }
-        this.visible = false
-      },
       deleteRecord(row) {
         this.$confirm('确认删除该记录吗?', '提示', {
           type: 'warning'
         })
           .then(() => {
-            this.$store.dispatch('DeleteRecord',row.PRC_ID).then((result) => {
+            this.$store.dispatch('DeleteRecord',row).then((result) => {
               if(result.code===200){
-                console.log("result:"+result.data.data);
                 this.$message({
                   type: 'info',
                   message: '删除成功！'
@@ -277,10 +242,23 @@
       },
       changeState(row){
         //改变状态，传给后端商品ID和商品当前状态，后端进行判断，并在数据库进行相应的更新
-        const para = {'PRC_ID':row.PRC_ID,'state':row.state}
-        this.$store.dispatch('ChangeState',para).then((result) => {
+       if (row.product_status === '已上架')
+          this.productCategoryFormData.productCategory.product_status = '待入仓'
+       else if (row.product_status === '待上架')
+         this.productCategoryFormData.productCategory.product_status = '已上架'
+        else if (row.product_status === '待入仓')
+          this.productCategoryFormData.productCategory.product_status = '待上架'
+        console.log(row)
+        this.productCategoryFormData.operationFlag = "update"
+        this.productCategoryFormData.productCategory.category_name = row.category_name
+        this.productCategoryFormData.productCategory.plateform_type = row.plateform_type
+        this.productCategoryFormData.productCategory.img_url = row.img_url
+        this.productCategoryFormData.productCategory.prc_id = row.prc_id
+        this.productCategoryFormData.productCategory.pro_id = row.product.pro_id
+        this.productCategoryFormData.productCategory.product = row.product
+        this.$store.dispatch('addAndUpdateProductCategory', this.productCategoryFormData).then((result) => {
           if(result.code===200){
-            console.log("result:"+result.data.data);
+            console.log("result:"+result.code);
             this.$message({
               type: 'info',
               message: '操作成功！'
@@ -296,13 +274,15 @@
 
       },
       edit(rowData) {
-        this.ProductData = {
-          PRC_ID: rowData.PRC_ID,
-          TITLE: rowData.TITLE,
-          CATEGORY_NAME: rowData.CATEGORY_NAME,
-          image: rowData.image,
-          operationFlag: 'update'
-        },
+          this.productCategoryFormData.operationFlag = "update"
+          this.productCategoryFormData.productCategory.category_name = rowData.category_name
+          this.productCategoryFormData.productCategory.plateform_type = rowData.plateform_type
+          this.productCategoryFormData.productCategory.img_url = rowData.img_url
+          this.productCategoryFormData.productCategory.prc_id = rowData.prc_id
+          this.productCategoryFormData.productCategory.pro_id = rowData.product.pro_id
+          this.productCategoryFormData.productCategory.product = rowData.product
+          this.dialogImageUrl = rowData.img_url
+          this.dialogVisible = true
           this.visible = true
       },
       search() {
@@ -317,7 +297,64 @@
             })
           }
         })
-      }
+      },
+      handleRemove(file, fileList) {
+        // console.log(file, fileList);
+      },
+      handlePictureCardPreview(file) {
+        // console.log(file)
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+      },
+      handleUploadSuccess(result) {
+        // console.log(result)
+        if(result.code != 200){
+          this.$message({
+            type: 'error',
+            message: `upload failed`
+          })
+        }
+        this.dialogImageUrl = result.data.uri
+        this.img_id = result.data.img_id
+      },
+      resetForm() {
+        this.productCategoryFormData.productCategory.img_url = ''
+        this.productCategoryFormData.productCategory.product_status = ''
+        this.productCategoryFormData.productCategory.plateform_type = ''
+        this.productCategoryFormData.productCategory.category_name = ''
+      },
+
+      addBtn() {
+        this.resetForm()
+        this.productCategoryFormData.operationFlag = 'add'
+        this.visible = true
+      },
+
+      addProductCategory() {
+        this.productCategoryFormData.productCategory.img_url = this.dialogImageUrl
+        this.productCategoryFormData.productCategory.product_status = "待入仓"
+        console.log(this.productCategoryFormData.productCategory.plateform_type)
+        console.log(this.productCategoryFormData.productCategory.category_name)
+        if (Array.isArray(this.productCategoryFormData.productCategory.plateform_type))
+         this.productCategoryFormData.productCategory.plateform_type = this.productCategoryFormData.productCategory.plateform_type[0]
+        if (Array.isArray(this.productCategoryFormData.productCategory.category_name))
+         this.productCategoryFormData.productCategory.category_name = this.productCategoryFormData.productCategory.category_name[0]
+            this.$store.dispatch('addAndUpdateProductCategory', this.productCategoryFormData).then((result) => {
+              if (result.code == 200) {
+                this.$message({
+                  type: 'info',
+                  message: `Succeeded`
+                })
+              } else {
+                this.$message({
+                  type: 'info',
+                  message: `Failed`
+                })
+              }
+              this.visible = false
+              this.loadData()
+            })
+      },
       /**
        * 图片上传,有点问题
        * @param
@@ -339,6 +376,21 @@
       /* beforeUpload(file) {
          return true;
        }*/
+    },
+    computed: {
+      filteredProductCategoryData () {
+        const search = this.sCondition
+        return this.resultList.filter(data => {
+          return Object.keys(data).some(key => {
+            return (
+              String(data[key])
+                .toLowerCase()
+                .indexOf(search) > -1
+            )
+          })
+        })
+        // return this.tableDataDisease
+      }
     }
 
   }

@@ -22,8 +22,8 @@ const mutations = {
       state.token = 'MVO'
     }
   },
-  SET_ROLE: (state) => {
-    state.role = state.token
+  SET_ROLE: (state, role) => {
+    state.role = role
   },
   SET_USERID: (state, user_id) => {
     state.user_id = user_id
@@ -40,6 +40,7 @@ const actions = {
         console.log(data)
         commit('SET_TOKEN', data.role_id)
         commit('SET_USERID', data.user_id)
+        setToken(state.token)
         resolve()
       }).catch(error => {
         reject(error)
@@ -58,8 +59,6 @@ const actions = {
 
         // reset visited views and cached views
         // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
-        dispatch('tagsView/delAllViews', null, { root: true })
-
         resolve()
       }).catch(error => {
         reject(error)
