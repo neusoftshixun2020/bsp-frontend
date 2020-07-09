@@ -381,13 +381,23 @@
       filteredProductCategoryData () {
         const search = this.sCondition
         return this.resultList.filter(data => {
-          return Object.keys(data).some(key => {
+          const a =  Object.keys(data.product).some(key => {
             return (
-              String(data[key])
+              String(data.product[key])
                 .toLowerCase()
                 .indexOf(search) > -1
             )
           })
+          const b = Object.keys(data).some(key => {
+              return (
+                String(data[key])
+                  .toLowerCase()
+                  .indexOf(search) > -1
+              )
+            })
+          // console.log("a:", a)
+          // console.log("b:" ,b)
+          return (a || b)
         })
         // return this.tableDataDisease
       }
