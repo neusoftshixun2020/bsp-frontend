@@ -20,6 +20,12 @@
       >
         <el-table-column type="selection" />
 
+        <el-table-column align="center" label="Product Name">
+          <template slot-scope="scope">
+            {{ scope.row.product.title }}
+          </template>
+        </el-table-column>
+
         <el-table-column  align="center" label="Category">
           <template slot-scope="scope">
             {{ scope.row.category_name }}
@@ -40,14 +46,6 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="number"  align="center">
-          <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.pro_num }}
-            </el-tag>
-          </template>
-        </el-table-column>
-
         <el-table-column  align="center" width="250px"  label = 'Operations' >
           <template slot-scope="scope">
             <el-button type = 'info' size="mini" @click="edit(scope.row)">edit</el-button>
@@ -57,7 +55,7 @@
 
             <el-button v-else-if="scope.row.product_status==='待上架'" type="primary" size="mini" round  @click="changeState(scope.row)">上架</el-button>
 
-            <el-button v-else-if="scope.row.product_status==='上架中'" type="primary" size="mini" round @click="changeState(scope.row)">下架</el-button>
+            <el-button v-else-if="scope.row.product_status==='已上架'" type="primary" size="mini" round @click="changeState(scope.row)">下架</el-button>
 
             <el-button v-else type = 'primary' size="mini" round :style="{ display: 'none' }"></el-button>
 
@@ -79,17 +77,28 @@
     <el-dialog title='Add Product Category' :visible.sync = 'visible' width = '50%' :close-on-lick-modal = 'false'>
       <el-form :model='productCategoryFormData'  ref='productCategoryFormData' label-width='0px' class=''>
 
-        <el-form-item label="category name" label-width="130px"  prop='sid'>
+        <el-form-item label="product" label-width="130px" prop="sid">
           <el-col :span="8">
-            <el-input type='text' v-model='productCategoryFormData.productCategory.category_name'  autocomplete='off' placeholder='Category Name'>
+            <el-input type="text" v-model="productCategoryFormData.productCategory.product.title" autocomplete="off" placeholder="Product Name">
             </el-input>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="category" label-width="130px"  prop='sid'>
+          <el-col :span="8">
+            <el-cascader
+              :options="options"
+              v-model='productCategoryFormData.productCategory.category_name'
+              ></el-cascader>
           </el-col>
         </el-form-item>
 
         <el-form-item label="platform type" label-width="130px"  prop='sid'>
           <el-col :span="8">
-            <el-input type='text' v-model='productCategoryFormData.productCategory.plateform_type'  autocomplete='off' placeholder='Platform Type'>
-            </el-input>
+            <el-cascader
+            :options="platform_options"
+            v-model='productCategoryFormData.productCategory.plateform_type'
+            ></el-cascader>
           </el-col>
         </el-form-item>
 
@@ -146,7 +155,10 @@
             category_name: '',
             plateform_type: '',
             product_status: '',
-            img_url: ''
+            img_url: '',
+            product: {
+              title: ''
+            }
           },
           operationFlag: 'add'
         },
@@ -170,15 +182,12 @@
           }
         ],
         value2:'',
-        options2:[{
-          value:'electronic product',
-          label:'electronic product'},
+        platform_options:[{
+          value:'Ebay',
+          label:'Ebay'},
           {
-            value:'drinks',
-            label:'drinks'},
-          {
-            value:'food',
-            label:'food'}
+            value:'Amazon',
+            label:'Amazon'}
         ]
       }
     },
@@ -233,10 +242,10 @@
       },
       changeState(row){
         //改变状态，传给后端商品ID和商品当前状态，后端进行判断，并在数据库进行相应的更新
-       if (row.product_status === '上架中')
-          this.productCategoryFormData.productCategory.product_status = '已上架'
+       if (row.product_status === '已上架')
+          this.productCategoryFormData.productCategory.product_status = '待入仓'
        else if (row.product_status === '待上架')
-         this.productCategoryFormData.productCategory.product_status = '上架中'
+         this.productCategoryFormData.productCategory.product_status = '已上架'
         else if (row.product_status === '待入仓')
           this.productCategoryFormData.productCategory.product_status = '待上架'
         console.log(row)
@@ -245,6 +254,8 @@
         this.productCategoryFormData.productCategory.plateform_type = row.plateform_type
         this.productCategoryFormData.productCategory.img_url = row.img_url
         this.productCategoryFormData.productCategory.prc_id = row.prc_id
+        this.productCategoryFormData.productCategory.pro_id = row.product.pro_id
+        this.productCategoryFormData.productCategory.product = row.product
         this.$store.dispatch('addAndUpdateProductCategory', this.productCategoryFormData).then((result) => {
           if(result.code===200){
             console.log("result:"+result.code);
@@ -268,6 +279,8 @@
           this.productCategoryFormData.productCategory.plateform_type = rowData.plateform_type
           this.productCategoryFormData.productCategory.img_url = rowData.img_url
           this.productCategoryFormData.productCategory.prc_id = rowData.prc_id
+          this.productCategoryFormData.productCategory.pro_id = rowData.product.pro_id
+          this.productCategoryFormData.productCategory.product = rowData.product
           this.dialogImageUrl = rowData.img_url
           this.dialogVisible = true
           this.visible = true
@@ -320,6 +333,12 @@
       addProductCategory() {
         this.productCategoryFormData.productCategory.img_url = this.dialogImageUrl
         this.productCategoryFormData.productCategory.product_status = "待入仓"
+        console.log(this.productCategoryFormData.productCategory.plateform_type)
+        console.log(this.productCategoryFormData.productCategory.category_name)
+        if (Array.isArray(this.productCategoryFormData.productCategory.plateform_type))
+         this.productCategoryFormData.productCategory.plateform_type = this.productCategoryFormData.productCategory.plateform_type[0]
+        if (Array.isArray(this.productCategoryFormData.productCategory.category_name))
+         this.productCategoryFormData.productCategory.category_name = this.productCategoryFormData.productCategory.category_name[0]
             this.$store.dispatch('addAndUpdateProductCategory', this.productCategoryFormData).then((result) => {
               if (result.code == 200) {
                 this.$message({
