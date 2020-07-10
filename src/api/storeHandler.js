@@ -2,7 +2,7 @@ import request from '../utils/request'
 
 export function getAmazonStores() {
   return request({
-    url: '/store/getAmazonStores',
+    url: '/bvo/getAmazonStore',
     method: 'post',
     data: {
     }
@@ -11,7 +11,7 @@ export function getAmazonStores() {
 
 export function getEBayStores() {
   return request({
-    url: '/store/getEBayStores',
+    url: '/bvo/getEbayStore',
     method: 'post',
     data: {
     }
@@ -20,17 +20,11 @@ export function getEBayStores() {
 
 
 
-export function addStore(PLATFORM_TYPE, STORE_NAME, DSR_ID, GOA_ID, TOKEN) {
+export function addStore(sdata) {
   return request({
-    url: '/store/addStore',
+    url: '/bvo/addStore',
     method: 'post',
-    data: {
-      PLATFORM_TYPE,
-      STORE_NAME,
-      DSR_ID,
-      GOA_ID,
-      TOKEN
-    }
+    data: sdata
   })
 }
 

@@ -23,9 +23,9 @@ const product = {
         })
       })
     },
-    AddStore({ commit }, storeinfo) {
+    AddStore({ commit }, data) {
       return new Promise((resolve, reject) => {
-        addStore(storeinfo.PLATFORM_TYPE, storeinfo.STORE_NAME, storeinfo.DSR_ID, storeinfo.GOA_ID, storeinfo.TOKEN).then(response => {
+        addStore(data.store).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
