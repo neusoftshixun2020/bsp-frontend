@@ -7,7 +7,7 @@
           <el-col :span="6">
             <div class="grid-content">
               <span style="color:#606266">
-                <el-input v-model="scondition" autocomplete="off" style="width:315px" placeholder="Please enter your search condition" />
+                <el-input v-model="scondition" autocomplete="off" style="width:90%" placeholder="Please enter your search condition" />
               </span>
             </div>
           </el-col>
