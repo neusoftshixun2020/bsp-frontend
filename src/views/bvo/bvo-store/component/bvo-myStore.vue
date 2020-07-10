@@ -76,7 +76,7 @@
               <el-row>
                 <el-col>
                   <el-form-item label="Seller ID" label-width="160px">
-                    <el-input v-model="addFormData.store.dsr_dropshipper.dsr_id" type="text" autocomplete="off" clearable style="width: 300px"/>
+                    <el-input v-model="addFormData.store.dsr_id" type="text" autocomplete="off" clearable style="width: 300px"/>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -128,19 +128,17 @@ export default {
       ebayStoreList: [],
       dialogVisible: false,
       options: [{
-        value: 'Option 1',
+        value: '1',
         label: 'Amazon'
       }, {
-        value: 'Option 2',
+        value: '2',
         label: 'eBay'
       }],
       addFormData: {
         store:{
           plataeform_type: '',
           store_name: '',
-          dsr_dropshipper:{
-            dsr_id: ''
-          },
+          dsr_id: '',
           // goa_government_area:{
           //   goa_id: ''
           // },
@@ -177,9 +175,8 @@ export default {
         store:{
           plataeform_type: '',
           store_name: '',
-          dsr_dropshipper:{
-            dsr_id: ''
-          },
+          dsr_id: '',
+
           // goa_government_area:{
           //   goa_id: ''
           // },
@@ -193,13 +190,13 @@ export default {
     addStore() {
       this.$refs.addFormData.validate(valid => {
         if (valid) {
-          this.addFormData.store.dsr_dropshipper.dsr_id = parseInt(this.addFormData.store.dsr_dropshipper.dsr_id)
+          this.addFormData.store.dsr_id = parseInt(this.addFormData.store.dsr_id)
           // this.addFormData.store.goa_government_area.goa_id = parseInt(this.addFormData.store.goa_government_area.goa_id)
-
+          console.log('===================================')
           console.log(this.addFormData)
-
+          console.log('===================================')
           this.$store.dispatch('AddStore', this.addFormData).then((result) => {
-            if (result.data.data) {
+            if (result.code == 200) {
               this.$message({
                 type: 'info',
                 message: `Add Succeeded`
