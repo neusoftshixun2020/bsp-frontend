@@ -9,16 +9,6 @@ export function getProducts() {
   })
 }
 
-export function getProductsByTitle(TITLE) {
-  return request({
-    url: '/product/getProductsByTitle',
-    method: 'post',
-    data: {
-      TITLE
-    }
-  })
-}
-
 export function addAndupdateProduct(pdata, flag) {
   return request({
     url: '/product/addAndUpdateProduct',
