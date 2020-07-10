@@ -18,7 +18,8 @@ router.beforeEach(async(to, from, next) => {
   document.title = getPageTitle(to.meta.title)
 
   // determine whether the user has logged in
-  const hasToken = store.getters.token
+  const hasToken = getToken()
+  console.log(hasToken)
 
   if (hasToken) {
     if (to.path === '/login') {
@@ -35,7 +36,7 @@ router.beforeEach(async(to, from, next) => {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
 
-          const token = store.getters.token
+          const token = hasToken
           store.commit('user/SET_ROLE', token)
           const role = store.getters.role
 
