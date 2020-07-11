@@ -160,6 +160,8 @@ export default {
   },
   methods: {
     loadData() {
+      const userid = this.$store.getters.userid
+      console.log(userid)
       this.$store.dispatch('GetAmazonStores').then((result) => {
         this.amazonStoreList = result.data
         console.log(result.data)
@@ -233,6 +235,7 @@ export default {
         })
       })
     }
+
   }
 
 }

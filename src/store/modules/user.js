@@ -1,6 +1,8 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
+// import store from '../index'
+import store from './store'
 
 const state = {
   role: '',
@@ -25,8 +27,8 @@ const mutations = {
   SET_ROLE: (state, role) => {
     state.role = role
   },
-  SET_USERID: (state, user_id) => {
-    state.user_id = user_id
+  SET_USERID: (state, userid) => {
+    state.userid = userid
   }
 }
 
