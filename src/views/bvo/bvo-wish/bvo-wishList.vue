@@ -1,34 +1,47 @@
 <template>
-  <div style="width:90%;margin:0px auto">
-    <el-table :data="wishListData" width="100%">
+    <div class="app-container">
+<!--      <el-page-header @back="goBack" content="Wish List"></el-page-header>-->
+      <span style="color:#3CB371; font-weight: bold; font-size: 22px">WishList</span>
+      <div class="WishListTable">
+    <el-table :data="wishList" width="100%" :cell-style="cellStyle">
 
       <el-table-column type="selection" />
-
-      <el-table-column align="center" label="image" width="160" prop="image">
+      <el-table-column align="center"  width="160">
         <template slot-scope="scope">
-          <img :src="scope.row.image" width="100" height="100" @click="showDetail">
+          <img :src="scope.row.URI" width="150" height="150" @click="showDetail(scope.row)">
+
+<!--          <el-card class="box-card" width="100%" :body-style="{ padding: '0px' }">-->
+<!--            <img :src="scope.row.URI" width="200" height="200" @click="showDetail(scope.row)">-->
+<!--            <div class="right learfix">-->
+<!--              <time class="time">{{scope.row.TITLE}}</time>-->
+<!--              <el-button type="text" class="button">操作按钮</el-button>-->
+<!--            </div>-->
+<!--          </el-card>-->
+
         </template>
       </el-table-column>
 
-      <el-table-column
-        prop="productname"
-        label="Product Name"
-        show-overflow-tooltip
-      />
+      <el-table-column >
+        <template slot-scope="scope" >
+          <div class="title" >{{scope.row.TITLE}}</div>
 
-      <el-table-column
-        prop="price"
-        label="Price"
-        show-overflow-tooltip
-      />
+          <div class="price">{{'$'+scope.row.RETAIL_PRICE}}</div>
+          <div class="sku">{{'sku:'+scope.row.SKU_CD}}</div>
 
-      <el-table-column
-        prop="id"
-        label="sku"
-        show-overflow-tooltip
-      />
+<!--          <el-card class="box-card" width="70%">-->
+<!--            <div slot="header" class="clearfix">-->
+<!--              <span style="color:#66CDAA; font-weight: bold; font-size: 18px">{{scope.row.TITLE}}</span>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--              <div class="price">{{'$'+scope.row.RETAIL_PRICE}}</div>-->
+<!--              <div class="sku">{{'sku: '+scope.row.SKU_CD}}</div>-->
+<!--            </div>-->
+<!--          </el-card>-->
+        </template>
+      </el-table-column>
+
     </el-table>
-
+    </div>
   </div>
 
 </template>
@@ -38,6 +51,8 @@ export default {
   name: 'WishList',
   data() {
     return {
+      wishList:[],
+      head:'Wish List',
       wishListData: [{
         productname: 'Cola',
         price: '￥3',
@@ -52,16 +67,80 @@ export default {
       }]
     }
   },
+  created() {
+  this.loadData()
+  },
+  mounted() {
+  this.loadData();
+  },
   methods: {
-    showDetail(rowData) {
-      this.$router.push({
-        path: '/productDetail'
+    loadData(){
+      /**
+       * PRO_ID,TITLE,RETAIL_PRICE,SKU_CD
+       */
+      this.$store.dispatch('GetProductList').then((result) => {
+       // console.log("---------result.data-------")
+       // console.log(JSON.stringify(result.data))
+        this.wishList = result.data.items
       })
-    }
+    },
+    showDetail(rowData) {
+      console.log("传递PRO_ID:"+rowData.PRO_ID)
+      this.$router.push({
+        name: 'productDetail',
+        query: {
+          'PRO_ID': rowData.PRO_ID,
+           isAddBtn:false
+        }
+      })
+    },
+    cellStyle({columnIndex}){
+      if(columnIndex === 2){//指定列号
+        return 'float:left; margin-top:20px; margin-left: 160px;'
+      }else{
+        return ''
+      }
+    },
+
   }
 }
 </script>
 
 <style scoped>
+  .WishListTable {
+    margin-top: 0px;
+    margin-left: 200px;
+    margin-right: 100px;
+  }
+  .head{
+    margin-top: 0px;
+    font-size:25px;
+  }
+  .title{
+    font-weight: bold;
+    font-size:18px;
+<<<<<<< Updated upstream
+=======
+    //vertical-align: top;
+>>>>>>> Stashed changes
+    color:#66CDAA;
+    font-weight: bold;
+  }
+  .price{
+    color:#F56C6C;
+    font-size:16px;
+    margin-top:5px;
+  }
+  .sku{
+    font-size:16px;
+  }
+<<<<<<< Updated upstream
+ 
+=======
+  .box-card{
+
+  }
+>>>>>>> Stashed changes
 
 </style>
+

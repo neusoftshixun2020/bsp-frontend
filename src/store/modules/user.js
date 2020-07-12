@@ -25,8 +25,8 @@ const mutations = {
   SET_ROLE: (state, role) => {
     state.role = role
   },
-  SET_USERID: (state, user_id) => {
-    state.user_id = user_id
+  SET_USERID: (state, userid) => {
+    state.userid = userid
   }
 }
 

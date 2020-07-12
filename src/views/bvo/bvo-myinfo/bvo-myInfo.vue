@@ -13,8 +13,8 @@
     <el-main>
 
     <el-form ref="ruleForm" :model="ruleForm" status-icon :rules="rules" class="ruleForm">
-      <el-form-item label="User Name" prop="username" style="margin-left:400px;">
-      <el-input v-model="ruleForm.username" style="width:200px" />
+      <el-form-item label="User Name: " prop="username" style="margin-left:400px;">
+    
     </el-form-item>
     <el-form-item label="Name" prop="name" style="margin-left:434px;">
       <el-input v-model="ruleForm.name" style="width:200px" />
@@ -103,9 +103,11 @@ data() {
       })
     }
     ,
-    myshop() {
-      console.log("go to my store")
-    this.$router.push({path: '/bvo-myStore'})
+     myshop() {
+      this.$router.push({
+        name: 'mystore',
+        
+      })
     }
   }
 }

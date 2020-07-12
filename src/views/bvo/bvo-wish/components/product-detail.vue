@@ -40,6 +40,7 @@
           productname:'可乐',
           price:'￥3',
           sku: '2545464471',
+          img_id:'',
           image: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3450121606,1183124297&fm=26&gp=0.jpg',
           brand: '可乐公司',
           stock: 32,

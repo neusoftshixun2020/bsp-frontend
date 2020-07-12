@@ -8,15 +8,15 @@
     <div class="ProductTable">
       <el-table
         ref="multipleTable"
-        :data="companylist.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+        :data="companylist"
         element-loading-text="Loading"
         fit
         border
         highlight-current-row
         width="80%"
       >
-      <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
-        </el-table-column>
+      <!-- <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
+        </el-table-column> -->
         <el-table-column align="center" prop = 'name_cn' label = 'Company Name(CN)'>
         </el-table-column>
         <el-table-column align="center" prop = 'name_en' label = 'Company Name(EN)'>
@@ -31,12 +31,20 @@
          </template>
        </el-table-column>
       </el-table>
-        <el-pagination
-        small
-        layout="prev, pager, next"
-        :total="total"
-        @current-change="current_change">
-      </el-pagination>
+       <el-row :gutter="20">
+      <el-col :span="8"><div class="grid-content" /></el-col>
+      <el-col :span="8">
+        <div class="grid-content">
+          <div class="block">
+            <el-pagination
+              :page-size="20"
+              layout="total, prev, pager, next"
+              :total="1000"
+            />
+          </div>
+        </div></el-col>
+      <el-col :span="8"><div class="grid-content" /></el-col>
+    </el-row>
       <br>
       <el-button type="primary" @click="showAddInfo" plain icon="el-icon-plus" style="margin-left:10px">Add</el-button>
     </div>
@@ -48,7 +56,7 @@
     <div class="BrandTable">
       <el-table
         ref="multipleTable1"
-         :data="brandList.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+         :data="brandList"
         element-loading-text="Loading"
         fit
         border
@@ -56,8 +64,8 @@
         width="80%"
       >
         <el-table-column type="selection" />
-        <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
-        </el-table-column>
+        <!-- <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
+        </el-table-column> -->
          <el-table-column align="center" prop = 'name_en' label = 'Brand Name(EN)'>
         </el-table-column>
           <el-table-column align="center" label="image"  >
@@ -72,12 +80,20 @@
           </template>
         </el-table-column>
       </el-table>
-        <el-pagination
-        small
-        layout="prev, pager, next"
-        :total="total"
-        @current-change="current_change">
-      </el-pagination>
+        <el-row :gutter="20">
+      <el-col :span="8"><div class="grid-content" /></el-col>
+      <el-col :span="8">
+        <div class="grid-content">
+          <div class="block">
+            <el-pagination
+              :page-size="20"
+              layout="total, prev, pager, next"
+              :total="1000"
+            />
+          </div>
+        </div></el-col>
+      <el-col :span="8"><div class="grid-content" /></el-col>
+    </el-row>
     </div>
         <br>
       <el-button type="primary" @click="showaddBrand" plain icon="el-icon-plus" style="margin-left:90px">Add</el-button>
@@ -128,12 +144,12 @@
  <!--添加brand弹窗-->
     <el-dialog title='Add Brand' :visible.sync = 'dialogVisible1' width = '50%' :close-on-lick-modal = 'false'>
       <el-form :model = 'BrandData'  ref = 'BrandData' label-width = '0px' class = ''>
-         <el-form-item label="Company ID" label-width="130px"  prop='man_id'>
+         <!-- <el-form-item label="Company ID" label-width="130px"  prop='man_id'>
           <el-col :span="8">
             <el-input type='text' v-model='BrandData.man_id'  autocomplete='off' placeholder='Title'>
             </el-input>
           </el-col>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="Brand Name(EN)" label-width="130px"  prop='name_en'>
           <el-col :span="8">
             <el-input type='text' v-model='BrandData.name_en'  autocomplete='off' placeholder='Title'>
@@ -173,12 +189,12 @@
 <!--修改brand弹窗-->
     <el-dialog title='Edit Brand' :visible.sync = 'dialogVisible2' width = '50%' :close-on-lick-modal = 'false'>
       <el-form :model = 'BrandData'  ref = 'BrandData' label-width = '0px' class = ''>
-        <el-form-item label="Company ID" label-width="130px"  prop='man_id'>
+        <!-- <el-form-item label="Company ID" label-width="130px"  prop='man_id'>
           <el-col :span="8">
             <el-input type='text' v-model='BrandData.man_id'  autocomplete='off' placeholder='Title'>
             </el-input>
           </el-col>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="Brand Name(EN)" label-width="130px"  prop='name_en'>
           <el-col :span="8">
             <el-input type='text' v-model='BrandData.name_en'  autocomplete='off' placeholder='Title'>
@@ -233,10 +249,15 @@ export default {
       head:'Company Information',
       dialogImageUrl: '',
       img_id: '',
+<<<<<<< Updated upstream
       total:0,//默认数据总数
       pagesize:4,//每页的数据条数
       currentPage:1,//默认开始页面
+     
 
+=======
+     
+>>>>>>> Stashed changes
       ProductData:{
           man_id:'',
           name_cn:'',
@@ -258,28 +279,23 @@ export default {
     this.loadData()
   },
   methods: {
-  //   uploadImage:{
-
-  //   },
-  // chooseImage:{
-
-  // },
+<<<<<<< Updated upstream
    current_change:function(currentPage){
         this.currentPage = currentPage;
       },
+    loadData () {    
+       this.$store.dispatch('GetManByFilter',this.ProductData.man_id).then((result) => {
+=======
+  
     loadData () {
       this.$store.dispatch('GetManByFilter',this.ProductData.man_id).then((result) => {
         // console.log("result.data-----companylist")
         // console.log(result.data)
+>>>>>>> Stashed changes
          console.log("result.data.list-----companylist")
         this.companylist = result.data.list
-        // console.log(result.data.list)
       })
-      this.$store.dispatch('GetBrandByFilter',this.ProductData.man_id).then((result) => {
-        // console.log("result.data-----brandList")
-        // console.log(result.data)
-        // console.log("result.data.list-----brandList")
-        // console.log(result.data.list)
+       this.$store.dispatch('GetBrandByFilter',this.ProductData.man_id).then((result) => {
         this.brandList = result.data
         console.log("branddata", this.brandList)
       })
@@ -325,6 +341,13 @@ export default {
     addBrand(){
     this.$refs.BrandData.validate(valid => {
         if(valid) {
+        // this.ProductData.man_id = parseInt(this.ProductData.man_id)
+        // this.BrandData.man_id= parseInt(this.BrandData.man_id)
+        // this.BrandData.brd_id = parseInt(this.BrandData.brd_id )
+        // console.log( ' this.ProductData.man_id:'+this.ProductData.man_id)
+        // console.log( ' this.BrandData.man_id:'+this.BrandData.man_id)
+        // console.log( ' this.BrandData.brd_id:'+this.BrandData.brd_id)
+        // console.log("userid: "+userid)
           // console.log('valid');
           this.BrandData.img_url = this.dialogImageUrl
           this.$store.dispatch('AddBrand',this.BrandData).then((result) => {
