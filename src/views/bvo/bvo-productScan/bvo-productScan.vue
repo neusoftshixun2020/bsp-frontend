@@ -13,7 +13,7 @@
     <div style="height:300px;width:300px" >
        <img :src="products.img_url" class="image"  @click="showDetail(products)">
       <div class="category">{{products.category_name}}</div>
-       <div class="category">{{products.product.retail_price}}</div>
+       <div class="category">{{products.product_status}}</div>
     </div>
   </el-card>
    <br>

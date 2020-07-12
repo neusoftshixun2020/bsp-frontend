@@ -156,7 +156,6 @@
             </el-input>
           </el-col>
         </el-form-item>
-
          <el-form-item label-width="130px" >
          <div class="divcss5">Recommended image size 160*80 JPG/PNG format</div>
         </el-form-item>
@@ -249,15 +248,11 @@ export default {
       head:'Company Information',
       dialogImageUrl: '',
       img_id: '',
-<<<<<<< Updated upstream
       total:0,//默认数据总数
       pagesize:4,//每页的数据条数
       currentPage:1,//默认开始页面
      
 
-=======
-     
->>>>>>> Stashed changes
       ProductData:{
           man_id:'',
           name_cn:'',
@@ -279,19 +274,11 @@ export default {
     this.loadData()
   },
   methods: {
-<<<<<<< Updated upstream
    current_change:function(currentPage){
         this.currentPage = currentPage;
       },
     loadData () {    
        this.$store.dispatch('GetManByFilter',this.ProductData.man_id).then((result) => {
-=======
-  
-    loadData () {
-      this.$store.dispatch('GetManByFilter',this.ProductData.man_id).then((result) => {
-        // console.log("result.data-----companylist")
-        // console.log(result.data)
->>>>>>> Stashed changes
          console.log("result.data.list-----companylist")
         this.companylist = result.data.list
       })
