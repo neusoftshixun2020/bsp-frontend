@@ -7,20 +7,12 @@ const state = {
   username: '',
   response_status: '',
   userid: '',
-  token: ''
+  token: getToken()
 }
 
 const mutations = {
-  SET_TOKEN: (state, role_id) => {
-    if (role_id == 0) {
-      state.token = 'Super Admin'
-    } else if (role_id == 1) {
-      state.token = 'GVO'
-    } else if (role_id == 2) {
-      state.token = 'BVO'
-    } else if (role_id == 3) {
-      state.token = 'MVO'
-    }
+  SET_TOKEN: (state, token) => {
+    state.token = token
   },
   SET_ROLE: (state, role) => {
     state.role = role
@@ -36,10 +28,12 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        console.log(data)
-        commit('SET_TOKEN', data.role_id)
-        commit('SET_USERID', data.user_id)
+        const { token, data } = response
+        // console.log("++++++++token+++++++++"+token)
+        // console.log(data)
+        commit('SET_TOKEN', token)
+        // console.log("++++++++role+++++++++"+state.role)
+        // console.log("++++++++user_id+++++++++"+state.user_id)
         setToken(state.token)
         resolve()
       }).catch(error => {
@@ -47,6 +41,21 @@ const actions = {
       })
     })
   },
+
+  getInfo({ commit }, token) {
+    return new Promise((resolve, reject) => {
+      getInfo(token).then(response => {
+        // console.log("++++response+++++", response)
+        const { data } = response
+        commit('SET_ROLE', data.role)
+        commit('SET_USERID', data.user_id)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
 
   // user logout
   logout({ commit, state, dispatch }) {
