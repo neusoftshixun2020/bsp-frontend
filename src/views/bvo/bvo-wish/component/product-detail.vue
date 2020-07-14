@@ -2,31 +2,31 @@
   <div id="wishListDetailContainer">
     <div style="overflow: hidden; width: 100%">
       <span style="width: 420px; float: left">
-        <img :src="productDetail[0].URI" style="width: 380px; height: 380px">
+        <img :src="productDetail[0].productCategory.img_url" style="width: 380px; height: 380px">
       </span>
       <!--      <span style="width: 200px; float: left">-->
       <div class="info">
-        <div class="productproperty" style="font-weight: 700; font-size: 22px;">{{ productDetail[0].TITLE }}</div>
-        <div class="productproperty" style="color: red">{{'$'+productDetail[0].RETAIL_PRICE }}</div>
-        <div class="productproperty">sku:  {{ productDetail[0].SKU_CD }}</div>
-        <div class="productproperty">brand: {{ productDetail[0].NAME_EN }}</div>
-        <div class="productproperty">Stock: {{ productDetail[0].STOCK }}</div>
+        <div class="productproperty" style="font-weight: 700; font-size: 22px;color: #66CDAA">{{ productDetail[0].title }}</div>
+        <div class="productproperty" style="color:#F56C6C">{{'Price: $'+productDetail[0].price.price }}</div>
+        <div class="productproperty" style="color:#808080">SKU:  {{ productDetail[0].sku_cd }}</div>
+        <div class="productproperty" style="color:#808080">Brand: {{ productDetail[0].brand.name_en }}</div>
+        <div class="productproperty" style="color:#808080">Stock: {{ productDetail[0].stock }}</div>
 
         <div style="margin-top: 20px">
-          <el-row style="width: 1000px">
-            <el-button type="primary" size="mini" class="productproperty" @click="dropShip()">Dropship Now</el-button>
-            <el-button v-if="this.isAddBtn===true" type="primary" size="mini" class="productproperty" >Add to Wish List</el-button>
-            <el-button v-else type="primary" size="mini" class="productproperty" >Add to Wish List</el-button>
+          <el-row style="width: 1000px;">
+            <el-button type="success" size="mini" class="productproperty" @click="dropShip()"  round>Dropship Now</el-button>
+            <el-button v-if="this.isAddBtn===true" icon="el-icon-star-on" type="success" size="mini" class="productproperty"  round >Add to Wish List</el-button>
+            <el-button v-else type="success" icon="el-icon-s-goods" size="mini" class="productproperty" @click="addToWishlist()"  round plain>Add to Wish List</el-button>
           </el-row>
         </div>
       </div>
-      <!--      </span>-->
+
     </div>
     <div>
       <div class="wishlistTitle">Item Description</div>
       <el-tabs v-model="activeName" type="border-card" style="font-size: 20px; width: 800px">
-        <el-tab-pane label="ebay description" name="first"><div class="productproperty">{{ productDetail[0].ebayDescription }}</div></el-tab-pane>
-        <el-tab-pane label="Amazon description" name="second"><div class="productproperty">{{ productDetail[0].amazonDescription }}</div></el-tab-pane>
+        <el-tab-pane label="ebay description" name="first"><div class="productproperty">{{ productDetail[0].productDescription.description }}</div></el-tab-pane>
+        <el-tab-pane label="Amazon description" name="second"><div class="productproperty">{{ productDetail[0].productDescription.description }}</div></el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -38,9 +38,13 @@ export default {
   data() {
     return {
       productDetail:[],
-      PRO_ID:'',
+      title:'',
       isAddBtn:true,
-      activeName: 'first'
+      activeName: 'first',
+      wishlistData:{
+        dsr_id:'12',
+        pro_id:'',
+      }
     }
   },
   created:function(){
@@ -51,14 +55,12 @@ export default {
     this.loadProductDetailByPRO_ID();
   },
   watch:{
-      // 监测路由变化,只要变化了就调用获取路由参数方法将数据存储本组件即可
       '$route': 'getParams'
     },
   methods:{
     getParams(){
-      var routerParams = this.$route.query.PRO_ID
-      this.PRO_ID = routerParams
-      this.isAddBtn = this.$route.query.isAddBtn
+      var routerParams = this.$route.query.pro_id
+      this.wishlistData.pro_id = routerParams
     },
     loadProductDetailByPRO_ID(){
       /**
@@ -70,22 +72,42 @@ export default {
        * ebayDescription & amazonDescription
        */
     //  this.isAddBtn = this.$route.query.isAddBtn;
-      this.PRO_ID = this.$route.query.PRO_ID,
-      console.log("收到的PRO_ID:"+this.PRO_ID);
-      this.$store.dispatch('LoadProductDetailByPRO_ID',this.PRO_ID).then((result) => {
+      this.title = this.$route.query.title,
+      console.log("收到的title:"+this.title);
+      this.$store.dispatch('LoadProductDetailByPRO_ID',this.title).then((result) => {
         console.log("---------Detail: result-------");
         console.log(JSON.stringify(result));
         console.log("---------Detail: result.data-------");
         console.log(JSON.stringify(result.data));
-        console.log("---------Detail: result.data.items-------");
-        console.log(JSON.stringify(result.data.items));
-        this.productDetail = result.data.items
+        console.log("---------Detail: result.data.list-------");
+        console.log(JSON.stringify(result.data.list));
+        this.productDetail = result.data.list;
       })
     },
     dropShip(){
       console.log("dripship")
+      console.log("传给storechoose的pro_id："+this.wishlistData.pro_id);
       this.$router.push({
-        path: 'storechoose',
+        name: 'storechoose',
+        query: {
+           pro_id: this.wishlistData.pro_id,
+           dsr_id: '12',
+        }
+      })
+    },
+    addToWishList(){
+      this.$store.dispatch('AddToWishList',this.wishlistData).then((result) => {
+        if(result.code===200){
+          this.$message({
+            type: 'info',
+            message: 'Add Succeed！'
+          })
+        }else{
+          this.$message({
+            type:'info',
+            message:'Add Failed！'
+          })
+        }
       })
     }
   }
@@ -102,7 +124,8 @@ export default {
     margin-top: 25px;
     margin-right: 10px;
     margin-left: 10px;
-    font-size: 18px;
+    font-size: 14px;
+
   }
 
   .wishlistTitle {

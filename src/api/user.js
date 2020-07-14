@@ -16,13 +16,6 @@ export function login(data) {
   })
 }
 
-// export function getInfo(token) {
-//   return request({
-//     url: '/vue-element-admin/user/info',
-//     method: 'get',
-//     params: { token }
-//   })
-// }
 
 export function getInfo(token) {
   return request({
@@ -39,18 +32,21 @@ export function logout() {
   })
 }
 
-// export function logout() {
-//   return request({
-//     url: 'user/logout',
-//     method: 'post'
-//   })
-// }
 
 export function fetchList(query) {
   return request({
     url: 'user/userlist',
-    method: 'get',
+    method: 'post',
     params: query
+  })
+}
+
+export function fetchUser(data) {
+  return request({
+    url: 'user/userlist',
+    method: 'post',
+    data
+
   })
 }
 export function updateUser(data) {

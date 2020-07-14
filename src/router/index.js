@@ -142,28 +142,6 @@ export const constantRoutes = [
     hidden: false
   },*/
   {
-    path: '/wishlist',
-    component: Layout,
-    // hidden: true,
-    children: [{
-      path: 'list',
-      component: () => import('@/views/bsp/wishList'),
-      name: 'wishlist',
-      meta: { title: 'Wishlist', icon: 'list' }
-    }]
-  },
-  {
-    path: '/productDetail',
-    component: Layout,
-    hidden: true,
-    children: [{
-      path: '',
-      component: () => import('@/views/bsp/components/product-detail'),
-      name: 'productDetail',
-      meta: { title: 'Product Details', icon: 'list' }
-    }]
-  },
-  {
     path: '/mywallet',
     component: Layout,
     children: [{
@@ -519,9 +497,9 @@ export const asyncRoutes = [
         meta: { title: 'Product Category' }
       },
       {
-        path: 'upload-excel1',
-        component: () => import('@/views/excel/upload-excel'),
-        name: 'ordermanagement',
+        path: 'myorder',
+        component: () => import('@/views/mvo/mvo-order'),
+        name: 'MVOOrderManagement',
         meta: { title: 'Order Management' }
       },
       {
@@ -565,6 +543,22 @@ export const asyncRoutes = [
         name: 'wishlist',
         meta: { title: 'Wishlist' }
         // meta: { title: 'Wishlist', icon: 'list' }
+      },
+      {
+        path: 'productDetail',
+        component: () => import('@/views/bvo/bvo-wish/component/product-detail'),
+        name: 'productDetail',
+        hidden:true,
+        meta: { title: 'productDetail' }
+        // meta: { title: 'Wishlist', icon: 'list' }
+      },
+      {
+        path: 'storechoose',
+        component: () => import('@/views/bvo/bvo-wish/storechoose'),
+        name: 'storechoose',
+        hidden:true,
+        meta: { title: 'storeChoose' }
+        // meta: { title: 'storeChoose', icon: 'list' }
       },
       {
         path: 'upload-excel1',

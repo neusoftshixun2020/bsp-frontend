@@ -31,35 +31,13 @@
       <el-button type="info" @click="myshop">My Stores</el-button>
     </el-form-item>
   </el-form>
-      <!-- <el-main class="inputName">
-        <div style="margin-bottom: 40px">Username</div>
-        <div>
-          <label class="green" value="11">Name:</label>
-          <input type="text" value="Lucy">
-        </div>
-        <br>
-        <br>
-        <div>
-          <label class="green">Email:</label>
-          <input type="text" value="97656444@123.com">
-        </div>
-        <br>
-        <br>
-        <div>
-          <label class="green">Phone:</label>
-          <input type="text" value="1376533621">
-        </div>
-        <br>
-        <br>
-        <el-button type="info" @click="save()">save</el-button>
-        <el-button type="info" @lick="myshop()">My Stores</el-button> -->
       </el-main>
     
   </el-container>
 </template>
 
 <script>
-import {updateUser} from "@/api/user"
+import {updateUser,fetchList} from "@/api/user"
 export default {
 data() {
     return {
@@ -71,11 +49,18 @@ data() {
       }
     }   
  },
-//  mounted: function () {
-//     this.loadData()
-//   },
+ mounted: function () {
+    this.loadData()
+  },
   methods: {
-     
+      loadData() {
+      const userid=this.$store.getters.userid
+      console.log('userid:'+userid)
+       fetchList(userid).then((result) => {
+        console.log("ruleForm:"+result.data)
+        this.ruleForm = result.data
+      })
+    },
        submitForm(){
        this.$refs.ruleForm.validate(valid => {
         if(valid) {

@@ -10,11 +10,13 @@
                 <span style="color:#66CDAA; font-weight: bold; font-size: 18px">eBay</span>
               </div>
               <div>
-                <el-table :data="ebayStoreList.slice((currentPage-1)*pagesize,currentPage*pagesize)" width="100%" >
+                <el-table :data="ebayStoreList.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+                          @selection-change="handleEbaySelectionChange"
+                          width="100%" >
                   <el-table-column type="selection"/>
                   <el-table-column label="Store Name">
                     <template slot-scope="scope">
-                      <div class="storename" >{{scope.row.STORE_NAME}}</div>
+                      <div class="storename" >{{scope.row.store_name}}</div>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -34,11 +36,13 @@
                 <span style="color:#66CDAA; font-weight: bold; font-size: 18px">Amazon</span>
               </div>
               <div>
-                <el-table :data="amazonStoreList.slice((currentPage-1)*pagesize,currentPage*pagesize)" width="50%" :cell-style="cellStyle">
+                <el-table :data="amazonStoreList.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+                          @selection-change="handleAmazonSelectionChange"
+                          width="50%">
                   <el-table-column type="selection" />
                   <el-table-column label="Store Name">
                     <template slot-scope="scope" >
-                      <div class="storename" >{{scope.row.STORE_NAME}}</div>
+                      <div class="storename" >{{scope.row.store_name}}</div>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -54,7 +58,7 @@
           </el-col>
         </el-row>
         <div class="btn">
-        <el-button type = 'success' size="small" @click = 'push' round>Push</el-button>
+        <el-button type = 'success' size="small" @click = 'handelPushBtn' round>Push</el-button>
         </div>
       </div>
 
@@ -67,52 +71,81 @@
       return{
         ebayStoreList:[],
         amazonStoreList:[],
+        selectedEbayStores:[],
+        selectedAmazonStores:[],
+
         //分页
         enbaytotal:0,//默认数据总数
         amazontotal:0,
         pagesize:5,//每页的数据条数
         currentPage:1,//默认开始页面
+        pro_id:'',
+        str_id:'',
+        dropship_price:'',
+        ebaystore:{
+          dsr_id:'',
+          platform_type:'1',
+        },
+        amazonstore:{
+          dsr_id:'',
+          platform_type:'2',
+        },
+        sdi_ebay:[],
+        sdi_amazon:[],
       }
     },
-    mounted(){
+    created:function(){
+      this.getParams();
       this.getEbayStoreList();
       this.getAmazonStoreList();
     },
+   mounted(){
+      this.getEbayStoreList();
+      this.getAmazonStoreList();
+    },
+    watch:{
+      '$route': 'getParams'
+    },
     methods: {
+      getParams(){
+        console.log("---------Storechoose的getParams----------");
+        var routerParams = this.$route.query.pro_id;
+        this.pro_id = routerParams;
+        this.ebaystore.dsr_id = parseInt(this.$route.query.dsr_id);
+        this.amazonstore.dsr_id = parseInt(this.$route.query.dsr_id);
+        //this.dropshipItem.pro_id = parseInt(this.$route.query.pro_id);
+      },
+      handleEbaySelectionChange(val) {
+        console.log("handleEbaySelectionChange--",val);
+        this.selectedEbayStores = val
+      },
+      handleAmazonSelectionChange(val) {
+        console.log("handleAmazonSelectionChange--",val);
+        this.selectedAmazonStores = val
+      },
       current_change:function(currentPage){
         this.currentPage = currentPage;
       },
       getEbayStoreList(){
-        this.$store.dispatch('GetEbayStoreList').then((result) => {
-           console.log("---------result.data-------");
+        this.$store.dispatch('GetEbayStoreList',this.ebaystore).then((result) => {
+           console.log("---------ebay---result.data-------");
            console.log(JSON.stringify(result.data));
-           console.log("---------result.data.items-------");
-           console.log(JSON.stringify(result.data.items));
-           this.ebayStoreList = result.data.items;
-
-            this.enbaytotal = this.ebayStoreList.length;
-           for(let i=0;i<this.ebayStoreList.length;i++){
-             console.log("ebayStore_Name:"+this.ebayStoreList[i].STORE_NAME);
-           }
+           this.ebayStoreList = result.data;
+           this.enbaytotal = this.ebayStoreList.length;
         })
       },
       getAmazonStoreList(){
-        this.$store.dispatch('GetAmazonStoreList').then((result) => {
-          // console.log("---------result.data-------")
-          // console.log(JSON.stringify(result.data))
+        this.$store.dispatch('GetAmazonStoreList',this.amazonstore).then((result) => {
           console.log("---------amazon-result.data-------");
           console.log(JSON.stringify(result.data));
-          console.log("---------amazon-result.data.items-------");
-          console.log(JSON.stringify(result.data.items));
-          this.amazonStoreList = result.data.items
+          this.amazonStoreList = result.data
         })
       },
-      push(){
-        this.$confirm('Are you sure to push these products?', '提示', {
-          type: 'warning'
-        })
-          .then(() => {
-            this.$store.dispatch('Push',row.PRC_ID).then((result) => {
+      pushEbayStores(){
+        console.log("进入PushEbay");
+            console.log("sdi_ebay:"+JSON.stringify(this.sdi_ebay));
+            this.$store.dispatch('PushEbayStores',this.sdi_ebay).then((result) => {
+              console.log("result.code:"+result.code);
               if(result.code===200){
                 this.$message({
                   type: 'info',
@@ -124,11 +157,48 @@
                   message:'Push Failed！'
                 })
               }
-              this.fetchData()
             })
-          })
-          .catch(() => {
-          })
+      },
+      pushAmazonStores(){
+            console.log("amazon_ebay:"+JSON.stringify(this.sdi_amazon));
+            this.$store.dispatch('PushAmazonStores',this.sdi_amazon).then((result) => {
+              if(result.code===200){
+                console.log("result:"+result.data.data);
+                this.$message({
+                  type: 'info',
+                  message: 'Push Succeed！'
+                })
+              }else{
+                this.$message({
+                  type:'info',
+                  message:'Push Failed！'
+                })
+              }
+            })
+      },
+      handelPushBtn(){
+        this.$confirm('Are you sure to push these products?', '提示', {
+          type: 'warning'
+        }).then(() => {
+          for(let i=0;i<this.selectedEbayStores.length;i++){
+            const item = {
+              str_id:parseInt(this.selectedEbayStores[i].str_id),
+              pro_id:parseInt(this.pro_id)
+            }
+            console.log("ebay_dropshipItem: "+item.str_id+","+item.pro_id);
+            this.sdi_ebay.push(item);
+          }
+          for(let i=0;i<this.selectedAmazonStores.length;i++){
+            const item = {
+              str_id:parseInt(this.selectedAmazonStores[i].str_id),
+              pro_id:parseInt(this.pro_id)
+            }
+            console.log("amazon_dropshipItem: "+item.str_id+","+item.pro_id);
+            this.sdi_amazon.push(item);
+          }
+        this.pushEbayStores();
+        this.pushAmazonStores();
+        })
       }
 
     }
@@ -136,6 +206,7 @@
 </script>
 
 <style>
+
   .el-main {
     padding-bottom: 0;
     font-family: "Open Sans";
