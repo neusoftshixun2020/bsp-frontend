@@ -126,6 +126,7 @@ export default {
     return {
       amazonStoreList: [],
       ebayStoreList: [],
+      dsrid:'',
       dialogVisible: false,
       options: [{
         value: '1',
@@ -162,6 +163,7 @@ export default {
     loadData() {
       const userid = this.$store.getters.userid
       console.log(userid)
+      this.
       this.$store.dispatch('GetAmazonStores').then((result) => {
         this.amazonStoreList = result.data
         console.log(result.data)
