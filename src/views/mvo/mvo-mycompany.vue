@@ -15,8 +15,8 @@
         highlight-current-row
         width="80%"
       >
-      <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
-        </el-table-column>
+      <!-- <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
+        </el-table-column> -->
         <el-table-column align="center" prop = 'name_cn' label = 'Company Name(CN)'>
         </el-table-column>
         <el-table-column align="center" prop = 'name_en' label = 'Company Name(EN)'>
@@ -27,12 +27,26 @@
         </el-table-column>
          <el-table-column align="center"  label = 'Operations'>
          <template slot-scope = 'scope'>
-           <el-button type = 'primary' size="small" @click = 'EditCompany(scope.row)'>Modify</el-button>
+           <el-button type = 'primary' size="small" icon="el-icon-edit" @click = 'EditCompany(scope.row)'>Modify</el-button>
          </template>
        </el-table-column>
       </el-table>
+       <el-row :gutter="20">
+      <el-col :span="8"><div class="grid-content" /></el-col>
+      <el-col :span="8">
+        <div class="grid-content">
+          <div class="block">
+            <el-pagination
+              :page-size="20"
+              layout="total, prev, pager, next"
+              :total="1000"
+            />
+          </div>
+        </div></el-col>
+      <el-col :span="8"><div class="grid-content" /></el-col>
+    </el-row>
       <br>
-      <el-button type="primary" @click="showAddInfo" style="margin-left:10px">Add</el-button>
+      <el-button type="primary" @click="showAddInfo" plain icon="el-icon-plus" style="margin-left:10px">Add</el-button>
     </div>
 
 <!--品牌信息-->
@@ -42,7 +56,7 @@
     <div class="BrandTable">
       <el-table
         ref="multipleTable1"
-        :data="brandList"
+         :data="brandList"
         element-loading-text="Loading"
         fit
         border
@@ -61,14 +75,28 @@
         </el-table-column>
            <el-table-column align="center"  label = 'Operations'>
           <template slot-scope="scope">
-            <el-button type = 'info' size="mini" @click.native ='EditBrand(scope.row)'>edit</el-button>
-            <el-button type = 'danger' size="mini" @click.native ='deleteBrand(scope.row)'>delete</el-button>
+            <el-button type = 'info' size="mini" icon="el-icon-edit" @click.native ='EditBrand(scope.row)'>Modify</el-button>
+            <el-button type = 'danger' size="mini" icon="el-icon-delete" @click.native ='deleteBrand(scope.row)'>delete</el-button>
           </template>
         </el-table-column>
       </el-table>
+        <el-row :gutter="20">
+      <el-col :span="8"><div class="grid-content" /></el-col>
+      <el-col :span="8">
+        <div class="grid-content">
+          <div class="block">
+            <el-pagination
+              :page-size="20"
+              layout="total, prev, pager, next"
+              :total="1000"
+            />
+          </div>
+        </div></el-col>
+      <el-col :span="8"><div class="grid-content" /></el-col>
+    </el-row>
     </div>
         <br>
-      <el-button type="primary" @click="showaddBrand" style="margin-left:90px">Add</el-button>
+      <el-button type="primary" @click="showaddBrand" plain icon="el-icon-plus" style="margin-left:90px">Add</el-button>
 
 
     <!--修改company弹窗-->
@@ -88,15 +116,6 @@
             </el-input>
           </el-col>
         </el-form-item>
-
-         <el-form-item label="Brief Introdution"  label-width="130px" prop='decription'>
-      <el-input
-        v-model="ProductData.decription"
-        :autosize="{ minRows: 8, maxRows: 8}"
-        type="textarea"
-        placeholder="enter"
-      />
-    </el-form-item>
 
         <el-form-item label="GMC Report Type(1-TUV , 2-UL)" label-width="130px"  prop='gmc_report_type'>
          <el-col :span="8">
@@ -137,7 +156,6 @@
             </el-input>
           </el-col>
         </el-form-item>
-
          <el-form-item label-width="130px" >
          <div class="divcss5">Recommended image size 160*80 JPG/PNG format</div>
         </el-form-item>
@@ -230,8 +248,13 @@ export default {
       head:'Company Information',
       dialogImageUrl: '',
       img_id: '',
+      total:0,//默认数据总数
+      pagesize:4,//每页的数据条数
+      currentPage:1,//默认开始页面
+     
 
       ProductData:{
+         user_id: 2,
           man_id:'',
           name_cn:'',
           name_en:'',
@@ -252,25 +275,22 @@ export default {
     this.loadData()
   },
   methods: {
-  //   uploadImage:{
+   current_change:function(currentPage){
+        this.currentPage = currentPage;
+      },
+    loadData () {    
+      this.user_id=this.$store.getters.userid
+      console.log('userid is:'+this.user_id)    
+      this.ProductData.user_id=parseInt(this.ProductData.user_id)
+      console.log(this.ProductData)
+      this.$store.dispatch('GetManByFilter',this.ProductData).then((result) => {
+      console.log("result.data.list-----companylist")
+      this.companylist = result.data.list
+      console.log(this.companylist)
+      this.total = this.companylist.length;
 
-  //   },
-  // chooseImage:{
-
-  // },
-    loadData () {
-      this.$store.dispatch('GetAllByFilter',this.ProductData.man_id).then((result) => {
-        // console.log("result.data-----companylist")
-        // console.log(result.data)
-        // console.log("result.data.list-----companylist")
-        this.companylist = result.data.list
-        // console.log(result.data.list)
       })
-      this.$store.dispatch('GetBrandByFilter',this.ProductData.man_id).then((result) => {
-        // console.log("result.data-----brandList")
-        // console.log(result.data)
-        // console.log("result.data.list-----brandList")
-        // console.log(result.data.list)
+       this.$store.dispatch('GetBrandByFilter',this.ProductData.man_id).then((result) => {
         this.brandList = result.data
         console.log("branddata", this.brandList)
       })
@@ -316,6 +336,13 @@ export default {
     addBrand(){
     this.$refs.BrandData.validate(valid => {
         if(valid) {
+        // this.ProductData.man_id = parseInt(this.ProductData.man_id)
+        // this.BrandData.man_id= parseInt(this.BrandData.man_id)
+        // this.BrandData.brd_id = parseInt(this.BrandData.brd_id )
+        // console.log( ' this.ProductData.man_id:'+this.ProductData.man_id)
+        // console.log( ' this.BrandData.man_id:'+this.BrandData.man_id)
+        // console.log( ' this.BrandData.brd_id:'+this.BrandData.brd_id)
+        // console.log("userid: "+userid)
           // console.log('valid');
           this.BrandData.img_url = this.dialogImageUrl
           this.$store.dispatch('AddBrand',this.BrandData).then((result) => {

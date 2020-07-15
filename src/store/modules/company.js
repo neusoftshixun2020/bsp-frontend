@@ -1,5 +1,5 @@
-﻿import { addManufacturer ,updateManufacturer,deleteBrand,addBrand,updateBrand,getAllByFilter,
-  getBrandByFilter,addOrUpdateBrand} from '../../api/addCompany'
+﻿import { addManufacturer ,updateManufacturer,deleteBrand,addBrand,updateBrand,getManByFilter,
+  getBrandByFilter} from '../../api/addCompany'
 
   const company = {
     actions: {
@@ -61,9 +61,10 @@
         })
       })
     },
-    GetAllByFilter ({ commit },man_id) {
+    GetManByFilter ({ commit },maninfo) {
       return new Promise((resolve, reject) => {
-        getAllByFilter(man_id).then(response => {
+        getManByFilter(maninfo.man_id,maninfo.name_en, maninfo.name_cn, maninfo.gmc_report_type, maninfo.gmc_report_url,
+          maninfo.description, maninfo.created_by, maninfo.creation_date, maninfo.last_update_by, maninfo.last_update_date, maninfo.call_cnt, maninfo.remark, maninfo.sts_cd, maninfo.user_id).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
@@ -72,6 +73,16 @@
       })
     },
 
+    // GetManByFilter ({ commit },data) {
+    //   return new Promise((resolve, reject) => {
+    //     getManByFilter(data).then(response => {
+    //       commit('')
+    //       resolve(response)
+    //     }).catch(error => {
+    //       reject(error)
+    //     })
+    //   })
+    // },
     GetBrandByFilter({ commit }, man_id) {
       return new Promise((resolve, reject) => {
         getBrandByFilter( man_id).then(response => {
@@ -82,6 +93,16 @@
         })
       })
      }
+    //  GetBrandByFilter({ commit }, data) {
+    //   return new Promise((resolve, reject) => {
+    //     getBrandByFilter(data).then(response => {
+    //       commit('')
+    //       resolve(response)
+    //     }).catch(error => {
+    //       reject(error)
+    //     })
+    //   })
+    //  }
   }
 }
 export default company
