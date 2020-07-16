@@ -73,19 +73,9 @@
       })
     },
 
-    // GetManByFilter ({ commit },data) {
-    //   return new Promise((resolve, reject) => {
-    //     getManByFilter(data).then(response => {
-    //       commit('')
-    //       resolve(response)
-    //     }).catch(error => {
-    //       reject(error)
-    //     })
-    //   })
-    // },
-    GetBrandByFilter({ commit }, man_id) {
+    GetBrandByFilter({ commit }, data) {
       return new Promise((resolve, reject) => {
-        getBrandByFilter( man_id).then(response => {
+        getBrandByFilter(data).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
@@ -93,16 +83,7 @@
         })
       })
      }
-    //  GetBrandByFilter({ commit }, data) {
-    //   return new Promise((resolve, reject) => {
-    //     getBrandByFilter(data).then(response => {
-    //       commit('')
-    //       resolve(response)
-    //     }).catch(error => {
-    //       reject(error)
-    //     })
-    //   })
-    //  }
+ 
   }
 }
 export default company
