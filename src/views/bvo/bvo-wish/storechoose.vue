@@ -84,7 +84,33 @@
         dropship_price:'',
         ebaystore:{
           dsr_id:'',
-          platform_type:'1',
+          platform_type:'1', data(){
+            return{
+              ebayStoreList:[],
+              amazonStoreList:[],
+              selectedEbayStores:[],
+              selectedAmazonStores:[],
+
+              //分页
+              enbaytotal:0,//默认数据总数
+              amazontotal:0,
+              pagesize:5,//每页的数据条数
+              currentPage:1,//默认开始页面
+              pro_id:'',
+              str_id:'',
+              dropship_price:'',
+              ebaystore:{
+                dsr_id:'',
+                platform_type:'1',
+              },
+              amazonstore:{
+                dsr_id:'',
+                platform_type:'2',
+              },
+              sdi_ebay:[],
+              sdi_amazon:[],
+            }
+          }
         },
         amazonstore:{
           dsr_id:'',

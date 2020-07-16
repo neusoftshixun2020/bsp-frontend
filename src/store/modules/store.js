@@ -1,11 +1,11 @@
-import {getAmazonStores, getEBayStores, addStore} from '../../api/storeHandler'
+import {getAmazonStores, getEBayStores, addStore, getDsr} from '../../api/storeHandler'
 
 const product = {
   actions: {
 
-    GetAmazonStores({ commit }) {
+    GetAmazonStores({ commit },data) {
       return new Promise((resolve, reject) => {
-        getAmazonStores().then(response => {
+        getAmazonStores(data.store).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
@@ -13,9 +13,9 @@ const product = {
         })
       })
     },
-    GetEBayStores({ commit }) {
+    GetEBayStores({ commit },data) {
       return new Promise((resolve, reject) => {
-        getEBayStores().then(response => {
+        getEBayStores(data.store).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
@@ -26,6 +26,16 @@ const product = {
     AddStore({ commit }, data) {
       return new Promise((resolve, reject) => {
         addStore(data.store).then(response => {
+          commit('')
+          resolve(response)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    GetDsr ({ commit },user_id) {
+      return new Promise((resolve, reject) => {
+        getDsr(user_id).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
