@@ -53,18 +53,7 @@ export default {
       };
     },
     login() {
-      this.$axios
-        .post('/login', {
-          account_name: this.loginForm.account_name,
-          password: this.loginForm.password
-        })
-        .then(successResponse => {
-          if (successResponse.data.code === 200) {
-            this.$router.replace({path: 'myWalletBalance'})
-          }
-        })
-        .catch(failResponse => {
-        })
+
     },
     doRegister() {
       this.$router.push({
