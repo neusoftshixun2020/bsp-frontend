@@ -110,12 +110,11 @@ export function getManByFilter (man_id,name_en, name_cn, gmc_report_type, gmc_re
 }
 
 
-export function getBrandByFilter(man_id) {
+export function getBrandByFilter(data) {
   return request({
     url: 'brand/getBrandByFilter',
     method: 'post',
-    data: {
-      man_id
-    }
+    data: data
+     
   })
 }

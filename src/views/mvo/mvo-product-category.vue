@@ -3,8 +3,8 @@
     <el-col :span = '20' class = 'toolbar'>
       <p v-text ='head'></p>
       <el-input type='text' v-model='sCondition' autocomplete='off' placeholder='please enter the product name' style='width:20%' ></el-input>
-      <el-button type = 'primary' size="small" @click="search">Search</el-button>
-      <el-button type = 'primary' size="small" @click="addBtn">添加</el-button>
+      <el-button type = 'primary' size="small" style="margin-left:15px" @click="search">Search</el-button>
+      <el-button type = 'primary' size="small"  style="margin-left:20px"  @click="addBtn">添加</el-button>
     </el-col>
 
     <div class="ProductTable">
@@ -216,7 +216,6 @@
         // })
         this.loadData()
       },
-
       deleteRecord(row) {
         this.$confirm('确认删除该记录吗?', '提示', {
           type: 'warning'

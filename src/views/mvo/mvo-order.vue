@@ -6,62 +6,58 @@
          Order Management
         </h1>
       </div>
-       <el-input type='text' v-model='sCondition' autocomplete='off' placeholder='please enter the product name' style='width:20%' ></el-input>
-      <el-button type = 'primary' size="small" @click="search" style="margin-left:30px">Search</el-button>
+       <el-input type='text' v-model='scondition' autocomplete='off' placeholder='please enter the order title' style='width:40%' ></el-input>
+      
     </el-header>
        <el-main>
             <!-- <待支付> -->
       <el-tabs style="margin-top:70px">
       <el-tab-pane label="Awaiting Payment" >
-
       <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        :data="AwaitingPaymentData"
+        v-for="adata in AwaitingPaymentData" v-bind:key="adata.id"
+        :data="adata"
         element-loading-text="Loading"
         fit
         highlight-current-row
         width="80%"
       >
 
-        <el-table-column align="center" label="Title">
+        <el-table-column align="center" label="Title" >
           <template slot-scope="scope">
-            <el-button type="text"  @click="track(scope.row)" > {{ scope.row.product.title }}</el-button>
+            <el-button type="text"  @click="seeProduct(scope.row)" > {{ scope.row.products[0].title }}</el-button>
           </template>
         </el-table-column>
 
-        <el-table-column  align="center" label="Price">
+       <el-table-column align="center" label="Price"  >
           <template slot-scope="scope">
-            {{ scope.row.product.price }}
+            {{ scope.row.salesOrderLineItems[0].price }}
           </template>
         </el-table-column>
 
-        <el-table-column align="center" label="QTY"  >
+        
+
+        <el-table-column align="center" label="QTY" >
           <template slot-scope="scope">
-            {{ scope.row.product.QTY }}
+            {{ scope.row.salesOrderLineItems[0].qty }}
           </template>
         </el-table-column>
 
-        <el-table-column label="Sku"  align="center">
+        <el-table-column label="Sku"  align="center" >
           <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.product.sku_cd }}
-            </el-tag>
+              {{ scope.row.products[0].sku_cd }}
           </template>
         </el-table-column>
-        <el-table-column label="Order No"  align="center">
-          <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.product_status }}
-            </el-tag>
+        <el-table-column label="Order No"  align="center" >
+          <template slot-scope="scope">     
+              {{ scope.row.order_no }}        
           </template>
         </el-table-column>
 
-        <el-table-column label="Creation Date"  align="center">
+        <el-table-column label="Creation Date"  align="center" >
           <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.creation_date }}
-            </el-tag>
+              {{ scope.row.creation_date | dateFmt('YYYY-MM-DD HH:mm:ss')}}
           </template>
         </el-table-column>
         </el-table>
@@ -71,6 +67,7 @@
         :total="total"
         @current-change="current_change">
       </el-pagination>
+     
     </el-tab-pane>
 
     <!-- <待发货> -->
@@ -78,67 +75,63 @@
       <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        :data="AwaitingShipmentData"
+        v-for="adata in AwaitingShipmentData" v-bind:key="adata.id"
+        :data="adata"
         element-loading-text="Loading"
         fit
         highlight-current-row
+        @selection-change="selschange"
         width="80%"
       >
-        <el-table-column type="selection" />
-        <el-table-column align="center" label="Title">
+        <el-table-column type="selection" v-model="orders"/>
+           <el-table-column align="center" label="Title" >
           <template slot-scope="scope">
-         <el-button type="text"  @click="track(scope.row)" > {{ scope.row.product.title }}</el-button>
+            <el-button type="text"  @click="seeProduct(scope.row)" > {{ scope.row.products[0].title }}</el-button>
           </template>
         </el-table-column>
 
-        <el-table-column  align="center" label="Price">
+       <el-table-column align="center" label="Price">
           <template slot-scope="scope">
-            {{ scope.row.product.price }}
+            {{ scope.row.salesOrderLineItems[0].price }}
           </template>
         </el-table-column>
-
-        <el-table-column align="center" label="QTY"  >
+        <el-table-column align="center" label="QTY" >
           <template slot-scope="scope">
-            {{ scope.row.product.QTY }}
+            {{ scope.row.salesOrderLineItems[0].qty }}
           </template>
         </el-table-column>
 
         <el-table-column label="Sku"  align="center">
           <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.product.sku_cd }}
-            </el-tag>
+              {{ scope.row.products[0].sku_cd }}
           </template>
         </el-table-column>
-        <el-table-column label="Order No"  align="center">
-          <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.product_status }}
-            </el-tag>
+        <el-table-column label="Order No"  align="center" >
+          <template slot-scope="scope">     
+              {{ scope.row.order_no }}        
           </template>
         </el-table-column>
 
-        <el-table-column label="Creation Date"  align="center">
+        <el-table-column label="Creation Date"  align="center" >
           <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.creation_date }}
-            </el-tag>
+              {{ scope.row.creation_date | dateFmt('YYYY-MM-DD HH:mm:ss') }}
           </template>
         </el-table-column>
 
-         <el-table-column label="Operation">
+         <el-table-column label="Operation" >
             <template slot-scope="scope">
-              <el-button type="primary" icon="el-icon-edit" plain circle @click="deliver(scope.row)">Deliver</el-button>
+              <el-button type="primary" icon="el-icon-edit" size="small"  @click="deliver(scope.row,scope.$index)">Deliver</el-button>
             </template>
           </el-table-column>
         </el-table>
-
-      <el-pagination
+     <span> <el-pagination
         small
         layout="prev, pager, next"
         :total="total"
         @current-change="current_change">
       </el-pagination>
+       <el-button type="primary"  size="small"  @click="deliverall" :disabled="orders.length===0">DeliverAll</el-button>
+      </span>
     </el-tab-pane>
 
        <!-- <已发货> -->
@@ -146,75 +139,68 @@
        <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        :data="AwaitingShipmentData"
+        v-for="adata in ShipedData" v-bind:key="adata.id"
+        :data="adata"
         element-loading-text="Loading"
         fit
         highlight-current-row
+         @selection-change="selschange1"
         width="80%"
       >
-        <el-table-column type="selection" />
-
-        <el-table-column align="center" label="Title">
+       <el-table-column type="selection" v-model="corders"/>
+     
+           <el-table-column align="center" label="Title" >
           <template slot-scope="scope">
-              <el-button type="text"  @click="track(scope.row)" > {{ scope.row.product.title }}</el-button>
+            <el-button type="text"  @click="seeProduct(scope.row)" > {{ scope.row.products[0].title }}</el-button>
           </template>
         </el-table-column>
 
-        <el-table-column  align="center" label="Price">
+       <el-table-column align="center" label="Price" >
           <template slot-scope="scope">
-            {{ scope.row.product.price }}
+            {{ scope.row.salesOrderLineItems[0].price }}
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="QTY" >
+          <template slot-scope="scope">
+            {{ scope.row.salesOrderLineItems[0].qty }}
           </template>
         </el-table-column>
 
-        <el-table-column align="center" label="QTY"  >
+        <el-table-column label="Sku"  align="center" >
           <template slot-scope="scope">
-            {{ scope.row.product.QTY }}
+              {{ scope.row.products[0].sku_cd }}
+          </template>
+        </el-table-column>
+        <el-table-column label="Order No"  align="center" >
+          <template slot-scope="scope">     
+              {{ scope.row.order_no }}        
           </template>
         </el-table-column>
 
-        <el-table-column label="Sku"  align="center">
+        <el-table-column label="Creation Date"  align="center" >
           <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.product.sku_cd }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="Order No"  align="center">
-          <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.product_status }}
-            </el-tag>
+              {{ scope.row.creation_date | dateFmt('YYYY-MM-DD HH:mm:ss')}}
           </template>
         </el-table-column>
 
-        <el-table-column label="Creation Date"  align="center">
+         <el-table-column label="Tracking No"  align="center" >
           <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.creation_date }}
-            </el-tag>
+             <el-button type="text"  @click="track(scope.row)" >{{ scope.row.salesOrderLineItems[0].tracking_no }}</el-button>
           </template>
         </el-table-column>
-
-         <el-table-column label="Tracking No"  align="center">
-          <template slot-scope="scope">
-             <el-button type="text"  @click="track(scope.row)" >{{ scope.row.product.tracking_no }}</el-button>
-          </template>
-        </el-table-column>
-
-
-         <el-table-column label="Operation">
+         <el-table-column label="Operation" >
             <template slot-scope="scope">
-              <el-button type="primary"  plain circle @click="cancel(scope.row)" >Cancel</el-button>        
+              <el-button type="primary"  @click="cancel(scope.row,scope.$index)" >Cancel</el-button>        
           </template>
           </el-table-column>
         </el-table>
-
       <el-pagination
         small
         layout="prev, pager, next"
         :total="total"
         @current-change="current_change">
       </el-pagination>
+        <el-button type="primary"  size="small"  @click="cancelAll" :disabled="corders.length===0">CancelAll</el-button>
     </el-tab-pane>
 
        <!-- <已完成> -->
@@ -222,61 +208,53 @@
          <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        :data="AwaitingShipmentData"
+        v-for="adata in CompletedData" v-bind:key="adata.id"
+        :data="adata"
         element-loading-text="Loading"
         fit
         highlight-current-row
         width="80%"
       >
-        <el-table-column type="selection" />
 
-        <el-table-column align="center" label="Title">
+         <el-table-column align="center" label="Title" >
           <template slot-scope="scope">
-           <el-button type="text"  @click="track(scope.row)" > {{ scope.row.product.title }}</el-button>
+            <el-button type="text"  @click="seeProduct(scope.row)" > {{ scope.row.products[0].title }}</el-button>
           </template>
         </el-table-column>
 
-        <el-table-column  align="center" label="Price">
+       <el-table-column align="center" label="Price" >
           <template slot-scope="scope">
-            {{ scope.row.product.price }}
+            {{ scope.row.salesOrderLineItems[0].price }}
           </template>
         </el-table-column>
-
         <el-table-column align="center" label="QTY"  >
           <template slot-scope="scope">
-            {{ scope.row.product.QTY }}
+            {{ scope.row.salesOrderLineItems[0].qty }}
           </template>
         </el-table-column>
 
-        <el-table-column label="Sku"  align="center">
+        <el-table-column label="Sku"  align="center" >
           <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.product.sku_cd }}
-            </el-tag>
+              {{ scope.row.products[0].sku_cd }}
           </template>
         </el-table-column>
-        <el-table-column label="Order No"  align="center">
-          <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.product_status }}
-            </el-tag>
+        <el-table-column label="Order No"  align="center" >
+          <template slot-scope="scope">     
+              {{ scope.row.order_no }}        
           </template>
         </el-table-column>
 
-        <el-table-column label="Creation Date"  align="center">
+        <el-table-column label="Creation Date"  align="center" >
           <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.creation_date }}
-            </el-tag>
+              {{ scope.row.creation_date | dateFmt('YYYY-MM-DD HH:mm:ss')}}
           </template>
         </el-table-column>
 
-          <el-table-column label="Tracking No"  align="center">
+         <el-table-column label="Tracking No"  align="center" >
           <template slot-scope="scope">
-        <el-button type="text"  @click="track(scope.row)" >{{ scope.row.product.tracking_no }}</el-button>
+             <el-button type="text"  @click="track(scope.row)" >{{ scope.row.salesOrderLineItems[0].tracking_no }}</el-button>
           </template>
         </el-table-column>
-
         </el-table>
       <el-pagination
         small
@@ -292,50 +270,44 @@
          <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        :data="AwaitingShipmentData"
+        v-for="adata in CancelledData" v-bind:key="adata.id"
+        :data="adata"
         element-loading-text="Loading"
         fit
         highlight-current-row
         width="80%"
       >
-        <el-table-column align="center" label="Title">
+  <el-table-column align="center" label="Title" >
           <template slot-scope="scope">
-              <el-button type="text"  @click="track(scope.row)" > {{ scope.row.product.title }}</el-button>
+            <el-button type="text"  @click="seeProduct(scope.row)" > {{ scope.row.products[0].title }}</el-button>
           </template>
         </el-table-column>
 
-        <el-table-column  align="center" label="Price">
+       <el-table-column align="center" label="Price" >
           <template slot-scope="scope">
-            {{ scope.row.product.price }}
+            {{ scope.row.salesOrderLineItems[0].price }}
           </template>
         </el-table-column>
-
         <el-table-column align="center" label="QTY"  >
           <template slot-scope="scope">
-            {{ scope.row.product.QTY }}
+            {{ scope.row.salesOrderLineItems[0].qty }}
           </template>
         </el-table-column>
 
-        <el-table-column label="Sku"  align="center">
+        <el-table-column label="Sku"  align="center" >
           <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.product.sku_cd }}
-            </el-tag>
+              {{ scope.row.products[0].sku_cd }}
           </template>
         </el-table-column>
-        <el-table-column label="Order No"  align="center">
-          <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.product_status }}
-            </el-tag>
+        <el-table-column label="Order No"  align="center" >
+          <template slot-scope="scope">     
+              {{ scope.row.order_no }}        
           </template>
         </el-table-column>
 
-        <el-table-column label="Creation Date"  align="center">
+        <el-table-column label="Creation Date"  align="center" >
           <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.creation_date }}
-            </el-tag>
+              {{ scope.row.creation_date | dateFmt('YYYY-MM-DD HH:mm:ss')}}
           </template>
         </el-table-column>
         </el-table>
@@ -345,75 +317,272 @@
         :total="total"
         @current-change="current_change">
       </el-pagination>
-    </el-tab-pane>
+    </el-tab-pane> 
     </el-tabs>
     </el-main>
 </el-container>
 </template>
 
 <script>
-import {fetchUser} from '@/api/user'
+import { compression } from 'jszip/lib/defaults';
  export default {
     name: 'MVOOrderManagement',
     data() {
       return {   
+        orders:[],
+        corders:[],
+        orders1:[],
+        corders1:[],
         resultList: [],
-        sCondition:'',
+        scondition:'',
         AwaitingPaymentData:[],  
         AwaitingShipmentData:[],
+        ShipedData:[],
+        CompletedData:[],
+        CancelledData:[],
+        cancelorders:[],
         listLoading: false,   
         total:0,//默认数据总数
         pagesize:7,//每页的数据条数
         currentPage:1,//默认开始页面
+        ProductData:{
+         user_id: '',
+          man_id:'',
+          name_cn:'',
+          name_en:'',
+          decription:'',
+          gmc_report_type:'',
+          gmc_report_url:'',
+         }
       }
   },
    mounted() {
       this.loadData()
     },
-    
-
     methods: {
       current_change:function(currentPage){
         this.currentPage = currentPage;
       },
       loadData(){
-        const user_id=this.$store.getters.userid
-       console.log('user_id is:'+ this.user_id)
-        let arr = []
-        let userData = JSON.parse(JSON.stringify(arr))
-        userData.push(this.user_id)
-        console.log('userData is:'+ this.userData)
-        login(this.userData).then((result) => {
-        console.log("result.data-----userData")
-        this.userData = result.data
+          this.ProductData.user_id=this.$store.getters.userid
+          console.log( 'this.ProductData')
+          console.log(this.ProductData)
+        this.$store.dispatch('GetAwaitingPayment',this.ProductData).then((result) => {
+          console.log("AwaitingPaymentData")
+         this.AwaitingPaymentData = result.data
+         console.log("AwaitingPaymentData", this.AwaitingPaymentData)
       })
-      }
-      
-  },
-   computed: {
-      AwaitingPaymentData () {
-        const search = this.sCondition
-        return this.resultList.filter(data => {
-          const a =  Object.keys(data.product).some(key => {
-            return (
-              String(data.product[key])
-                .toLowerCase()
-                .indexOf(search) > -1
-            )
-          })
-          const b = Object.keys(data).some(key => {
-              return (
-                String(data[key])
-                  .toLowerCase()
-                  .indexOf(search) > -1
-              )
+       this.$store.dispatch('GetAwaitingShipment',this.ProductData).then((result) => {
+          console.log("GetAwaitingShipment")
+           this.AwaitingShipmentData=result.data
+          console.log("GetAwaitingShipment", this.AwaitingShipmentData)
+      })
+         this.$store.dispatch('GetShiped',this.ProductData).then((result) => {
+          console.log("getShiped")
+         this.ShipedData = result.data
+         console.log("getShiped", this.ShipedData)
+      })
+      this.$store.dispatch('GetCompleted',this.ProductData).then((result) => {
+          console.log("GetCompleted")
+         this.CompletedData = result.data
+         console.log("CompletedData", this.CompletedData)
+      })
+       this.$store.dispatch('GetCancelled',this.ProductData).then((result) => {
+          console.log("GetCancelled")
+         this.CancelledData = result.data
+         console.log("CancelledData", this.CancelledData)
+      })
+      adata()
+      }, 
+       seeProduct(rowData){
+      this.$router.push({
+        name: 'productDetail',
+        query: {       
+          'title':rowData.products[0].title
+        }
+      })
+       },
+       selschange(orders){
+        this.orders=orders
+        console.log("orders")
+        console.log( this.orders)
+       },
+        selschange1(corders){
+        this.corders=corders
+        console.log('cancelOrders')
+        console.log(this.corders)
+       },
+       deliverall(){
+         console.log("进入deliverall")
+        this.$confirm('Are you sure to deliver the orders?', 'Orders Deliver', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      }).then(() => {
+        
+        console.log('修改状态之后的this.orders')
+        console.log(this.orders)
+        this.$store.dispatch('Deliver',this.orders).then((result) => {
+          if (result.code==200){
+            this.$message({
+              type: 'info',
+              message: `deliver operation succeeded`
             })
-          // console.log("a:", a)
-          // console.log("b:" ,b)
-          return (a || b)
+          }else{
+            this.$message({
+              type: 'info',
+              message: `deliver operation failed`
+            })
+          }
+          this.loadData()
         })
-        // return this.tableDataDisease
-      }
+      }).catch(() => {
+      });
+       },
+      deliver(rowData){
+         console.log("进入deliver")
+        this.$confirm('Are you sure to deliver the order?', 'Order Deliver', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      }).then(() => {
+           rowData.order_sts=3
+            console.log('rowData')
+            console.log( rowData)
+            this.orders1.push(rowData)
+            console.log('orders1')
+            console.log( this.orders1)
+        this.$store.dispatch('Deliver',this.orders1).then((result) => {
+          if (result.code==200){
+            this.$message({
+              type: 'info',
+              message: `deliver operation succeeded`
+            })
+          }else{
+            this.$message({
+              type: 'info',
+              message: `deliver operation failed`
+            })
+          }
+          this.loadData()
+        })
+      }).catch(() => {
+      });
+       },
+    cancelAll(){
+       console.log("CancelAll")
+        this.$confirm('Are you sure to cancel the orders?', 'Orders Cancel', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      }).then(() => {
+         for(let i=0;i<this.corders.length;i++){
+            this.corders[i].order_sts=5
+        }
+         console.log('修改状态之后的this.corders')
+        console.log(this.corders)
+        this.$store.dispatch('CancelOrder',this.corders).then((result) => {
+          if (result.code==200){
+            this.$message({
+              type: 'info',
+              message: `cancel operation succeeded`
+            })
+          }else{
+            this.$message({
+              type: 'info',
+              message: `cancel operation failed`
+            })
+          }
+          this.loadData()
+        })
+      }).catch(() => {
+      });
+
+    },
+    cancel(rowData){
+         console.log("deliver")
+        this.$confirm('Are you sure to cancel the order?', 'Order Cancel', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      }).then(() => {     
+          rowData.order_sts=5
+            console.log('rowData')
+            console.log( rowData)
+            this.corders1.push(rowData)
+            console.log('orders1')
+            console.log( this.corders1)  
+        this.$store.dispatch('CancelOrder',this.corders1).then((result) => {
+          if (result.code==200){
+            this.$message({
+              type: 'info',
+              message: `cancel operation succeeded`
+            })
+          }else{
+            this.$message({
+              type: 'info',
+              message: `cancel operation failed`
+            })
+          }
+          this.loadData()
+        })
+      }).catch(() => {
+      });
+       },
+},
+   computed: {
+      adata () {
+        console.log("进入adata")
+      // const search = this.scondition
+      // return this.AwaitingPaymentData.filter(data => {
+      //   return Object.keys(data).some(key => {
+      //     return (
+      //       String(data[key])
+      //         .toLowerCase()
+      //         .indexOf(search) > -1
+      //     )
+      //   })
+      // })
+
+      //  return this.AwaitingShipmentData.filter(data => {
+      //   return Object.keys(data).some(key => {
+      //     return (
+      //       String(data[key])
+      //         .toLowerCase()
+      //         .indexOf(search) > -1
+      //     )
+      //   })
+      // })
+      //  return this.ShipedData.filter(data => {
+      //   return Object.keys(data).some(key => {
+      //     return (
+      //       String(data[key])
+      //         .toLowerCase()
+      //         .indexOf(search) > -1
+      //     )
+      //   })
+      // })
+      //  return this.CompletedData.filter(data => {
+      //   return Object.keys(data).some(key => {
+      //     return (
+      //       String(data[key])
+      //         .toLowerCase()
+      //         .indexOf(search) > -1
+      //     )
+      //   })
+      // })
+       return this.CancelledData.filter(data => {
+        return Object.keys(data).some(key => {
+          return (
+            String(data[key])
+              .toLowerCase()
+              .indexOf(search) > -1
+          )
+        })
+      })
+      // return this.tableDataDisease
+    }
+        
     }
 }
 </script>
