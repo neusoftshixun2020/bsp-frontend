@@ -521,6 +521,13 @@ export const asyncRoutes = [
         name: 'mvo-myWalletBalance',
         meta: { title: 'My Balance' },
         hidden:true
+      },
+      {
+        path: 'mvo-myWalletRecord',
+        component: () => import('@/views/mvo/mvo-myWalletRecord'),
+        name: 'mvo-myWalletRecord',
+        meta: { title: 'Withdraw Record' },
+        hidden:true
       }
     ]
   },

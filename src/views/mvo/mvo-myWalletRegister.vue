@@ -10,15 +10,18 @@
         </el-form-item>
 
         <el-form-item label="Password" label-width="14%"prop="password" style="margin-left:30%">
-          <el-input type="password" v-model="registerForm.password" style="width:25%" clearable></el-input>
+          <el-input :type="passw" v-model="registerForm.password" style="width:25%" clearable>
+            <i slot="suffix" :class="icon" @click="showPass"></i>
+          </el-input>
         </el-form-item>
         <el-form-item label="Enter Password Again" label-width="20%" prop="againPassword" style="margin-left:25%">
-          <el-input type="password" v-model="registerForm.againPassword" style="width:25%" clearable></el-input>
-          <Icon type="ios-checkmark-circle" v-if="changeAgainFlag == 1" color="#35B449"/>
-          <Icon type="md-close-circle" v-else-if="changeAgainFlag == 2" color="#f00"/>
+          <el-input :type="passw" v-model="registerForm.againPassword" style="width:25%" clearable>
+            <i slot="suffix" :class="icon" @click="showPass"></i>
+          </el-input>
+
         </el-form-item>
         <el-form-item style="margin-left:430px;">
-          <el-button type="primary" style="margin-left: 18%; margin-top: 2%" @click="register">Register</el-button>
+          <el-button type="primary" style="margin-left: 18%; margin-top: 2%" @click="register()">Register</el-button>
         </el-form-item>
       </el-form>
     </el-main>
@@ -40,6 +43,8 @@ export default {
       }
     };
     return{
+      passw:"password",
+      icon:"el-input__icon el-icon-view",
       changeFlag: 0,
       changeAgainFlag: 0,
       ruleValidate: {
@@ -61,25 +66,31 @@ export default {
     }
   },
   methods:{
+    showPass(){
+      //点击图标是密码隐藏或显示
+      if( this.passw=="text"){
+        this.passw="password";
+        //更换图标
+        this.icon="el-input__icon el-icon-view";
+      }else {
+        this.passw="text";
+        this.icon="el-input__icon el-icon-minus";
+      };
+    },
     register() {
       this.$refs.registerForm.validate(valid => {
         if (valid) {
-          this.registerForm.store.dsr_id = parseInt(this.addFormData.store.dsr_id)
-          // this.addFormData.store.goa_government_area.goa_id = parseInt(this.addFormData.store.goa_government_area.goa_id)
           console.log('===================================')
           console.log(this.addFormData)
           console.log('===================================')
-          this.$store.dispatch('AddStore', this.addFormData).then((result) => {
+          this.$store.dispatch('AddAccount', this.registerForm).then((result) => {
             if (result.code == 200) {
-              this.$message({
-                type: 'info',
-                message: `Add Succeeded`
+              alert("Register succeed!")
+              this.$router.push({
+                name: 'mvo-myWallet'
               })
             } else {
-              this.$message({
-                type: 'info',
-                message: `Add Failed`
-              })
+              alert("Register failed")
             }
 
           })

@@ -14,7 +14,7 @@
         </el-form-item>
 
         <el-form-item style="width: 100%">
-          <el-button type="primary" style="width: 100%;border: none; font-family:sans-serif"  v-on:click="login">Login</el-button>
+          <el-button type="primary" style="width: 100%;border: none; font-family:sans-serif"  @click.native="login">Login</el-button>
         </el-form-item>
         <el-row style="text-align: center; margin-top: -5%;font-family:sans-serif; margin-bottom: 5%">
           <el-link type="primary" @click="doRegister()">Have no account?  Click here to register</el-link>
@@ -53,12 +53,17 @@ export default {
       };
     },
     login() {
-
+      this.$store.dispatch('CheckAccount', this.loginForm).then((result) => {
+        if(result.code == 200){
+          this.$router.push({name: 'mvo-myWalletBalance',params:{buyer_id:result.data.buyer_id, account_name:this.loginForm.account_name}});
+        }else {
+          alert("Wrong password or username!")
+        }
+      })
     },
     doRegister() {
       this.$router.push({
         name: 'mvo-myWalletRegister',
-
       })
     }
   }

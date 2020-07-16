@@ -19,7 +19,7 @@
         </el-row>
 
         <el-table  :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'15px'}" :data="filteredProductData"
-                   :header-cell-style="{background:'#f0f9eb', fontFamily:'Helvetica',fontSize:'14px'}" style="width: 100%">
+                   :header-cell-style="{background:'#f0f9eb', fontFamily:'Helvetica',fontSize:'14px'}" style="width: 100%; margin-top: 2%">
           <el-table-column prop="pro_id" sortable label="Product ID" />
           <el-table-column prop="sku_cd" label="SKU Code" />
           <el-table-column prop="title" label="Title" />
@@ -51,7 +51,7 @@
 
         <el-dialog :visible.sync="dialogVisible" width="70%" :close-on-lick-modal="false">
           <div>
-            <el-form ref="addFormData" :model="addFormData"  label-width="100px" class="">
+            <el-form ref="addFormData" :model="addFormData"  label-width="10%" class="">
               <el-row type="flex">
                 <el-col>
                   <el-form-item label="SKU Code" label-width="14%">
@@ -198,21 +198,12 @@
                   </el-form-item>
                 </el-col>
               </el-row>
+              <el-form-item>
+                <el-button style="width: 10%;margin-left: 79%" type="info" @click.native="closeDialog">Close</el-button>
+                <el-button style="width: 10%" type="primary" @click.native="addOrUpdateProduct">Submit</el-button>
+              </el-form-item>
             </el-form>
-            <el-row :gutter="60" type="flex">
-              <el-col :span="19">
-                <div class="grid-content" />
-              </el-col>
-              <el-col :span="2">
-                  <el-button style="width: 220%"
-                    type="info"
-                    @click.native="closeDialog"
-                  >Close</el-button>
-              </el-col>
-              <el-col :span="2">
-                  <el-button style="width: 220%" type="primary" @click.native="addOrUpdateProduct">Submit</el-button>
-              </el-col>
-            </el-row>
+
           </div>
 
         </el-dialog>

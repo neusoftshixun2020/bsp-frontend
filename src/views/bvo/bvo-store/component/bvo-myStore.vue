@@ -52,7 +52,7 @@
         <el-dialog :visible.sync="dialogVisible" width="35%" :close-on-lick-modal="false">
           <div>
             <el-form ref="addFormData" :model="addFormData" :rules="storeRule" label-width="100px" status-icon>
-              <el-form-item label="Platform Type" label-width="160px">
+              <el-form-item label="Platform Type" prop="platform_type" label-width="160px">
                 <el-select v-model="addFormData.store.platform_type" placeholder="Select Platform" style="width: 300px">
                   <el-option
                     v-for="item in options"
@@ -62,10 +62,10 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="Store Name" label-width="160px">
+              <el-form-item label="Store Name" prop="store_name" label-width="160px">
                 <el-input v-model="addFormData.store.store_name" type="text" autocomplete="off" clearable style="width: 300px"/>
               </el-form-item>
-              <el-form-item label="Seller ID" label-width="160px">
+              <el-form-item label="Seller ID" prop="dsr_id" label-width="160px">
                 <el-input v-model="addFormData.store.dsr_id" type="text" autocomplete="off" clearable style="width: 300px"/>
               </el-form-item>
 <!--              <el-row>-->
@@ -75,7 +75,7 @@
 <!--                  </el-form-item>-->
 <!--                </el-col>-->
 <!--              </el-row>-->
-              <el-form-item label="MWS Auth Token" label-width="160px">
+              <el-form-item label="MWS Auth Token" prop="token" label-width="160px">
                 <el-input v-model="addFormData.store.eba_ebay_authorization.token" type="text" autocomplete="off" clearable style="width: 300px"/>
               </el-form-item>
               <el-form-item>
