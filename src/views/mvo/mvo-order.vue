@@ -7,7 +7,9 @@
         </h1>
       </div>
        <el-input type='text' v-model='scondition' autocomplete='off' placeholder='please enter the order title' style='width:40%' ></el-input>
-      
+      <el-button type="primary"  size="small" style="margin-left:50px" @click="deliverall" :disabled="orders.length===0">DeliverAll</el-button>
+       <el-button type="primary"  size="small" style="margin-left:60px" @click="cancelAll" :disabled="corders.length===0">CancelAll</el-button>
+
     </el-header>
        <el-main>
             <!-- <待支付> -->
@@ -66,13 +68,12 @@
         layout="prev, pager, next"
         :total="total"
         @current-change="current_change">
-      </el-pagination>
-     
+      </el-pagination> 
     </el-tab-pane>
 
     <!-- <待发货> -->
     <el-tab-pane label="Awaiting Shipment">
-      <el-table
+       <el-table
         ref="multipleTable"
         v-loading="listLoading"
         v-for="adata in AwaitingShipmentData" v-bind:key="adata.id"
@@ -80,17 +81,18 @@
         element-loading-text="Loading"
         fit
         highlight-current-row
-        @selection-change="selschange"
+         @selection-change="selschange"
         width="80%"
       >
-        <el-table-column type="selection" v-model="orders"/>
+       <el-table-column type="selection" v-model="orders"/>
+     
            <el-table-column align="center" label="Title" >
           <template slot-scope="scope">
             <el-button type="text"  @click="seeProduct(scope.row)" > {{ scope.row.products[0].title }}</el-button>
           </template>
         </el-table-column>
 
-       <el-table-column align="center" label="Price">
+       <el-table-column align="center" label="Price" >
           <template slot-scope="scope">
             {{ scope.row.salesOrderLineItems[0].price }}
           </template>
@@ -101,7 +103,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="Sku"  align="center">
+        <el-table-column label="Sku"  align="center" >
           <template slot-scope="scope">
               {{ scope.row.products[0].sku_cd }}
           </template>
@@ -114,24 +116,23 @@
 
         <el-table-column label="Creation Date"  align="center" >
           <template slot-scope="scope">
-              {{ scope.row.creation_date | dateFmt('YYYY-MM-DD HH:mm:ss') }}
+              {{ scope.row.creation_date | dateFmt('YYYY-MM-DD HH:mm:ss')}}
           </template>
         </el-table-column>
 
          <el-table-column label="Operation" >
             <template slot-scope="scope">
-              <el-button type="primary" icon="el-icon-edit" size="small"  @click="deliver(scope.row,scope.$index)">Deliver</el-button>
-            </template>
+              <el-button type="primary"  @click="deliver(scope.row,scope.$index)" >Deliver</el-button>        
+          </template>
           </el-table-column>
         </el-table>
-     <span> <el-pagination
+      <el-pagination
         small
         layout="prev, pager, next"
         :total="total"
         @current-change="current_change">
       </el-pagination>
-       <el-button type="primary"  size="small"  @click="deliverall" :disabled="orders.length===0">DeliverAll</el-button>
-      </span>
+        <!-- <el-button type="primary"  size="small"  @click="deliverall" :disabled="orders.length===0">DeliverAll</el-button> -->
     </el-tab-pane>
 
        <!-- <已发货> -->
@@ -200,7 +201,7 @@
         :total="total"
         @current-change="current_change">
       </el-pagination>
-        <el-button type="primary"  size="small"  @click="cancelAll" :disabled="corders.length===0">CancelAll</el-button>
+        <!-- <el-button type="primary"  size="small"  @click="cancelAll" :disabled="corders.length===0">CancelAll</el-button> -->
     </el-tab-pane>
 
        <!-- <已完成> -->
@@ -264,7 +265,7 @@
       </el-pagination>
     </el-tab-pane>
 
-
+     
        <!-- <已取消> -->
     <el-tab-pane label="Cancelled Orders">
          <el-table
@@ -319,12 +320,105 @@
       </el-pagination>
     </el-tab-pane> 
     </el-tabs>
+
+     <!-- <物流弹窗> -->
+ <!-- <el-dialog title='Show Tracking Information' :visible.sync = 'dialogVisible' width = '50%' :close-on-lick-modal = 'false'>
+     <el-form ref="ruleForm" :model="ruleForm" status-icon  class="ruleForm">
+      <el-form-item label="Tracking No: " prop="username" label-width="130px">
+      <el-button type="text"  >{{this.ruleForm.track_no}} </el-button>
+    </el-form-item>
+  
+    <el-row :gutter="20">
+          <el-col :span="6">
+            <div class="grid-content">
+               <el-form-item label="Place of Dispatch" prop="start" label-width="130px">
+                 <el-input v-model="ruleForm.start" />
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content">
+               <el-form-item  prop="Start Time" label-width="130px">
+                  <el-button type="text"  >{{this.ruleForm.start_time}} </el-button>
+                </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+      <el-row :gutter="20">
+          <el-col :span="6">
+            <div class="grid-content">
+               <el-form-item label="Transit Depot 1" prop="address1" label-width="130px">
+                 <el-input v-model="ruleForm.address1" />
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content">
+               <el-form-item  prop="update_time1" label-width="130px">
+                  <el-button type="text"  >{{this.ruleForm.update_time1}} </el-button>
+                </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+       <el-row :gutter="20">
+          <el-col :span="6">
+            <div class="grid-content">
+               <el-form-item label="Transit Depot 2" prop="address2" label-width="130px">
+                 <el-input v-model="ruleForm.address2" />
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content">
+               <el-form-item prop="update_time2" label-width="130px">
+                <el-button type="text"  >{{this.ruleForm.update_time2}} </el-button>
+               </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+       <el-row :gutter="20">
+          <el-col :span="6">
+            <div class="grid-content">
+               <el-form-item label="Transit Depot 3" prop="address3" label-width="130px">
+                 <el-input v-model="ruleForm.address3" />
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content">
+               <el-form-item prop="update_time3" label-width="130px">
+                <el-button type="text"  >{{this.ruleForm.update_time3}} </el-button>
+               </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+       
+      <el-row :gutter="20">
+          <el-col :span="6">
+            <div class="grid-content">
+               <el-form-item label="Shipping Address" prop="destination" label-width="130px">
+                 <el-input v-model="ruleForm.destination" />
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content">
+               <el-form-item  prop="Arrive Time" label-width="130px">
+                  <el-button type="text" >{{this.ruleForm.end_time}} </el-button>
+                </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+          <el-form-item  prop="destination" >
+          <el-button  align="center" type="info" @click.native="closeDialog">Close</el-button>
+        </el-form-item> 
+  </el-form>
+    </el-dialog> -->
     </el-main>
 </el-container>
 </template>
 
 <script>
-import { compression } from 'jszip/lib/defaults';
  export default {
     name: 'MVOOrderManagement',
     data() {
@@ -335,6 +429,7 @@ import { compression } from 'jszip/lib/defaults';
         corders1:[],
         resultList: [],
         scondition:'',
+        dialogVisible:false,
         AwaitingPaymentData:[],  
         AwaitingShipmentData:[],
         ShipedData:[],
@@ -363,6 +458,9 @@ import { compression } from 'jszip/lib/defaults';
       current_change:function(currentPage){
         this.currentPage = currentPage;
       },
+       closeDialog() {
+      this.dialogVisible = false
+    },
       loadData(){
           this.ProductData.user_id=this.$store.getters.userid
           console.log( 'this.ProductData')
@@ -419,7 +517,9 @@ import { compression } from 'jszip/lib/defaults';
         cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
-        
+        for(let i=0;i<this.orders.length;i++){
+            this.orders[i].order_sts=3
+        }
         console.log('修改状态之后的this.orders')
         console.log(this.orders)
         this.$store.dispatch('Deliver',this.orders).then((result) => {
