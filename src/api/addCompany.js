@@ -118,3 +118,12 @@ export function getBrandByFilter(data) {
      
   })
 }
+
+export function deleteAllBrand(data) {
+  return request({
+    url: 'brand/deleteAllBrand',
+    method: 'post',
+    data: data
+     
+  })
+}

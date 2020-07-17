@@ -1,5 +1,5 @@
 ﻿import { addManufacturer ,updateManufacturer,deleteBrand,addBrand,updateBrand,getManByFilter,
-  getBrandByFilter} from '../../api/addCompany'
+  getBrandByFilter,deleteAllBrand} from '../../api/addCompany'
 
   const company = {
     actions: {
@@ -82,7 +82,18 @@
           reject(error)
         })
       })
+     },
+     DeleteAllBrand({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        deleteAllBrand(data).then(response => {
+          commit('')
+          resolve(response)
+        }).catch(error => {
+          reject(error)
+        })
+      })
      }
+     
  
   }
 }

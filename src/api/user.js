@@ -73,3 +73,11 @@ export function deleteAll(data) {
   })
 }
 
+
+export function searchUser(data) {
+  return request({
+    url: 'user/searchUser',
+    method: 'post',
+    data
+  })
+}

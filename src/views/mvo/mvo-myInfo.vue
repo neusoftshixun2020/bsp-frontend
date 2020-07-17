@@ -125,6 +125,7 @@ export default {
  data() {
     return {
       ruleForm: {
+        user_id: '',
         name_cn: '',
         name_en: '',
         decription: '',
@@ -141,13 +142,7 @@ export default {
           }
         }
         ,
-      // options:[{
-      //           value:'1',
-      //           label:'TUV'},
-      //         {
-      //           value:'2',
-      //            label:'UL'}
-      //         ],
+     
       rules: {
         name_cn: [{ required: true, message: 'Chinese name can not be null', trigger: 'blur' }],
         name_en: [{ required: true, message: 'English name can not be null', trigger: 'blur' }],
@@ -161,6 +156,9 @@ export default {
   },
   methods: {
     submitForm(){
+       this.ruleForm.user_id=this.$store.getters.userid
+      console.log( 'this.ruleForm')
+      console.log(this.ruleForm)
        this.$refs.ruleForm.validate(valid => {
         if(valid) {
           // console.log('valid');

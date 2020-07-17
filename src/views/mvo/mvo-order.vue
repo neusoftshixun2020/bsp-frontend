@@ -63,12 +63,12 @@
           </template>
         </el-table-column>
         </el-table>
-      <el-pagination
+     <el-pagination
         small
         layout="prev, pager, next"
         :total="total"
         @current-change="current_change">
-      </el-pagination> 
+      </el-pagination>
     </el-tab-pane>
 
     <!-- <待发货> -->
@@ -184,9 +184,9 @@
           </template>
         </el-table-column>
 
-         <el-table-column label="Tracking No"  align="center" >
+          <el-table-column label="Tracking No"  align="center" >
           <template slot-scope="scope">
-             <el-button type="text"  @click="track(scope.row)" >{{ scope.row.salesOrderLineItems[0].tracking_no }}</el-button>
+             <el-button type="text"  @click="track(scope.row,scope.$index)" >{{ scope.row.salesOrderLineItems[0].tracking_no }}</el-button>
           </template>
         </el-table-column>
          <el-table-column label="Operation" >
@@ -253,7 +253,7 @@
 
          <el-table-column label="Tracking No"  align="center" >
           <template slot-scope="scope">
-             <el-button type="text"  @click="track(scope.row)" >{{ scope.row.salesOrderLineItems[0].tracking_no }}</el-button>
+             <el-button type="text"  @click="track(scope.row,scope.$index)" >{{ scope.row.salesOrderLineItems[0].tracking_no }}</el-button>
           </template>
         </el-table-column>
         </el-table>
@@ -322,24 +322,24 @@
     </el-tabs>
 
      <!-- <物流弹窗> -->
- <!-- <el-dialog title='Show Tracking Information' :visible.sync = 'dialogVisible' width = '50%' :close-on-lick-modal = 'false'>
+ <el-dialog title='Show Tracking Information' :visible.sync = 'dialogVisible' width = '50%' :close-on-lick-modal = 'false'>
      <el-form ref="ruleForm" :model="ruleForm" status-icon  class="ruleForm">
-      <el-form-item label="Tracking No: " prop="username" label-width="130px">
-      <el-button type="text"  >{{this.ruleForm.track_no}} </el-button>
+      <el-form-item label="Tracking No :" prop="username" label-width="150px">
+      <el-button type="text" v-model="ruleForm.track_no"  >{{this.ruleForm.track_no}} </el-button>
     </el-form-item>
   
     <el-row :gutter="20">
           <el-col :span="6">
             <div class="grid-content">
-               <el-form-item label="Place of Dispatch" prop="start" label-width="130px">
-                 <el-input v-model="ruleForm.start" />
+               <el-form-item label="Place of Dispatch :" prop="start" label-width="150px">
+                     <el-button type="text" v-model="ruleForm.start" >{{this.ruleForm.start}} </el-button>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content">
-               <el-form-item  prop="Start Time" label-width="130px">
-                  <el-button type="text"  >{{this.ruleForm.start_time}} </el-button>
+               <el-form-item  prop="Start Time :" label-width="150px">
+                  <el-button type="text" v-model="ruleForm.start_time" >{{this.ruleForm.start_time}} </el-button>
                 </el-form-item>
             </div>
           </el-col>
@@ -347,15 +347,15 @@
       <el-row :gutter="20">
           <el-col :span="6">
             <div class="grid-content">
-               <el-form-item label="Transit Depot 1" prop="address1" label-width="130px">
-                 <el-input v-model="ruleForm.address1" />
+               <el-form-item label="Transit Depot 1 :" prop="address1" label-width="150px">
+                 <el-button type="text" v-model="ruleForm.address1" >{{this.ruleForm.address1}} </el-button>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content">
-               <el-form-item  prop="update_time1" label-width="130px">
-                  <el-button type="text"  >{{this.ruleForm.update_time1}} </el-button>
+               <el-form-item  prop="update_time1" label-width="150px">
+                  <el-button type="text" v-model="ruleForm.update_time1" >{{this.ruleForm.update_time1}} </el-button>
                 </el-form-item>
             </div>
           </el-col>
@@ -363,15 +363,15 @@
        <el-row :gutter="20">
           <el-col :span="6">
             <div class="grid-content">
-               <el-form-item label="Transit Depot 2" prop="address2" label-width="130px">
-                 <el-input v-model="ruleForm.address2" />
+               <el-form-item label="Transit Depot 2 :" prop="address2" label-width="150px">
+                  <el-button type="text"  v-model="ruleForm.address2" >{{this.ruleForm.address2}} </el-button>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content">
-               <el-form-item prop="update_time2" label-width="130px">
-                <el-button type="text"  >{{this.ruleForm.update_time2}} </el-button>
+               <el-form-item prop="update_time2" label-width="150px">
+                <el-button type="text" v-model="ruleForm.update_time2" >{{this.ruleForm.update_time2}} </el-button>
                </el-form-item>
             </div>
           </el-col>
@@ -379,15 +379,15 @@
        <el-row :gutter="20">
           <el-col :span="6">
             <div class="grid-content">
-               <el-form-item label="Transit Depot 3" prop="address3" label-width="130px">
-                 <el-input v-model="ruleForm.address3" />
+               <el-form-item label="Transit Depot 3 :" prop="address3" label-width="150px">
+                <el-button type="text"  v-model="ruleForm.address3" >{{this.ruleForm.address3}} </el-button>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content">
-               <el-form-item prop="update_time3" label-width="130px">
-                <el-button type="text"  >{{this.ruleForm.update_time3}} </el-button>
+               <el-form-item prop="update_time3" label-width="150px">
+                <el-button type="text"   v-model="ruleForm.update_time3">{{this.ruleForm.update_time3}} </el-button>
                </el-form-item>
             </div>
           </el-col>
@@ -396,24 +396,24 @@
       <el-row :gutter="20">
           <el-col :span="6">
             <div class="grid-content">
-               <el-form-item label="Shipping Address" prop="destination" label-width="130px">
-                 <el-input v-model="ruleForm.destination" />
+               <el-form-item label="Shipping Address :" prop="destination" label-width="150px">
+                 <el-button type="text"  v-model="ruleForm.destination">{{this.ruleForm.destination}} </el-button>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content">
-               <el-form-item  prop="Arrive Time" label-width="130px">
-                  <el-button type="text" >{{this.ruleForm.end_time}} </el-button>
+               <el-form-item  prop="Arrive Time" label-width="150px">
+                  <el-button type="text"  v-model="ruleForm.end_time">{{this.ruleForm.end_time}} </el-button>
                 </el-form-item>
             </div>
           </el-col>
         </el-row>
-          <el-form-item  prop="destination" >
+          <el-form-item  >
           <el-button  align="center" type="info" @click.native="closeDialog">Close</el-button>
         </el-form-item> 
   </el-form>
-    </el-dialog> -->
+    </el-dialog>
     </el-main>
 </el-container>
 </template>
@@ -448,7 +448,20 @@
           decription:'',
           gmc_report_type:'',
           gmc_report_url:'',
-         }
+         },
+          ruleForm: {
+          track_no: '',
+          start: '',
+          start_time: '',
+          address1: '',
+          address2:'',
+          address3:'',
+          update_time1:'',
+          update_time2:'',
+          update_time3:'',
+          destination:'',
+          end_time:''
+      }
       }
   },
    mounted() {
@@ -460,6 +473,15 @@
       },
        closeDialog() {
       this.dialogVisible = false
+    },
+    track(rowData,rowindex){
+      this.dialogVisible = true
+      this.$store.dispatch('GetTrack',rowData).then((result) => {
+        this.ruleForm=result.data[0]
+      console.log("ruleForm")
+      console.log(this.ruleForm)
+      })
+
     },
       loadData(){
           this.ProductData.user_id=this.$store.getters.userid

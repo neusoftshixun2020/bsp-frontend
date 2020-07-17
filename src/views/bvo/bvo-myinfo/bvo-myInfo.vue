@@ -12,9 +12,9 @@
     </el-header>
     <el-main>
 
-    <el-form ref="ruleForm" :model="ruleForm" status-icon :rules="rules" class="ruleForm">
+    <el-form ref="ruleForm" :model="ruleForm" status-icon  class="ruleForm">
       <el-form-item label="User Name: " prop="username" style="margin-left:400px;">
-    
+      <el-button type="text"  >{{this.ruleForm.username}} </el-button>
     </el-form-item>
     <el-form-item label="Name" prop="name" style="margin-left:434px;">
       <el-input v-model="ruleForm.name" style="width:200px" />
@@ -37,10 +37,13 @@
 </template>
 
 <script>
-import {updateUser,fetchList} from "@/api/user"
+import {updateUser,searchUser} from "@/api/user"
 export default {
 data() {
     return {
+       ProductData:{
+         user_id: '',
+         },
       ruleForm: {
         username: '',
         name: '',
@@ -49,16 +52,21 @@ data() {
       }
     }   
  },
+
+
  mounted: function () {
     this.loadData()
   },
   methods: {
       loadData() {
-      const userid=this.$store.getters.userid
-      console.log('userid:'+userid)
-       fetchList(userid).then((result) => {
-        console.log("ruleForm:"+result.data)
-        this.ruleForm = result.data
+     this.ProductData.user_id=this.$store.getters.userid
+      console.log( 'this.ProductData')
+      console.log(this.ProductData)
+      searchUser(this.ProductData).then((result) => {
+      console.log("ruleForm:")
+    
+      this.ruleForm = result.data
+        console.log(ruleForm)
       })
     },
        submitForm(){

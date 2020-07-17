@@ -1,110 +1,89 @@
 <template>
-  <div class="app-container">
-     <div class="page-header position-relative">
+<el-container id="main-content" class="clearfix">
+    <el-header>
+      <div class="page-header position-relative">
         <h1 style="color: #2679b5;">
-         Administrator
-          <small>
-            <i class="icon-double-angle-right" />Withdrawal Audit
-          </small>
+         Withdrawal Audit
         </h1>
       </div>
-
-    <div class="ProductTable">
+     
+    </el-header>
+       <el-main>
+        
       <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        :data="AuditData"
+        :data="AuditData.slice((currentPage-1)*PageSize,currentPage*PageSize)"
         element-loading-text="Loading"
-        fit
         border
+        fit
         highlight-current-row
         width="80%"
       >
-        <el-table-column type="selection" />
 
-        <el-table-column align="center" label="Product Name">
+        <el-table-column align="center" label="Account Name" >
           <template slot-scope="scope">
-            {{ scope.row.product.title }}
+          {{ scope.row.account_name }}
           </template>
         </el-table-column>
 
-        <el-table-column  align="center" label="Category">
+       <el-table-column align="center" label="Transaction Type"  >
           <template slot-scope="scope">
-            {{ scope.row.category_name }}
+            <el-button v-if="scope.row.transaction_type===1" type="text">Recharge</el-button>
+             <el-button v-else-if="scope.row.transaction_type===2" type="text">Withdraw </el-button>
+               <el-button v-else-if="scope.row.transaction_type===3" type="text">Consume  </el-button>
+             <el-button v-else type="text"> Refund</el-button>   
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="Transaction Money" >
+          <template slot-scope="scope">
+           {{ scope.row.transaction_money }}
           </template>
         </el-table-column>
 
-        <el-table-column align="center" label="image"  >
+        <el-table-column label="Apply Time"  align="center" >
           <template slot-scope="scope">
-            <img :src="scope.row.img_url" width="80" height="80" >
+             {{ scope.row.create_time| dateFmt('YYYY-MM-DD HH:mm:ss')}}
+          </template>
+        </el-table-column>
+        <el-table-column label="Status"  align="center" >
+          <template slot-scope="scope">     
+              <el-button v-if="scope.row.status===2" type="text">Waiting Audit</el-button>
+             <el-button v-else-if="scope.row.status===1" type="text">Failed</el-button>
+             <el-button v-else type="text" > Audited</el-button>  
           </template>
         </el-table-column>
 
-        <el-table-column label="state"  align="center">
-          <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.product_status }}
-            </el-tag>
+       <el-table-column label="Operation" >
+            <template slot-scope="scope">
+              <el-button type="primary"  @click="audit(scope.row,scope.$index)" >Audit</el-button>        
           </template>
-        </el-table-column>
-
-        <el-table-column  align="center" width="250px"  label = 'Operations' >
-          <template slot-scope="scope">
-            <el-button type = 'info' size="mini" @click="edit(scope.row)">edit</el-button>
-            <el-button type = 'danger' size="mini" @click ='deleteRecord(scope.row,scope.$index)'>delete</el-button>
-
-            <el-button v-if="scope.row.product_status==='待入仓'" type="primary" size="mini" round @click="changeState(scope.row)">入仓</el-button>
-
-            <el-button v-else-if="scope.row.product_status==='待上架'" type="primary" size="mini" round  @click="changeState(scope.row)">上架</el-button>
-
-            <el-button v-else-if="scope.row.product_status==='已上架'" type="primary" size="mini" round @click="changeState(scope.row)">下架</el-button>
-
-            <el-button v-else type = 'primary' size="mini" round :style="{ display: 'none' }"></el-button>
-
-          </template>
-        </el-table-column>
-
-      </el-table>
-
-      <el-pagination
-        small
-        layout="prev, pager, next"
-        :total="total"
-        @current-change="current_change">
+          </el-table-column>
+        </el-table>
+            <el-pagination @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"
+                     :current-page="currentPage"
+                     :page-sizes="pageSizes"
+                     :page-size="PageSize" layout="total, sizes, prev, pager, next, jumper"
+                     :total="total">
       </el-pagination>
 
-    </div>
 
-    <!--添加信息弹窗-->
-    <el-dialog title='Add Product Category' :visible.sync = 'visible' width = '50%' :close-on-lick-modal = 'false'>
-      <el-form :model='productCategoryFormData'  ref='productCategoryFormData' label-width='0px' class=''>
-
-        <el-form-item label="product" label-width="130px" prop="sid">
-          <el-col :span="8">
-            <el-input type="text" v-model="productCategoryFormData.productCategory.product.title" autocomplete="off" placeholder="Product Name">
-            </el-input>
-          </el-col>
+        <!--弹窗-->
+    <el-dialog title='Audit Flow' :visible.sync = 'visible' width = '50%' :close-on-lick-modal = 'false'>
+      <el-form :model = 'FlowData'  ref = 'FlowData' label-width = '0px' class = ''>
+        <el-form-item label-width="150px"  prop='pass'>
+        <template>
+            <el-radio v-model="radio" label="4"  @change="getValue">Pass</el-radio>
+            <el-radio v-model="radio" label="1" @change="getValue">Failed</el-radio>
+        </template>
         </el-form-item>
 
-        <el-form-item label="category" label-width="130px"  prop='sid'>
-          <el-col :span="8">
-            <el-cascader
-              :options="options"
-              v-model='productCategoryFormData.productCategory.category_name'
-              ></el-cascader>
-          </el-col>
+         <el-form-item label-width="150px" label="Upload flow " >
+         <div class="divcss5">Recommended image size 160*80 JPG/PNG format</div>
         </el-form-item>
 
-        <el-form-item label="platform type" label-width="130px"  prop='sid'>
-          <el-col :span="8">
-            <el-cascader
-            :options="platform_options"
-            v-model='productCategoryFormData.productCategory.plateform_type'
-            ></el-cascader>
-          </el-col>
-        </el-form-item>
-
-        <el-form-item label="Main Pricture" label-width="130px">
+    <el-form-item label="Flow Picture" label-width="130px" prop='image_url'>
           <el-upload
             action="http://localhost:8088/image/uploadImage"
             list-type="picture-card"
@@ -113,21 +92,29 @@
             :on-remove="handleRemove">
             <i class="el-icon-plus"></i>
           </el-upload>
-          <img height="100px" width="100px" :src="dialogImageUrl" alt="" style="float: left">
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt="">
+          </el-dialog>
+        </el-form-item>
+
+         <el-form-item label="Reasons for Failed" label-width="150px"  prop='reason'>
+          <el-col :span="8">
+            <el-input type='text' v-model='FlowData.reason'  autocomplete='off' placeholder='reason'>
+            </el-input>
+          </el-col>
         </el-form-item>
 
       </el-form>
       <span slot = 'footer' class = 'dialog-footer'>
-        <el-button type = 'primary' size='small' @click="addProductCategory">Save</el-button>
-        <el-button type = 'danger' size='small' @click.native = "visible = false, ProductData = {
-                    TITLE:'',
-                    CATEGORY_NAME:'',
-                    SECOND_CATEGORY:'',
-                    image:'' }">Close</el-button>
+          <el-button type = 'primary' size='small' @click="update">Save</el-button>
+          <el-button type = 'danger' size='small' @click.native = "visible = false, FlowData = {
+                    pass:'',
+                    image_url:'' ,
+                    reason:'' }">Close</el-button>
        </span>
     </el-dialog>
-
-  </div>
+    </el-main>
+</el-container>
 
 </template>
 
@@ -136,34 +123,125 @@
     name: 'adminAudit',
     data() {
       return {
-        resultList: [],
+        AuditData:[],
         listLoading: false,
         downloadLoading: false,
-        sCondition:'',
-        head:'Product Name',
-        operation:'',
         img_id: '',
+        radio:'',
         dialogImageUrl: '',
-        dialogVisible: false,
+         // 默认显示第几页
+        currentPage:1,
+        // 总条数，根据接口获取数据长度(注意：这里不能为空)
+        total:1,
+        // 个数选择器（可修改）
+        pageSizes:[1,2,3,4],
+        // 默认每页显示的条数（可修改）
+        PageSize:1,
 
-        total:0,//默认数据总数
-        pagesize:7,//每页的数据条数
-        currentPage:1,//默认开始页面
-
+        dialogVisible:false,
         visible: false,
-
+        FlowData:{
+          transaction_id:'',
+            status:'',
+             pass:'',
+             image_url:'',
+             reason:'',
+          walletTransactionAudit:{
+          status:'',
+        }
+        },
+         
       }
     },
     mounted() {
       this.loadData()
     },
     methods: {
-      current_change:function(currentPage){
-        this.currentPage = currentPage;
+      // 分页
+      // 每页显示的条数
+      handleSizeChange(val) {
+        // 改变每页显示的条数
+        this.PageSize=val
+        // 注意：在改变每页显示的条数时，要将页码显示到第一页
+        this.currentPage=1
       },
+      // 显示第几页
+      handleCurrentChange(val) {
+        // 改变默认的页数
+        this.currentPage=val
+      },
+        getValue(){
+            console.log(this.radio)
+            this.FlowData.pass=this.radio
+            if( this.FlowData.pass=='4'){
+              this.FlowData.status=4
+              this.FlowData.walletTransactionAudit.status=4
+            }
+            if(this.FlowData.pass=='1'){
+              this.FlowData.status=1
+              this.FlowData.walletTransactionAudit.status=1
+            }
+             console.log(this.FlowData.pass)
+        },
       loadData() {
-       
+        this.$store.dispatch('GetFlow').then((result) => {
+         console.log("AuditData")
+         this.AuditData = result.data
+         this.total = this.AuditData.length
+         console.log(this.AuditData)
+      })
+      this.getValue()
       },
+      audit(rowData){
+      this.FlowData = Object.assign({}, rowData)
+      this.visible = true
+    },
+      update(){
+        console.log(this.FlowData.status)
+        console.log(this.FlowData.walletTransactionAudit.status)
+        this.$refs.FlowData.validate(valid => {
+        if(valid) {
+          this.FlowData.img_url = this.dialogImageUrl
+          this.$store.dispatch('AuditFlow',this.FlowData).then((result) => {
+            // console.log(result)
+            if (result.code==200){
+              this.$message({
+                type: 'info',
+                message: `update operation succeeded`
+              })
+            }else{
+              this.$message({
+                type: 'info',
+                message: `update operation failed`
+              })
+            }
+            this.visible = false
+            this.loadData()
+          })
+        } else {
+          return false
+        }
+      })
+      },
+       handleRemove(file, fileList) {
+      // console.log(file, fileList);
+    },
+    handlePictureCardPreview(file) {
+      // console.log(file)
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    handleUploadSuccess(result) {
+      // console.log(result)
+      if(result.code != 200){
+        this.$message({
+          type: 'error',
+          message: `upload failed`
+        })
+      }
+      this.dialogImageUrl = result.data.uri
+      this.img_id = result.data.img_id
+    }
 
   }
   }
