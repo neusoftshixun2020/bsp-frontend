@@ -7,8 +7,8 @@
         <el-table  :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'15px'}" :data="account_fund"
                    :header-cell-style="{background:'#f0f9eb', fontFamily:'Helvetica',fontSize:'14px'}" style="width: 100%">
           <el-table-column prop="account_name" label="Account Name" />
-          <el-table-column prop="available_money" label="Available Money" />
-          <el-table-column prop="withdrawing_money" label="Withdrawing Money" />
+          <el-table-column prop="available_money" label="Available Money"/>
+<!--          <el-table-column prop="withdrawing_money" label="Withdrawing Money" />-->
 
           <el-table-column label="Operation">
             <template slot-scope="scope">
@@ -22,8 +22,8 @@
         <el-dialog :visible.sync="dialogVisible" width="40%" :close-on-lick-modal="false">
           <div>
             <el-form ref="addFormData" :model="addFormData"  :rules="rules" label-width="10%">
-              <el-form-item label="Withdraw Amount" prop="withdraw_amount" label-width="30%">
-                <el-input style="width: 80%" v-model="addFormData.withdraw_amount" type="text" autocomplete="off" clearable />
+              <el-form-item label="Withdraw Amount" prop="withdrawing_money" label-width="30%">
+                <el-input style="width: 80%" v-model="addFormData.withdrawing_money" type="text" autocomplete="off" clearable />
               </el-form-item>
               <br>
               <el-form-item label="Password" label-width="30%" prop="password">
@@ -50,12 +50,14 @@
 export default {
   name: 'mvo-myWalletBalance',
   data(){
-    let account_name=this.$route.params.account_name;
-    let buyer_id=this.$route.params.buyer_id;
     return{
       passw:"password",
       icon:"el-input__icon el-icon-view",
-      account_fund:[{account_name:account_name, available_money:'', withdrawing_money:''}],
+      account_fund:[{
+        account_name: this.$route.params.account_name,
+        available_money:'',
+        // withdrawing_money:''
+      }],
       dialogVisible: false,
       rules: {
         password: [
@@ -67,8 +69,8 @@ export default {
       },
       addFormData: {
         password:'',
-        withdraw_amount:'',
-        buyer_id
+        withdrawing_money:'',
+        buyer_id:''
       }
     }
   },
@@ -88,17 +90,28 @@ export default {
       };
     },
     loadData() {
-      this.$store.dispatch('GetFund',this.buyer_id).then((result) => {
+      this.$store.dispatch('GetFund',this.addFormData.buyer_id).then((result) => {
         console.log(result)
-        this.account_fund = result.data
+        // console.log("=============buyer_id:==============")
+        // console.log(this.addFormData.buyer_id)
+        this.account_fund[0].available_money = result.data.available_money
+        this.addFormData.buyer_id = result.data.buyer_id
+        // this.account_fund[0].withdrawing_money = result.data.withdrawing_money
+        console.log(this.account_fund)
+        // console.log("=============buyer_id:==============")
+        // console.log(this.addFormData.buyer_id)
       })
     },
     clickWithdraw(rowData) {
       this.dialogVisible = true
     },
-    withdraw() {
+    withdraw(rowData) {
       this.$refs.addFormData.validate(valid => {
         if (valid) {
+          this.addFormData.buyer_id = parseInt(this.addFormData.buyer_id)
+          this.addFormData.withdrawing_money = parseFloat(this.addFormData.withdrawing_money)
+          console.log("===================")
+          console.log(this.addFormData)
           this.$store.dispatch('Withdraw', this.addFormData).then(result => {
             if (result.code == 200) {
               this.$message({
@@ -118,9 +131,18 @@ export default {
       })
     },
     record(rowData){
-      // this.$router.push({name: 'mvo-myWalletBalance',params:{buyer_id:this.buyer_id}});
-      this.$router.push({name: 'mvo-myWalletRecord'});
+      console.log("=========buyerid======")
+      console.log(buyer_id)
+      this.$router.push({name: 'mvo-myWalletBalance',params:{buyer_id:this.buyer_id}});
+
+    },
+    getParams(){
+      this.addFormData.buyer_id = this.$route.params.buyer_id;
+      this.account_fund.account_name = this.$route.params.account_name;
     }
+  },
+  created:function(){
+    this.getParams();
   }
 }
 

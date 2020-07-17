@@ -23,9 +23,9 @@ const product = {
         })
       })
     },
-    GetFund({ commit }, buyer_id) {
+    GetFund({ commit }, data) {
       return new Promise((resolve, reject) => {
-        getFund(buyer_id).then(response => {
+        getFund(data).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
@@ -43,9 +43,9 @@ const product = {
         })
       })
     },
-    GetTransactionRecord ({ commit },buyer_id) {
+    GetTransactionRecord ({ commit },data) {
       return new Promise((resolve, reject) => {
-        getTransactionRecord(buyer_id).then(response => {
+        getTransactionRecord(data.walletAccount).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {

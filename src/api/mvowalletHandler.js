@@ -19,11 +19,11 @@ export function addAccount(wdata) {
 
 
 
-export function getFund(buyer_id) {
+export function getFund(data) {
   return request({
     url: '/wallet/getFund',
     method: 'post',
-    data: {buyer_id}
+    data: data
   })
 }
 
@@ -35,11 +35,11 @@ export function withdraw(wdata) {
   })
 }
 
-export function getTransactionRecord(buyer_id) {
+export function getTransactionRecord(data) {
   return request({
     url: '/wallet/getTransactionRecord',
     method: 'post',
-    data: buyer_id
+    data: data
   })
 }
 
