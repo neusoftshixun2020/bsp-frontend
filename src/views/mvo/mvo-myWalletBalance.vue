@@ -23,7 +23,7 @@
           <div>
             <el-form ref="addFormData" :model="addFormData"  :rules="rules" label-width="10%">
               <el-form-item label="Withdraw Amount" prop="withdrawing_money" label-width="30%">
-                <el-input style="width: 80%" v-model="addFormData.withdrawing_money" type="text" autocomplete="off" clearable />
+                <el-input style="width: 80%" v-model="addFormData.walletAccountFund.withdrawing_money" type="text" autocomplete="off" clearable />
               </el-form-item>
               <br>
               <el-form-item label="Password" label-width="30%" prop="password">
@@ -68,9 +68,16 @@ export default {
         ]
       },
       addFormData: {
+        buyer_id:'',
         password:'',
-        withdrawing_money:'',
-        buyer_id:''
+        account_name:'',
+        walletAccountFund:{
+          buyer_id:'',
+          available_money:'',
+          depositing_money:0,
+          withdrawing_money:'',
+          currency:'RMB'
+        }
       }
     }
   },
@@ -96,6 +103,7 @@ export default {
         // console.log(this.addFormData.buyer_id)
         this.account_fund[0].available_money = result.data.available_money
         this.addFormData.buyer_id = result.data.buyer_id
+        this.addFormData.walletAccountFund.available_money = parseFloat(result.data.available_money)
         // this.account_fund[0].withdrawing_money = result.data.withdrawing_money
         console.log(this.account_fund)
         // console.log("=============buyer_id:==============")
@@ -109,7 +117,7 @@ export default {
       this.$refs.addFormData.validate(valid => {
         if (valid) {
           this.addFormData.buyer_id = parseInt(this.addFormData.buyer_id)
-          this.addFormData.withdrawing_money = parseFloat(this.addFormData.withdrawing_money)
+          this.addFormData.walletAccountFund.withdrawing_money = parseFloat(this.addFormData.walletAccountFund.withdrawing_money)
           console.log("===================")
           console.log(this.addFormData)
           this.$store.dispatch('Withdraw', this.addFormData).then(result => {
@@ -118,14 +126,14 @@ export default {
                 type: 'info',
                 message: `Withdraw Succeeded`
               })
+              this.dialogVisible = false
+              this.loadData()
             } else {
               this.$message({
                 type: 'info',
                 message: `Withdraw Failed`
               })
             }
-            this.dialogVisible = false
-            this.loadData()
           })
         }
       })
@@ -138,6 +146,8 @@ export default {
     },
     getParams(){
       this.addFormData.buyer_id = this.$route.params.buyer_id;
+      this.addFormData.walletAccountFund.buyer_id = this.$route.params.buyer_id.buyer_id;
+      this.addFormData.account_name = this.$route.params.account_name;
       this.account_fund.account_name = this.$route.params.account_name;
     }
   },

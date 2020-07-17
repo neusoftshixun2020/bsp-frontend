@@ -111,11 +111,13 @@ export default {
         value: '2',
         label: 'eBay'
       }],
-      storeRule: {
-        store_name: [{ required: true, message: 'Store Name can not be null', trigger: 'blur' }],
-        platform_type: [{ required: true, message: 'Platform Type can not be null', trigger: 'blur' }],
-        dsr_id: [{ required: true, message: 'Seller ID can not be null', trigger: 'blur' }],
-        token: [{ required: true, message: 'MWS Auth Token can not be null', trigger: 'blur' }],
+      ebayStore:{
+        dsr_id:'',
+        platform_type:'2'
+      },
+      amazonStore:{
+        dsr_id:'',
+        platform_type:'1'
       },
       addFormData: {
         store:{
@@ -129,6 +131,13 @@ export default {
             token: ''
           }
         }
+      },
+
+      storeRule: {
+        // store_name: [{ required: true, message: 'Store Name can not be null', trigger: 'blur' }],
+        // platform_type: [{ required: true, message: 'Platform Type can not be null', trigger: 'blur' }],
+        // dsr_id: [{ required: true, message: 'Seller ID can not be null', trigger: 'blur' }],
+        // token: [{ required: true, message: 'MWS Auth Token can not be null', trigger: 'blur' }],
       }
 
     }
@@ -140,33 +149,26 @@ export default {
     loadData() {
       this.user_id = this.$store.getters.userid
       this.$store.dispatch('GetDsr',this.user_id).then((result) =>{
-        this.dsrid = result.data.dsr_id
-      })
-      console.log("===================")
-      console.log(this.dsrid)
-      console.log("===================")
-      // this.addFormData.store.dsr_id = parseInt(this.addFormData.store.dsr_id)
-      // this.addFormData.store.platform_type = "1"
-      // // console.log("===================")
-      // // console.log(this.addFormData.store.platform_type)
-      // // console.log("===================")
-      // this.$store.dispatch('GetAmazonStores',this.addFormData).then((result) => {
-      //   this.amazonStoreList = result.data
-      //   console.log(result.data)
-      //   // this.total1 = this.amazonStoreList.length
-      // })
-      // this.addFormData.store.platform_type = "2"
-      // // console.log("===================")
-      // // console.log(this.addFormData.store.platform_type)
-      // // console.log("===================")
-      // this.$store.dispatch('GetEBayStores',this.addFormData).then((result) => {
-      //   this.ebayStoreList = result.data
-      //   console.log(result.data)
-      //
-      // })
+        this.amazonStore.dsr_id = result.data[0].dsr_id
+        this.ebayStore.dsr_id = result.data[0].dsr_id
+        console.log(result.data)
+        console.log(result.data[0])
+        console.log(result.data[0].dsr_id)
+        this.amazonStore.dsr_id = parseInt(this.amazonStore.dsr_id)
+        this.ebayStore.dsr_id = parseInt(this.ebayStore.dsr_id)
+        this.$store.dispatch('GetAmazonStores',this.amazonStore).then((result) => {
+          this.amazonStoreList = result.data
+          console.log(result.data)
+        })
+        this.$store.dispatch('GetEBayStores',this.ebayStore).then((result) => {
+          this.ebayStoreList = result.data
+          console.log(result.data)
 
+        })
+      })
     },
-    clickAdd(){
+
+      clickAdd(){
       this.addFormData = {
         store:{
           platform_type: '',

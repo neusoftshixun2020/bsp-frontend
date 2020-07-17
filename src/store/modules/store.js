@@ -5,7 +5,7 @@ const product = {
 
     GetAmazonStores({ commit },data) {
       return new Promise((resolve, reject) => {
-        getAmazonStores(data.store).then(response => {
+        getAmazonStores(data).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
@@ -15,7 +15,7 @@ const product = {
     },
     GetEBayStores({ commit },data) {
       return new Promise((resolve, reject) => {
-        getEBayStores(data.store).then(response => {
+        getEBayStores(data).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
