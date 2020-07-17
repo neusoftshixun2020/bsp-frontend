@@ -5,7 +5,7 @@ const product = {
 
     CheckAccount({ commit },data) {
       return new Promise((resolve, reject) => {
-        checkAccount(data.store).then(response => {
+        checkAccount(data).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
@@ -15,7 +15,7 @@ const product = {
     },
     AddAccount({ commit },data) {
       return new Promise((resolve, reject) => {
-        addAccount(data.store).then(response => {
+        addAccount(data).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
@@ -33,9 +33,9 @@ const product = {
         })
       })
     },
-    Withdraw ({ commit },user_id) {
+    Withdraw ({ commit },data) {
       return new Promise((resolve, reject) => {
-        withdraw(user_id).then(response => {
+        withdraw(data).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
@@ -43,9 +43,9 @@ const product = {
         })
       })
     },
-    GetTransactionRecord ({ commit },user_id) {
+    GetTransactionRecord ({ commit },buyer_id) {
       return new Promise((resolve, reject) => {
-        getTransactionRecord(user_id).then(response => {
+        getTransactionRecord(buyer_id).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {

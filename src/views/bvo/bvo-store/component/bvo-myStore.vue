@@ -4,7 +4,7 @@
       <div style="margin-left:20%; margin-right:20%">
         <p class="title">My Stores</p>
         <div class="store">
-          <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="amazonStore"
+          <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="amazonStoreList"
                     :header-cell-style="{color: '#409EFF',fontSize:'18px',fontFamily:'Helvetica'}">
             <el-table-column prop="store_name" label="Amazon"/>
           </el-table>
@@ -24,7 +24,7 @@
           </el-row>
         </div>
         <div class="store">
-          <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="ebayStore"
+          <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="ebayStoreList"
                     :header-cell-style="{color: '#409EFF',fontSize:'18px',fontFamily:'Helvetica'}">
             <el-table-column prop="store_name" label="eBay"/>
           </el-table>
@@ -100,7 +100,10 @@ export default {
       amazonStoreList: [],
       ebayStoreList: [],
       user_id:'',
+      dsrid:'',
       dialogVisible: false,
+      total1:'',
+      total2:'',
       options: [{
         value: '1',
         label: 'Amazon'
@@ -136,32 +139,31 @@ export default {
   methods: {
     loadData() {
       this.user_id = this.$store.getters.userid
-      console.log("===================")
-      console.log(this.user_id)
-      console.log("===================")
       this.$store.dispatch('GetDsr',this.user_id).then((result) =>{
-        this.addFormData.store.dsr_id = result.data.dsr_id
+        this.dsrid = result.data.dsr_id
       })
       console.log("===================")
-      console.log(this.addFormData.store.dsr_id)
+      console.log(this.dsrid)
       console.log("===================")
-      this.addFormData.store.dsr_id = parseInt(this.addFormData.store.dsr_id)
-      this.addFormData.store.platform_type = "1"
-      // console.log("===================")
-      // console.log(this.addFormData.store.platform_type)
-      // console.log("===================")
-      this.$store.dispatch('GetAmazonStores',this.addFormData).then((result) => {
-        this.amazonStoreList = result.data
-        console.log(result.data)
-      })
-      this.addFormData.store.platform_type = "2"
-      // console.log("===================")
-      // console.log(this.addFormData.store.platform_type)
-      // console.log("===================")
-      this.$store.dispatch('GetEBayStores',this.addFormData).then((result) => {
-        this.ebayStoreList = result.data
-        console.log(result.data)
-      })
+      // this.addFormData.store.dsr_id = parseInt(this.addFormData.store.dsr_id)
+      // this.addFormData.store.platform_type = "1"
+      // // console.log("===================")
+      // // console.log(this.addFormData.store.platform_type)
+      // // console.log("===================")
+      // this.$store.dispatch('GetAmazonStores',this.addFormData).then((result) => {
+      //   this.amazonStoreList = result.data
+      //   console.log(result.data)
+      //   // this.total1 = this.amazonStoreList.length
+      // })
+      // this.addFormData.store.platform_type = "2"
+      // // console.log("===================")
+      // // console.log(this.addFormData.store.platform_type)
+      // // console.log("===================")
+      // this.$store.dispatch('GetEBayStores',this.addFormData).then((result) => {
+      //   this.ebayStoreList = result.data
+      //   console.log(result.data)
+      //
+      // })
 
     },
     clickAdd(){
@@ -207,28 +209,28 @@ export default {
         }
       })
     }
-  },
-  computed: {
-    ebayStore(){
-      return this.ebayStoreList.filter(data => {
-        return Object.keys(data).some(platform_type => {
-          return (
-            String(data[platform_type]) == "2"
-          )
-        })
-      })
-    },
-    amazonStore(){
-      return this.amazonStoreList.filter(data => {
-        return Object.keys(data).some(platform_type => {
-          return (
-            String(data[platform_type]) == "1"
-          )
-        })
-      })
-    }
-
   }
+  // computed: {
+  //   ebayStore(){
+  //     return this.ebayStoreList.filter(data => {
+  //       return Object.keys(data).some(platform_type => {
+  //         return (
+  //           String(data[platform_type]) == "2"
+  //         )
+  //       })
+  //     })
+  //   },
+  //   amazonStore(){
+  //     return this.amazonStoreList.filter(data => {
+  //       return Object.keys(data).some(platform_type => {
+  //         return (
+  //           String(data[platform_type]) == "1"
+  //         )
+  //       })
+  //     })
+  //   }
+
+  // }
 
 }
 </script>

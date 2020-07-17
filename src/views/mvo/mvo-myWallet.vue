@@ -55,7 +55,7 @@ export default {
     login() {
       this.$store.dispatch('CheckAccount', this.loginForm).then((result) => {
         if(result.code == 200){
-          this.$router.push({name: 'mvo-myWalletBalance',params:{buyer_id:result.data.buyer_id, account_name:this.loginForm.account_name}});
+          this.$router.push({name: 'mvo-myWalletBalance',params:{buyer_id:result.data, account_name:this.loginForm.account_name}});
         }else {
           alert("Wrong password or username!")
         }

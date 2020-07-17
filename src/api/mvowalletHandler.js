@@ -23,7 +23,7 @@ export function getFund(buyer_id) {
   return request({
     url: '/wallet/getFund',
     method: 'post',
-    data: buyer_id
+    data: {buyer_id}
   })
 }
 

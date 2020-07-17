@@ -18,7 +18,7 @@
           </el-col>
         </el-row>
 
-        <el-table  :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'15px'}" :data="filteredProductData"
+        <el-table  :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'15px'}" :data="filteredProductData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
                    :header-cell-style="{background:'#f0f9eb', fontFamily:'Helvetica',fontSize:'14px'}" style="width: 100%; margin-top: 2%">
           <el-table-column prop="pro_id" sortable label="Product ID" />
           <el-table-column prop="sku_cd" label="SKU Code" />
@@ -38,11 +38,15 @@
           <el-col :span="8"><div class="grid-content" /></el-col>
           <el-col :span="8">
             <div class="grid-content">
-              <div class="block">
+              <div class="block" style="alignment: center">
                 <el-pagination
-                  :page-size="20"
-                  layout="total, prev, pager, next"
-                  :total="1000"
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page="currentPage"
+                  :page-sizes="[10, 20, 30, 50, 100]"
+                  :page-size="pageSize"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total= this.filteredProductData.length
                 />
               </div>
             </div></el-col>
@@ -220,6 +224,10 @@ export default {
       productList: [],
       dialogVisible: false,
       scondition: '',
+      // 当前页
+      currentPage: 1,
+      // 每页多少条
+      pageSize: 10,
       addFormData: {
         product: {
           pro_id: '',
@@ -382,7 +390,16 @@ export default {
         })
       }).catch(() => {
       })
+    },
+    // 每页多少条
+    handleSizeChange(val) {
+      this.pageSize = val;
+    },
+    // 当前页
+    handleCurrentChange(val) {
+      this.currentPage = val;
     }
+
   },
   computed: {
     filteredProductData () {

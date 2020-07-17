@@ -92,12 +92,8 @@ export default {
             } else {
               alert("Register failed")
             }
-
           })
         }
-      })
-      this.$router.push({
-        name: 'mvo-myWallet'
       })
     }
   }

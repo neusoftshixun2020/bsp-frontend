@@ -8,7 +8,7 @@
                    :header-cell-style="{background:'#f0f9eb', fontFamily:'Helvetica',fontSize:'14px'}" style="width: 100%">
           <el-table-column prop="account_name" label="Account Name" />
           <el-table-column prop="available_money" label="Available Money" />
-          <el-table-column prop="withdrawing_money" label="Withdrawing" />
+          <el-table-column prop="withdrawing_money" label="Withdrawing Money" />
 
           <el-table-column label="Operation">
             <template slot-scope="scope">
@@ -33,7 +33,7 @@
               </el-form-item>
               <el-form-item>
                 <el-button style="width: 15%;margin-left: 30%; margin-top: 2%" type="info" @click.native="dialogVisible = false">Close</el-button>
-                <el-button style="width: 15%" type="primary" @click.native="record">Submit</el-button>
+                <el-button style="width: 15%" type="primary" @click.native="withdraw">Submit</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -53,10 +53,9 @@ export default {
     let account_name=this.$route.params.account_name;
     let buyer_id=this.$route.params.buyer_id;
     return{
-      buyer_id,
       passw:"password",
       icon:"el-input__icon el-icon-view",
-      account_fund:[{account_name:'this.account_name', available_money:200, withdrawing_money:0}],
+      account_fund:[{account_name:account_name, available_money:'', withdrawing_money:''}],
       dialogVisible: false,
       rules: {
         password: [
@@ -68,7 +67,8 @@ export default {
       },
       addFormData: {
         password:'',
-        withdraw_amount:''
+        withdraw_amount:'',
+        buyer_id
       }
     }
   },
@@ -90,18 +90,38 @@ export default {
     loadData() {
       this.$store.dispatch('GetFund',this.buyer_id).then((result) => {
         console.log(result)
-        this.account_fund.available_money = result.data.list.available_money,
-        this.account_fund.withdrawing_money = result.data.list.withdrawing_money
+        this.account_fund = result.data
       })
     },
     clickWithdraw(rowData) {
       this.dialogVisible = true
     },
+    withdraw() {
+      this.$refs.addFormData.validate(valid => {
+        if (valid) {
+          this.$store.dispatch('Withdraw', this.addFormData).then(result => {
+            if (result.code == 200) {
+              this.$message({
+                type: 'info',
+                message: `Withdraw Succeeded`
+              })
+            } else {
+              this.$message({
+                type: 'info',
+                message: `Withdraw Failed`
+              })
+            }
+            this.dialogVisible = false
+            this.loadData()
+          })
+        }
+      })
+    },
     record(rowData){
       // this.$router.push({name: 'mvo-myWalletBalance',params:{buyer_id:this.buyer_id}});
       this.$router.push({name: 'mvo-myWalletRecord'});
     }
-  },
+  }
 }
 
 </script>
