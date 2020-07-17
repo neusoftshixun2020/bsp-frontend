@@ -73,28 +73,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/mywallet',
-    component: Layout,
-    hidden: true,
-    children: [{
-      path: '/mywallet',
-      component: () => import('@/views/bvo/bvo-wallet/brand-wallerAccountRegister'),
-      name: 'mywallet',
-      meta: { title: 'My Wallet', icon: 'edit' }
-    }]
-  },
-  {
-    path: '/brand-gmcwallerAcount',
-    component: Layout,
-    hidden: true,
-    children: [{
-      path: '',
-      component: () => import('@/views/bvo/bvo-wallet/component/brand-gmcwallerAcount'),
-      name: '',
-      meta: { title: 'brand-gmcwallerAcount', icon: 'edit' }
-    }]
-  },
-  {
     path: '/mvo-myInfo',
     component: Layout,
     hidden: true,
@@ -242,6 +220,29 @@ export const asyncRoutes = [
         // meta: { title: 'Wishlist', icon: 'list' }
       },
       {
+        path: 'orderlist',
+        component: () => import('@/views/bvo/bvo-order/orderlist'),
+        name: 'orderlist',
+        meta: { title: 'Order List' }
+        // meta: { title: 'Wishlist', icon: 'list' }
+      },
+      {
+        path: 'order-payment',
+        component: () => import('@/views/bvo/bvo-order/order-payment'),
+        name: 'order-payment',
+        hidden:true,
+        meta: { title: 'Order Payment' }
+        // meta: { title: 'Wishlist', icon: 'list' }
+      },
+      {
+        path: 'order_delivery',
+        component: () => import('@/views/bvo/bvo-order/order_delivery'),
+        name: 'order_delivery',
+        hidden:true,
+        meta: { title: 'Tracking Delivery Status' }
+        // meta: { title: 'Wishlist', icon: 'list' }
+      },
+      {
         path: 'productDetail',
         component: () => import('@/views/bvo/bvo-wish/component/product-detail'),
         name: 'productDetail',
@@ -258,11 +259,25 @@ export const asyncRoutes = [
         // meta: { title: 'storeChoose', icon: 'list' }
       },
       {
-        path: 'mywallet',
-        component: () => import('@/views/bvo/bvo-wallet/brand-wallerAccountRegister'),
-        name: 'bvo-mywallet',
+        path: 'bvo_wallet_login',
+        component: () => import('@/views/bvo/bvo-wallet/bvo_wallet_login'),
+        name: 'bvo_wallet_login',
         meta: { title: 'My Wallet' }
-      }
+      },
+      {
+        path: 'bvo_wallet_register',
+        component: () => import('@/views/bvo/bvo-wallet/bvo_wallet_register'),
+        name: 'bvo_wallet_register',
+        hidden:true,
+        meta: { title: 'bvo_wallet_register' }
+      },
+      {
+        path: 'bvo_wallet_fund',
+        component: () => import('@/views/bvo/bvo-wallet/bvo_wallet_fund'),
+        name: 'bvo_wallet_fund',
+        hidden:true,
+        meta: { title: 'bvo_wallet_fund' }
+      },
     ]
   }
 ]
