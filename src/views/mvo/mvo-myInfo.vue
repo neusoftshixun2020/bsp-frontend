@@ -32,7 +32,7 @@
         type="textarea"
         placeholder="enter"
       /> -->
-      
+
       <quill-editor ref="text" style="height:300px; margin-left=100px" v-model="ruleForm.description"  :options="editorOption" >
      <div id="toolbar" slot="toolbar">
           <!-- Add a bold button -->
@@ -134,7 +134,7 @@ export default {
       },
       editorOption: {
           placeholder: "please enter your description",
-          theme: "snow", // or 'bubble' 
+          theme: "snow", // or 'bubble'
           modules: {
             toolbar: {
               container: '#toolbar'

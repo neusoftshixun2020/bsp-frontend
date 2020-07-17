@@ -179,10 +179,31 @@ export const asyncRoutes = [
         meta: { title: 'Order Management' }
       },
       {
-        path: 'upload-excel2',
-        component: () => import('@/views/excel/upload-excel'),
-        name: 'mywallet',
+        path: 'mvo-myWallet',
+        component: () => import('@/views/mvo/mvo-myWallet'),
+        name: 'mvo-myWallet',
         meta: { title: 'My Wallet' }
+      },
+      {
+        path: 'mvo-myWalletRegister',
+        component: () => import('@/views/mvo/mvo-myWalletRegister'),
+        name: 'mvo-myWalletRegister',
+        meta: { title: 'My Wallet Registion' },
+        hidden:true
+      },
+      {
+        path: 'mvo-myWalletBalance',
+        component: () => import('@/views/mvo/mvo-myWalletBalance'),
+        name: 'mvo-myWalletBalance',
+        meta: { title: 'My Balance' },
+        hidden:true
+      },
+      {
+        path: 'mvo-myWalletRecord',
+        component: () => import('@/views/mvo/mvo-myWalletRecord'),
+        name: 'mvo-myWalletRecord',
+        meta: { title: 'Withdraw Record' },
+        hidden:true
       }
     ]
   },
@@ -239,7 +260,7 @@ export const asyncRoutes = [
       {
         path: 'mywallet',
         component: () => import('@/views/bvo/bvo-wallet/brand-wallerAccountRegister'),
-        name: 'mywallet',
+        name: 'bvo-mywallet',
         meta: { title: 'My Wallet' }
       }
     ]

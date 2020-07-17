@@ -4,11 +4,11 @@
       <div style="margin-left:20%; margin-right:20%">
         <p class="title">My Stores</p>
         <div class="store">
-          <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="amazonStore"
+          <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="amazonStoreList"
                     :header-cell-style="{color: '#409EFF',fontSize:'18px',fontFamily:'Helvetica'}">
             <el-table-column prop="store_name" label="Amazon"/>
           </el-table>
-          <el-row :gutter="20">
+          <el-row :gutter="20" type="flex">
             <el-col :span="9"><div class="grid-content" /></el-col>
             <el-col :span="8">
               <div class="grid-content">
@@ -24,7 +24,7 @@
           </el-row>
         </div>
         <div class="store">
-          <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="ebayStore"
+          <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="ebayStoreList"
                     :header-cell-style="{color: '#409EFF',fontSize:'18px',fontFamily:'Helvetica'}">
             <el-table-column prop="store_name" label="eBay"/>
           </el-table>
@@ -51,35 +51,23 @@
 
         <el-dialog :visible.sync="dialogVisible" width="35%" :close-on-lick-modal="false">
           <div>
-            <el-form ref="addFormData" :model="addFormData" :rules="storeRule" label-width="100px" class="">
-              <el-row>
-                <el-col>
-                  <el-form-item label="Platform Type" label-width="160px">
-                    <el-select v-model="addFormData.store.plataeform_type" placeholder="Select Platform" style="width: 300px">
-                      <el-option
-                        v-for="item in options"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                      </el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col>
-                  <el-form-item label="Store Name" label-width="160px">
-                    <el-input v-model="addFormData.store.store_name" type="text" autocomplete="off" clearable style="width: 300px"/>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col>
-                  <el-form-item label="Seller ID" label-width="160px">
-                    <el-input v-model="addFormData.store.dsr_id" type="text" autocomplete="off" clearable style="width: 300px"/>
-                  </el-form-item>
-                </el-col>
-              </el-row>
+            <el-form ref="addFormData" :model="addFormData" :rules="storeRule" label-width="100px" status-icon>
+              <el-form-item label="Platform Type" prop="platform_type" label-width="160px">
+                <el-select v-model="addFormData.store.platform_type" placeholder="Select Platform" style="width: 300px">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="Store Name" prop="store_name" label-width="160px">
+                <el-input v-model="addFormData.store.store_name" type="text" autocomplete="off" clearable style="width: 300px"/>
+              </el-form-item>
+              <el-form-item label="Seller ID" prop="dsr_id" label-width="160px">
+                <el-input v-model="addFormData.store.dsr_id" type="text" autocomplete="off" clearable style="width: 300px"/>
+              </el-form-item>
 <!--              <el-row>-->
 <!--                <el-col>-->
 <!--                  <el-form-item label="Marketplace ID" label-width="160px">-->
@@ -87,30 +75,15 @@
 <!--                  </el-form-item>-->
 <!--                </el-col>-->
 <!--              </el-row>-->
-              <el-row>
-                <el-col>
-                  <el-form-item label="MWS Auth Token" label-width="160px">
-                    <el-input v-model="addFormData.store.eba_ebay_authorization.token" type="text" autocomplete="off" clearable style="width: 300px"/>
-                  </el-form-item>
-                </el-col>
-              </el-row>
+              <el-form-item label="MWS Auth Token" prop="token" label-width="160px">
+                <el-input v-model="addFormData.store.eba_ebay_authorization.token" type="text" autocomplete="off" clearable style="width: 300px"/>
+              </el-form-item>
+              <el-form-item>
+                <el-button style="width: 20%; margin-left: 18%;margin-top: 5%" type="info" @click.native="dialogVisible = false">Close</el-button>
+                <el-button style="width: 20%; margin-left: 5%" type="primary" @click.native="addStore">Submit</el-button>
+              </el-form-item>
+            </el-form>
 
-            </el-form>s
-            <el-row :gutter="100">
-              <el-col :span="7">
-                <div class="grid-content" />
-              </el-col>
-              <el-col :span="4">
-                <div class="grid-content">
-                  <el-button style="width: 1230%" type="info" @click.native="dialogVisible = false">Close</el-button>
-                </div>
-              </el-col>
-              <el-col :span="4">
-                <div class="grid-content">
-                  <el-button style="width: 1230%" type="primary" @click.native="addStore">Submit</el-button>
-                </div>
-              </el-col>
-            </el-row>
           </div>
         </el-dialog>
       </div>
@@ -126,7 +99,11 @@ export default {
     return {
       amazonStoreList: [],
       ebayStoreList: [],
+      user_id:'',
+      dsrid:'',
       dialogVisible: false,
+      total1:'',
+      total2:'',
       options: [{
         value: '1',
         label: 'Amazon'
@@ -134,9 +111,17 @@ export default {
         value: '2',
         label: 'eBay'
       }],
+      ebayStore:{
+        dsr_id:'',
+        platform_type:'2'
+      },
+      amazonStore:{
+        dsr_id:'',
+        platform_type:'1'
+      },
       addFormData: {
         store:{
-          plataeform_type: '',
+          platform_type: '',
           store_name: '',
           dsr_id: '',
           // goa_government_area:{
@@ -147,12 +132,14 @@ export default {
           }
         }
       },
+
       storeRule: {
-        store_name: [{ required: true, message: 'Store Name can not be null', trigger: 'blur' }],
-        plataeform_type: [{ required: true, message: 'Platform Type can not be null', trigger: 'blur' }],
-        dsr_id: [{ required: true, message: 'Seller ID can not be null', trigger: 'blur' }],
-        token: [{ required: true, message: 'MWS Auth Token can not be null', trigger: 'blur' }],
+        // store_name: [{ required: true, message: 'Store Name can not be null', trigger: 'blur' }],
+        // platform_type: [{ required: true, message: 'Platform Type can not be null', trigger: 'blur' }],
+        // dsr_id: [{ required: true, message: 'Seller ID can not be null', trigger: 'blur' }],
+        // token: [{ required: true, message: 'MWS Auth Token can not be null', trigger: 'blur' }],
       }
+
     }
   },
   mounted: function() {
@@ -160,22 +147,31 @@ export default {
   },
   methods: {
     loadData() {
-      const userid = this.$store.getters.userid
-      console.log(userid)
-      this.$store.dispatch('GetAmazonStores').then((result) => {
-        this.amazonStoreList = result.data
+      this.user_id = this.$store.getters.userid
+      this.$store.dispatch('GetDsr',this.user_id).then((result) =>{
+        this.amazonStore.dsr_id = result.data[0].dsr_id
+        this.ebayStore.dsr_id = result.data[0].dsr_id
         console.log(result.data)
-      })
-      this.$store.dispatch('GetEBayStores').then((result) => {
-        this.ebayStoreList = result.data
-        console.log(result.data)
-      })
+        console.log(result.data[0])
+        console.log(result.data[0].dsr_id)
+        this.amazonStore.dsr_id = parseInt(this.amazonStore.dsr_id)
+        this.ebayStore.dsr_id = parseInt(this.ebayStore.dsr_id)
+        this.$store.dispatch('GetAmazonStores',this.amazonStore).then((result) => {
+          this.amazonStoreList = result.data
+          console.log(result.data)
+        })
+        this.$store.dispatch('GetEBayStores',this.ebayStore).then((result) => {
+          this.ebayStoreList = result.data
+          console.log(result.data)
 
+        })
+      })
     },
-    clickAdd(){
+
+      clickAdd(){
       this.addFormData = {
         store:{
-          plataeform_type: '',
+          platform_type: '',
           store_name: '',
           dsr_id: '',
 
@@ -215,28 +211,28 @@ export default {
         }
       })
     }
-  },
-  computed: {
-    ebayStore(){
-      return this.ebayStoreList.filter(data => {
-        return Object.keys(data).some(plataeform_type => {
-          return (
-            String(data[plataeform_type]) == "2"
-          )
-        })
-      })
-    },
-    amazonStore(){
-      return this.amazonStoreList.filter(data => {
-        return Object.keys(data).some(plataeform_type => {
-          return (
-            String(data[plataeform_type]) == "1"
-          )
-        })
-      })
-    }
-
   }
+  // computed: {
+  //   ebayStore(){
+  //     return this.ebayStoreList.filter(data => {
+  //       return Object.keys(data).some(platform_type => {
+  //         return (
+  //           String(data[platform_type]) == "2"
+  //         )
+  //       })
+  //     })
+  //   },
+  //   amazonStore(){
+  //     return this.amazonStoreList.filter(data => {
+  //       return Object.keys(data).some(platform_type => {
+  //         return (
+  //           String(data[platform_type]) == "1"
+  //         )
+  //       })
+  //     })
+  //   }
+
+  // }
 
 }
 </script>

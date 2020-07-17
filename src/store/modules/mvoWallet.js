@@ -1,11 +1,11 @@
-import {getAmazonStores, getEBayStores, addStore, getDsr} from '../../api/storeHandler'
+import {checkAccount, addAccount, getFund, withdraw, getTransactionalRecord} from '../../api/mvowalletHandler'
 
 const product = {
   actions: {
 
-    GetAmazonStores({ commit },data) {
+    CheckAccount({ commit },data) {
       return new Promise((resolve, reject) => {
-        getAmazonStores(data).then(response => {
+        checkAccount(data).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
@@ -13,9 +13,9 @@ const product = {
         })
       })
     },
-    GetEBayStores({ commit },data) {
+    AddAccount({ commit },data) {
       return new Promise((resolve, reject) => {
-        getEBayStores(data).then(response => {
+        addAccount(data).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
@@ -23,9 +23,9 @@ const product = {
         })
       })
     },
-    AddStore({ commit }, data) {
+    GetFund({ commit }, data) {
       return new Promise((resolve, reject) => {
-        addStore(data.store).then(response => {
+        getFund(data).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
@@ -33,9 +33,19 @@ const product = {
         })
       })
     },
-    GetDsr ({ commit },user_id) {
+    Withdraw ({ commit },data) {
       return new Promise((resolve, reject) => {
-        getDsr(user_id).then(response => {
+        withdraw(data).then(response => {
+          commit('')
+          resolve(response)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    GetTransactionRecord ({ commit },data) {
+      return new Promise((resolve, reject) => {
+        getTransactionalRecord(data).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {
