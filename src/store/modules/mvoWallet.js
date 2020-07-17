@@ -1,4 +1,4 @@
-import {checkAccount, addAccount, getFund, withdraw, getTransactionRecord} from '../../api/mvowalletHandler'
+import {checkAccount, addAccount, getFund, withdraw, getTransactionalRecord} from '../../api/mvowalletHandler'
 
 const product = {
   actions: {
@@ -45,7 +45,7 @@ const product = {
     },
     GetTransactionRecord ({ commit },data) {
       return new Promise((resolve, reject) => {
-        getTransactionRecord(data.walletAccount).then(response => {
+        getTransactionalRecord(data).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {

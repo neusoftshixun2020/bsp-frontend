@@ -35,9 +35,9 @@ export function withdraw(wdata) {
   })
 }
 
-export function getTransactionRecord(data) {
+export function getTransactionalRecord(data) {
   return request({
-    url: '/wallet/getTransactionRecord',
+    url: '/wallet/getTransactionalRecord',
     method: 'post',
     data: data
   })

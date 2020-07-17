@@ -132,8 +132,8 @@ export default {
     },
     record(rowData){
       console.log("=========buyerid======")
-      console.log(buyer_id)
-      this.$router.push({name: 'mvo-myWalletBalance',params:{buyer_id:this.buyer_id}});
+      console.log(this.addFormData.buyer_id)
+      this.$router.push({name: 'mvo-myWalletRecord',params:{buyer_id:this.addFormData.buyer_id}});
 
     },
     getParams(){
