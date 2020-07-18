@@ -105,7 +105,8 @@ export default {
         this.addFormData.buyer_id = result.data.buyer_id
         this.addFormData.walletAccountFund.available_money = parseFloat(result.data.available_money)
         // this.account_fund[0].withdrawing_money = result.data.withdrawing_money
-        console.log(this.account_fund)
+       console.log('this.account_fund')
+       console.log(this.account_fund)
         // console.log("=============buyer_id:==============")
         // console.log(this.addFormData.buyer_id)
       })
