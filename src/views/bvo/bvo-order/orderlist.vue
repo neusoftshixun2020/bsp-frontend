@@ -471,6 +471,9 @@
      // this.loadGetAwaitingPaymentData();
     },
     methods: {
+      closeDialog() {
+      this.dialogVisible = false
+    },
       track(rowData,rowindex){
         this.dialogVisible = true
         this.$store.dispatch('GetTrack',rowData).then((result) => {
