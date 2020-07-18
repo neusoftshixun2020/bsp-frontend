@@ -19,7 +19,7 @@ import './permission' // permission control
 import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
-
+import moment from 'moment'
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -42,6 +42,17 @@ Vue.use(Element, {
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
+
+Vue.filter("dateFmt", (input, formatString = "YYYY-MM-DD") => {
+  //es5函数参数设置默认值
+  //const lastFormatString = formatString || 
+
+  
+   // moment(input) 把时间字符串转成时间对象
+   // format(formatString) 把时间对象，按照指定格式，格式化成符合条件的字符串
+  return moment(input).format(formatString)
+})
+
 
 Vue.config.productionTip = false
 

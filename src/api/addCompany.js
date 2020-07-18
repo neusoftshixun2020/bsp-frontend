@@ -86,23 +86,44 @@ export function updateBrand(brd_id,man_id,name_en,name_cn, img_url) {
 }
 
 
-export function getAllByFilter (man_id) {
+export function getManByFilter (man_id,name_en, name_cn, gmc_report_type, gmc_report_url,
+  description, created_by, creation_date, last_update_by, last_update_date, call_cnt, remark, sts_cd, user_id) {
   return request({
     url: 'manufacturer/getManByFilter',
     method: 'post',
     data: {
-      man_id
+      man_id,
+      name_en,
+      name_cn,
+      gmc_report_type ,
+      gmc_report_url,
+      description,
+      created_by,
+      creation_date,
+      last_update_by,
+      last_update_date,
+      call_cnt, remark,
+      sts_cd,
+      user_id
     }
   })
 }
 
 
-export function getBrandByFilter(man_id) {
+export function getBrandByFilter(data) {
   return request({
     url: 'brand/getBrandByFilter',
     method: 'post',
-    data: {
-      man_id
-    }
+    data: data
+     
+  })
+}
+
+export function deleteAllBrand(data) {
+  return request({
+    url: 'brand/deleteAllBrand',
+    method: 'post',
+    data: data
+     
   })
 }

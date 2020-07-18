@@ -7,10 +7,7 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
+
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -60,19 +57,11 @@ export const constantRoutes = [
     component: () => import('@/views/login/auth-redirect'),
     hidden: true
   },
-  {
-    path: '/404',
-    component: () => import('@/views/error-page/404'),
-    hidden: true
-  },
-  {
-    path: '/401',
-    component: () => import('@/views/error-page/401'),
-    hidden: true
-  },
+
   {
     path: '/',
     component: Layout,
+    hidden: true,
     redirect: '/dashboard',
     children: [
       {
@@ -84,114 +73,14 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/documentation',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/guide',
-    component: Layout,
-    redirect: '/guide/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/guide/index'),
-        name: 'Guide',
-        meta: { title: 'Guide', icon: 'guide', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/profile',
-    component: Layout,
-    redirect: '/profile/index',
-    hidden: true,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/profile/index'),
-        name: 'Profile',
-        meta: { title: 'Profile', icon: 'user', noCache: true }
-      }
-    ]
-  },
-  /* {
-    path: '/wishlist',
-    component: Layout,
-   // redirect: '/wishlist/list',
-    hidden: true,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/bsp/wishList'),
-        name: 'WishList',
-        meta: { title: 'WishList', icon: 'user', noCache: true }
-      }
-    ]
-  },*/
-  /* {
-    path: '/wishlist',
-    component: () => import('@/views/bsp/wishList'),
-    hidden: false
-  },*/
-  {
-    path: '/wishlist',
-    component: Layout,
-    // hidden: true,
-    children: [{
-      path: 'list',
-      component: () => import('@/views/bsp/wishList'),
-      name: 'wishlist',
-      meta: { title: 'Wishlist', icon: 'list' }
-    }]
-  },
-  {
-    path: '/productDetail',
-    component: Layout,
-    hidden: true,
-    children: [{
-      path: '',
-      component: () => import('@/views/bsp/components/product-detail'),
-      name: 'productDetail',
-      meta: { title: 'Product Details', icon: 'list' }
-    }]
-  },
-  {
-    path: '/mywallet',
-    component: Layout,
-    children: [{
-      path: '/mywallet',
-      component: () => import('@/views/bvo/bvo-wallet/brand-wallerAccountRegister'),
-      name: 'mywallet',
-      meta: { title: 'My Wallet', icon: 'edit' }
-    }]
-  },
-  {
-    path: '/brand-gmcwallerAcount',
-    component: Layout,
-    hidden: true,
-    children: [{
-      path: '',
-      component: () => import('@/views/bvo/bvo-wallet/component/brand-gmcwallerAcount'),
-      name: '',
-      meta: { title: 'brand-gmcwallerAcount', icon: 'edit' }
-    }]
-  },
-  {
     path: '/mvo-myInfo',
     component: Layout,
+    hidden: true,
     children: [{
       path: '/mvo-myInfo',
       component: () => import('@/views/mvo/mvo-myInfo'),
       name: 'mvo-myInfo',
-      meta: { title: 'My Infomation' }
+      meta: { title: 'My Infomation',icon: 'edit' }
     }]
   },
 
@@ -206,28 +95,7 @@ export const constantRoutes = [
       meta: { title: 'Company Information', icon: 'edit' }
     }]
   }
-  // {
-  //   path: '/goodsStore',
-  //   component: Layout,
-  //  // hidden: true,
-  //   children: [{
-  //     path: 'goodsStore',
-  //     component: ()=>import('@/views/bvo/bvo-store/bvo-myStore'),
-  //     name: 'goodsStore',
-  //     meta: { title: 'Goods Store', icon: 'list' }
-  //   }]
-  // },
-  // {
-  //   path: '/AddStore',
-  //   component: Layout,
-  //   hidden: true,
-  //   children: [{
-  //     path: '',
-  //     component: ()=>import('@/views/bvo/bvo-store/component/bvo-storeAdd'),
-  //     name: '',
-  //    meta: { title: 'AddStore', icon: 'list' }
-  //   }]
-  // }
+
 ]
 
 /**
@@ -235,262 +103,26 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  {
-    path: '/permission',
+
+ {
+    path: '/Administrator',
     component: Layout,
-    redirect: '/permission/page',
-    alwaysShow: true, // will always show the root menu
-    name: 'Permission',
+    name: 'Administrator',
     meta: {
-      title: 'Permission',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'page',
-        component: () => import('@/views/permission/page'),
-        name: 'PagePermission',
-        meta: {
-          title: 'Page Permission',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'directive',
-        component: () => import('@/views/permission/directive'),
-        name: 'DirectivePermission',
-        meta: {
-          title: 'Directive Permission'
-          // if do not set roles, means: this page does not require permission
-        }
-      },
-      {
-        path: 'role',
-        component: () => import('@/views/permission/role'),
-        name: 'RolePermission',
-        meta: {
-          title: 'Role Permission',
-          roles: ['admin']
-        }
-      }
-    ]
-  },
-
-  {
-    path: '/icon',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/icons/index'),
-        name: 'Icons',
-        meta: { title: 'Icons', icon: 'icon', noCache: true }
-      }
-    ]
-  },
-
-  /** when your routing map is too long, you can split it into small modules **/
-  componentsRouter,
-  chartsRouter,
-  nestedRouter,
-  tableRouter,
-
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/list',
-    name: 'Example',
-    meta: {
-      title: 'Example',
-      icon: 'el-icon-s-help'
-    },
-    children: [
-      {
-        path: 'create',
-        component: () => import('@/views/example/create'),
-        name: 'CreateArticle',
-        meta: { title: 'Create Article', icon: 'edit' }
-      },
-      {
-        path: 'edit/:id(\\d+)',
-        component: () => import('@/views/example/edit'),
-        name: 'EditArticle',
-        meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
-        hidden: true
-      },
-      {
-        path: 'list',
-        component: () => import('@/views/example/list'),
-        name: 'ArticleList',
-        meta: { title: 'Article List', icon: 'list' }
-      }
-    ]
-  },
-
-  {
-    path: '/tab',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/tab/index'),
-        name: 'Tab',
-        meta: { title: 'Tab', icon: 'tab' }
-      }
-    ]
-  },
-
-  {
-    path: '/error',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'ErrorPages',
-    meta: {
-      title: 'Error Pages',
-      icon: '404'
-    },
-    children: [
-      {
-        path: '401',
-        component: () => import('@/views/error-page/401'),
-        name: 'Page401',
-        meta: { title: '401', noCache: true }
-      },
-      {
-        path: '404',
-        component: () => import('@/views/error-page/404'),
-        name: 'Page404',
-        meta: { title: '404', noCache: true }
-      }
-    ]
-  },
-
-  {
-    path: '/error-log',
-    component: Layout,
-    children: [
-      {
-        path: 'log',
-        component: () => import('@/views/error-log/index'),
-        name: 'ErrorLog',
-        meta: { title: 'Error Log', icon: 'bug' }
-      }
-    ]
-  },
-
-  {
-    path: '/excel',
-    component: Layout,
-    redirect: '/excel/export-excel',
-    name: 'Excel',
-    meta: {
-      title: 'Excel',
+      title: 'Administrator',
       icon: 'excel'
     },
     children: [
       {
-        path: 'export-excel',
-        component: () => import('@/views/excel/export-excel'),
-        name: 'ExportExcel',
-        meta: { title: 'Export Excel' }
+        path: 'adminAudit',
+        component: () => import('@/views/admin/adminAudit'),
+        name: 'adminAudit',
+        meta: { title: 'Money Audit' }
       },
-      {
-        path: 'export-selected-excel',
-        component: () => import('@/views/excel/select-excel'),
-        name: 'SelectExcel',
-        meta: { title: 'Export Selected' }
-      },
-      {
-        path: 'export-merge-header',
-        component: () => import('@/views/excel/merge-header'),
-        name: 'MergeHeader',
-        meta: { title: 'Merge Header' }
-      },
-      {
-        path: 'upload-excel',
-        component: () => import('@/views/excel/upload-excel'),
-        name: 'UploadExcel',
-        meta: { title: 'Upload Excel' }
-      }
+
     ]
   },
 
-  {
-    path: '/zip',
-    component: Layout,
-    redirect: '/zip/download',
-    alwaysShow: true,
-    name: 'Zip',
-    meta: { title: 'Zip', icon: 'zip' },
-    children: [
-      {
-        path: 'download',
-        component: () => import('@/views/zip/index'),
-        name: 'ExportZip',
-        meta: { title: 'Export Zip' }
-      }
-    ]
-  },
-
-  {
-    path: '/pdf',
-    component: Layout,
-    redirect: '/pdf/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/pdf/index'),
-        name: 'PDF',
-        meta: { title: 'PDF', icon: 'pdf' }
-      }
-    ]
-  },
-  {
-    path: '/pdf/download',
-    component: () => import('@/views/pdf/download'),
-    hidden: true
-  },
-
-  {
-    path: '/theme',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/theme/index'),
-        name: 'Theme',
-        meta: { title: 'Theme', icon: 'theme' }
-      }
-    ]
-  },
-
-  {
-    path: '/clipboard',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/clipboard/index'),
-        name: 'ClipboardDemo',
-        meta: { title: 'Clipboard', icon: 'clipboard' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://github.com/PanJiaChen/vue-element-admin',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true },
   {
     path: '/mvo',
     component: Layout,
@@ -519,16 +151,30 @@ export const asyncRoutes = [
         meta: { title: 'Product Category' }
       },
       {
-        path: 'upload-excel1',
-        component: () => import('@/views/excel/upload-excel'),
-        name: 'ordermanagement',
+        path: 'myorder',
+        component: () => import('@/views/mvo/mvo-order'),
+        name: 'MVOOrderManagement',
         meta: { title: 'Order Management' }
       },
       {
-        path: 'upload-excel2',
-        component: () => import('@/views/excel/upload-excel'),
-        name: 'mywallet',
+        path: 'mvo-myWallet',
+        component: () => import('@/views/mvo/mvo-myWallet'),
+        name: 'mvo-myWallet',
         meta: { title: 'My Wallet' }
+      },
+      {
+        path: 'mvo-myWalletRegister',
+        component: () => import('@/views/mvo/mvo-myWalletRegister'),
+        name: 'mvo-myWalletRegister',
+        meta: { title: 'My Wallet Registion' },
+        hidden:true
+      },
+      {
+        path: 'mvo-myWalletBalance',
+        component: () => import('@/views/mvo/mvo-myWalletBalance'),
+        name: 'mvo-myWalletBalance',
+        meta: { title: 'My Balance' },
+        hidden:true
       }
     ]
   },
@@ -548,14 +194,14 @@ export const asyncRoutes = [
         meta: { title: 'My Infomation' }
       },
       {
-        path: 'goodsStore',
-        component: () => import('@/views/bvo/bvo-store/bvo-myStore'),
-        name: 'goodsstore',
-        meta: { title: 'Goods Store' }
+        path: 'myStore',
+        component: () => import('@/views/bvo/bvo-store/component/bvo-myStore'),
+        name: 'mystore',
+        meta: { title: 'My Store' }
       },
       {
-        path: 'export-merge-header',
-        component: () => import('@/views/excel/merge-header'),
+        path: 'goodslist',
+        component: () => import('@/views/bvo/bvo-productScan/bvo-productScan'),
         name: 'goodslist',
         meta: { title: 'Goods List' }
       },
@@ -567,20 +213,66 @@ export const asyncRoutes = [
         // meta: { title: 'Wishlist', icon: 'list' }
       },
       {
-        path: 'upload-excel1',
-        component: () => import('@/views/excel/upload-excel'),
-        name: 'ordermanagement',
-        meta: { title: 'Order Management' }
+        path: 'orderlist',
+        component: () => import('@/views/bvo/bvo-order/orderlist'),
+        name: 'orderlist',
+        meta: { title: 'Order List' }
+        // meta: { title: 'Wishlist', icon: 'list' }
       },
       {
-        path: 'mywallet',
-        component: () => import('@/views/bvo/bvo-wallet/brand-wallerAccountRegister'),
-        name: 'mywallet',
+        path: 'order-payment',
+        component: () => import('@/views/bvo/bvo-order/order-payment'),
+        name: 'order-payment',
+        hidden:true,
+        meta: { title: 'Order Payment' }
+        // meta: { title: 'Wishlist', icon: 'list' }
+      },
+      {
+        path: 'order_delivery',
+        component: () => import('@/views/bvo/bvo-order/order_delivery'),
+        name: 'order_delivery',
+        hidden:true,
+        meta: { title: 'Tracking Delivery Status' }
+        // meta: { title: 'Wishlist', icon: 'list' }
+      },
+      {
+        path: 'productDetail',
+        component: () => import('@/views/bvo/bvo-wish/component/product-detail'),
+        name: 'productDetail',
+        hidden:true,
+        meta: { title: 'productDetail' }
+        // meta: { title: 'Wishlist', icon: 'list' }
+      },
+      {
+        path: 'storechoose',
+        component: () => import('@/views/bvo/bvo-wish/storechoose'),
+        name: 'storechoose',
+        hidden:true,
+        meta: { title: 'storeChoose' }
+        // meta: { title: 'storeChoose', icon: 'list' }
+      },
+      {
+        path: 'bvo_wallet_login',
+        component: () => import('@/views/bvo/bvo-wallet/bvo_wallet_login'),
+        name: 'bvo_wallet_login',
         meta: { title: 'My Wallet' }
-      }
+      },
+      {
+        path: 'bvo_wallet_register',
+        component: () => import('@/views/bvo/bvo-wallet/bvo_wallet_register'),
+        name: 'bvo_wallet_register',
+        hidden:true,
+        meta: { title: 'bvo_wallet_register' }
+      },
+      {
+        path: 'bvo_wallet_fund',
+        component: () => import('@/views/bvo/bvo-wallet/bvo_wallet_fund'),
+        name: 'bvo_wallet_fund',
+        hidden:true,
+        meta: { title: 'bvo_wallet_fund' }
+      },
     ]
   }
-
 ]
 
 const createRouter = () => new Router({

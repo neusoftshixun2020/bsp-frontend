@@ -13,16 +13,6 @@ const product = {
         })
       })
     },
-    GetProductByTitle({ commit }, TITLE) {
-      return new Promise((resolve, reject) => {
-        getProductsByTitle(TITLE).then(response => {
-          commit('')
-          resolve(response)
-        }).catch(error => {
-          reject(error)
-        })
-      })
-    },
     AddAndUpdateProduct({ commit }, data) {
       return new Promise((resolve, reject) => {
         addAndupdateProduct(data.product, data.operationFlag).then(response => {

@@ -15,8 +15,8 @@
         highlight-current-row
         width="80%"
       >
-      <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
-        </el-table-column>
+      <!-- <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
+        </el-table-column> -->
         <el-table-column align="center" prop = 'name_cn' label = 'Company Name(CN)'>
         </el-table-column>
         <el-table-column align="center" prop = 'name_en' label = 'Company Name(EN)'>
@@ -27,12 +27,21 @@
         </el-table-column>
          <el-table-column align="center"  label = 'Operations'>
          <template slot-scope = 'scope'>
-           <el-button type = 'primary' size="small" @click = 'EditCompany(scope.row)'>Modify</el-button>
+           <el-button type = 'primary' size="small" icon="el-icon-edit" @click = 'EditCompany(scope.row)'>Modify</el-button>
          </template>
        </el-table-column>
       </el-table>
+       <el-row :gutter="20">
+      <el-col :span="8"><div class="grid-content" /></el-col>
+      <el-col :span="8">
+        <div class="grid-content">
+          <div class="block">
+          </div>
+        </div></el-col>
+      <el-col :span="8"><div class="grid-content" /></el-col>
+    </el-row>
       <br>
-      <el-button type="primary" @click="showAddInfo" style="margin-left:10px">Add</el-button>
+      <el-button type="primary" @click="showAddInfo" plain icon="el-icon-plus" style="margin-left:10px">Add</el-button>
     </div>
 
 <!--品牌信息-->
@@ -42,16 +51,17 @@
     <div class="BrandTable">
       <el-table
         ref="multipleTable1"
-        :data="brandList"
+         :data="brandList.slice((currentPage-1)*PageSize,currentPage*PageSize)"
         element-loading-text="Loading"
         fit
         border
+         @selection-change="selschange"
         highlight-current-row
         width="80%"
       >
-        <el-table-column type="selection" />
-        <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
-        </el-table-column>
+      <el-table-column type="selection" v-model="orders"/>
+        <!-- <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
+        </el-table-column> -->
          <el-table-column align="center" prop = 'name_en' label = 'Brand Name(EN)'>
         </el-table-column>
           <el-table-column align="center" label="image"  >
@@ -61,14 +71,31 @@
         </el-table-column>
            <el-table-column align="center"  label = 'Operations'>
           <template slot-scope="scope">
-            <el-button type = 'info' size="mini" @click.native ='EditBrand(scope.row)'>edit</el-button>
-            <el-button type = 'danger' size="mini" @click.native ='deleteBrand(scope.row)'>delete</el-button>
+            <el-button type = 'info' size="mini" icon="el-icon-edit" @click.native ='EditBrand(scope.row)'>Modify</el-button>
+            <el-button type = 'danger' size="mini" icon="el-icon-delete" @click.native ='deleteBrand(scope.row)'>delete</el-button>
           </template>
         </el-table-column>
       </el-table>
+        <el-row :gutter="20">
+      <el-col :span="8"><div class="grid-content" /></el-col>
+      <el-col :span="8">
+        <div class="grid-content">
+          <div class="block">
+             <el-pagination @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"
+                     :current-page="currentPage"
+                     :page-sizes="pageSizes"
+                     :page-size="PageSize" layout="total, sizes, prev, pager, next, jumper"
+                     :total="total">
+      </el-pagination>
+          </div>
+        </div></el-col>
+      <el-col :span="8"><div class="grid-content" /></el-col>
+    </el-row>
     </div>
         <br>
-      <el-button type="primary" @click="showaddBrand" style="margin-left:90px">Add</el-button>
+      <el-button type="primary" @click="showaddBrand" plain icon="el-icon-plus" style="margin-left:90px">Add</el-button>
+    <el-button type="primary"  size="small" style="margin-left:50px" @click="deleteAll" :disabled="orders.length===0">DeleteAll</el-button>
 
 
     <!--修改company弹窗-->
@@ -88,15 +115,6 @@
             </el-input>
           </el-col>
         </el-form-item>
-
-         <el-form-item label="Brief Introdution"  label-width="130px" prop='decription'>
-      <el-input
-        v-model="ProductData.decription"
-        :autosize="{ minRows: 8, maxRows: 8}"
-        type="textarea"
-        placeholder="enter"
-      />
-    </el-form-item>
 
         <el-form-item label="GMC Report Type(1-TUV , 2-UL)" label-width="130px"  prop='gmc_report_type'>
          <el-col :span="8">
@@ -125,19 +143,18 @@
  <!--添加brand弹窗-->
     <el-dialog title='Add Brand' :visible.sync = 'dialogVisible1' width = '50%' :close-on-lick-modal = 'false'>
       <el-form :model = 'BrandData'  ref = 'BrandData' label-width = '0px' class = ''>
-         <el-form-item label="Company ID" label-width="130px"  prop='man_id'>
+         <!-- <el-form-item label="Company ID" label-width="130px"  prop='man_id'>
           <el-col :span="8">
             <el-input type='text' v-model='BrandData.man_id'  autocomplete='off' placeholder='Title'>
             </el-input>
           </el-col>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="Brand Name(EN)" label-width="130px"  prop='name_en'>
           <el-col :span="8">
             <el-input type='text' v-model='BrandData.name_en'  autocomplete='off' placeholder='Title'>
             </el-input>
           </el-col>
         </el-form-item>
-
          <el-form-item label-width="130px" >
          <div class="divcss5">Recommended image size 160*80 JPG/PNG format</div>
         </el-form-item>
@@ -170,12 +187,12 @@
 <!--修改brand弹窗-->
     <el-dialog title='Edit Brand' :visible.sync = 'dialogVisible2' width = '50%' :close-on-lick-modal = 'false'>
       <el-form :model = 'BrandData'  ref = 'BrandData' label-width = '0px' class = ''>
-        <el-form-item label="Company ID" label-width="130px"  prop='man_id'>
+        <!-- <el-form-item label="Company ID" label-width="130px"  prop='man_id'>
           <el-col :span="8">
             <el-input type='text' v-model='BrandData.man_id'  autocomplete='off' placeholder='Title'>
             </el-input>
           </el-col>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="Brand Name(EN)" label-width="130px"  prop='name_en'>
           <el-col :span="8">
             <el-input type='text' v-model='BrandData.name_en'  autocomplete='off' placeholder='Title'>
@@ -221,6 +238,7 @@ export default {
   name: 'MergeHeader',
   data() {
     return {
+      orders:[],
       companylist: [],
       brandList:[],
       downloadLoading: false,
@@ -230,8 +248,17 @@ export default {
       head:'Company Information',
       dialogImageUrl: '',
       img_id: '',
+      // 默认显示第几页
+      currentPage:1,
+      // 总条数，根据接口获取数据长度(注意：这里不能为空)
+      total:1,
+      // 个数选择器（可修改）
+      pageSizes:[1,2,3,4],
+      // 默认每页显示的条数（可修改）
+      PageSize:2,
 
       ProductData:{
+         user_id: '',
           man_id:'',
           name_cn:'',
           name_en:'',
@@ -252,27 +279,40 @@ export default {
     this.loadData()
   },
   methods: {
-  //   uploadImage:{
-
-  //   },
-  // chooseImage:{
-
-  // },
+     selschange(orders){
+        this.orders=orders
+        console.log("orders")
+        console.log( this.orders)
+       },
+      // 分页
+      // 每页显示的条数
+      handleSizeChange(val) {
+        // 改变每页显示的条数
+        this.PageSize=val
+        // 注意：在改变每页显示的条数时，要将页码显示到第一页
+        this.currentPage=1
+      },
+      // 显示第几页
+      handleCurrentChange(val) {
+        // 改变默认的页数
+        this.currentPage=val
+      },
     loadData () {
-      this.$store.dispatch('GetAllByFilter',this.ProductData.man_id).then((result) => {
-        // console.log("result.data-----companylist")
-        // console.log(result.data)
-        // console.log("result.data.list-----companylist")
-        this.companylist = result.data.list
-        // console.log(result.data.list)
+      this.ProductData.user_id=this.$store.getters.userid
+      console.log( 'this.ProductData')
+      console.log(this.ProductData)
+      this.$store.dispatch('GetManByFilter',this.ProductData).then((result) => {
+      console.log("result.data.list-----companylist")
+      this.companylist = result.data.list
+      console.log(this.companylist)
+       this.ProductData.man_id=this.companylist[0].man_id
+      console.log(this.ProductData)
+       this.$store.dispatch('GetBrandByFilter',this.ProductData).then((result) => {
+      this.total = result.data.length;
+      this.brandList = result.data//此处有问题，brandlist显示的还是所有品牌，报错是brandList is undefined
+      console.log("brandlist")
+      console.log(this.brandList)
       })
-      this.$store.dispatch('GetBrandByFilter',this.ProductData.man_id).then((result) => {
-        // console.log("result.data-----brandList")
-        // console.log(result.data)
-        // console.log("result.data.list-----brandList")
-        // console.log(result.data.list)
-        this.brandList = result.data
-        console.log("branddata", this.brandList)
       })
     },
 
@@ -309,6 +349,7 @@ export default {
     },
     showaddBrand(){
       this.dialogVisible1 = true
+      this.BrandData.name_en = ''
     },
     showAddInfo() {
       this.$router.push({path: "mvo-myInfo"})
@@ -316,8 +357,9 @@ export default {
     addBrand(){
     this.$refs.BrandData.validate(valid => {
         if(valid) {
-          // console.log('valid');
           this.BrandData.img_url = this.dialogImageUrl
+          this.BrandData.man_id=this.ProductData.man_id
+          console.log( this.BrandData.man_id)
           this.$store.dispatch('AddBrand',this.BrandData).then((result) => {
             if (result.code==200){
               this.$message({
@@ -336,7 +378,6 @@ export default {
 
           })
         } else {
-          // console.log('the parameter is invalid');
           return false
         }
       })
@@ -375,7 +416,7 @@ export default {
     },
 
     deleteBrand(rowData){
-      this.$confirm('Are you sure to delete the record?', 'Record Delete', {
+      this.$confirm('Are you sure to delete the record?', 'Brand Delete', {
         confirmButtonText: 'Confirm',
         cancelButtonText: 'Cancel',
         type: 'warning'
@@ -397,10 +438,30 @@ export default {
       }).catch(() => {
       });
     },
-    // ,
-    //  resetForm(formName) {
-    //   this.$refs[formName].resetFields()
-    // }
+    deleteAll(){
+    console.log("进入deleteAll")
+        this.$confirm('Are you sure to delete the brands?', 'Brands Delete', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      }).then(() => {
+        this.$store.dispatch('DeleteAllBrand',this.orders).then((result) => {
+          if (result.code==200){
+            this.$message({
+              type: 'info',
+              message: `delete operation succeeded`
+            })
+          }else{
+            this.$message({
+              type: 'info',
+              message: `delete operation failed`
+            })
+          }
+          this.loadData()
+        })
+      }).catch(() => {
+      });
+    },
     handleRemove(file, fileList) {
       // console.log(file, fileList);
     },
