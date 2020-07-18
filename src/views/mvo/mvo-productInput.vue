@@ -277,6 +277,34 @@ export default {
     addProduct(rowData) {
      this.addFormData.operationFlag = "add"
       this.dialogVisible = true
+      this.addFormData.product.pro_id ='',
+      this.addFormData.product.sku_cd = '',
+      this.addFormData.product.brd_id = '',
+      this.addFormData.product.man_id = '',
+      this.addFormData.product.title = '',
+      this.addFormData.product.upc = '',
+      this.addFormData.product.ean = '',
+      this.addFormData.product.model = '',
+      this.addFormData.product.warranty_day = '',
+      this.addFormData.product.warranty = '',
+      this.addFormData.product.replenishment_period = '',
+      this.addFormData.product.time_unit = '',
+      this.addFormData.product.img_id = '',
+      this.addFormData.product.prc_id = '',
+      this.addFormData.product.productDescription.description = '',
+      this.addFormData.product.productDescription.pdn_id = '',
+      this.addFormData.product.productDescription.pro_id = '',
+      this.addFormData.product.packageInfo.weight = '',
+      this.addFormData.product.packageInfo.height = '',
+      this.addFormData.product.packageInfo.width = '',
+      this.addFormData.product.packageInfo.length = '',
+      this.addFormData.product.packageInfo.pck_id = '',
+      this.addFormData.product.packageInfo.pro_id = '',
+      this.addFormData.product.price.price = '',
+      this.addFormData.product.price.effective_start_date = '',
+      this.addFormData.product.price.effective_end_date = '',
+      this.addFormData.product.price.ofp_id = '',
+      this.addFormData.product.price.pro_id = ''
     },
     searchProduct(rowData) {
       this.$store.dispatch('GetProductByTitle', this.scondition).then((result) => {

@@ -57,7 +57,7 @@ export const constantRoutes = [
     component: () => import('@/views/login/auth-redirect'),
     hidden: true
   },
- 
+
   {
     path: '/',
     component: Layout,
@@ -95,7 +95,7 @@ export const constantRoutes = [
       meta: { title: 'Company Information', icon: 'edit' }
     }]
   }
- 
+
 ]
 
 /**
@@ -103,7 +103,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
- 
+
  {
     path: '/Administrator',
     component: Layout,
@@ -119,7 +119,7 @@ export const asyncRoutes = [
         name: 'adminAudit',
         meta: { title: 'Money Audit' }
       },
- 
+
     ]
   },
 
@@ -174,13 +174,6 @@ export const asyncRoutes = [
         component: () => import('@/views/mvo/mvo-myWalletBalance'),
         name: 'mvo-myWalletBalance',
         meta: { title: 'My Balance' },
-        hidden:true
-      },
-      {
-        path: 'mvo-myWalletRecord',
-        component: () => import('@/views/mvo/mvo-myWalletRecord'),
-        name: 'mvo-myWalletRecord',
-        meta: { title: 'Withdraw Record' },
         hidden:true
       }
     ]
