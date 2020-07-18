@@ -477,8 +477,9 @@
     track(rowData,rowindex){
       this.dialogVisible = true
       this.$store.dispatch('GetTrack',rowData).then((result) => {
-        this.ruleForm=result.data[0]
-      console.log("ruleForm")
+      // console.log(result.data)
+      console.log(result)
+      this.ruleForm=result[0].data[0]
       console.log(this.ruleForm)
       })
 

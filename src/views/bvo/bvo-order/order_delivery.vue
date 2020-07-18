@@ -64,12 +64,12 @@
           this.tracking_no = routerParams;
           console.log(" this.tracking_no:"+ this.tracking_no );
         },
-        track(rowData){
+        track(rowData,rowindex){
           this.dialogVisible = true;
           console.log("track:"+rowData.track_no);
           this.$store.dispatch('GetTrack',rowData).then((result) => {
             console.log('result.data')
-            console.log(result.data)
+            console.log(result)
             this.ruleForm=result.data[0]
             console.log("ruleForm")
             console.log(this.ruleForm)
