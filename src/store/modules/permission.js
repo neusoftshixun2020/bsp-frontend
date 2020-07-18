@@ -66,7 +66,7 @@ const actions = {
         resolve(accessed_routes)
       } else {
         getPermissionRoute(role).then(response => {
-           console.log(response)
+          console.log(response)
           // reset visited views and cached views
           // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
           permission_routes = response.data
@@ -74,27 +74,38 @@ const actions = {
           permission_routes.forEach(permission_route => {
             asyncRoutes.forEach(route => {
               const tmp = {...route}
-              console.log(tmp)
-              console.log(permission_route)
-              if (tmp.name === permission_route.parentRoute.parent_route_name) {
+              // console.log(tmp)
+              // console.log(permission_route)
+              if (tmp.hidden || tmp.name === permission_route.parentRoute.parent_route_name) {
                 if (!permission_route.childrenRoute) {
                   res.push(tmp)
                 } else if(tmp.children) {
                   const childrenRes = []
                   tmp.children.forEach(children_route => {
                     const children_tmp = {...children_route}
-                    console.log(children_tmp)
-                    if (children_tmp.name === permission_route.childrenRoute.children_route_name) {
-                      console.log("yesyes!!!!!!!!!!!!!!!!!!!!!!!")
+                    // console.log(children_tmp)
+                    if (children_tmp.hidden || children_tmp.name === permission_route.childrenRoute.children_route_name) {
+                      // console.log("yesyes!!!!!!!!!!!!!!!!!!!!!!!")
                       childrenRes.push(children_tmp)
                     }
                   })
                   tmp.children = childrenRes
                   res.push(tmp)
+                  //console.log("tmp========================")
                 }
               }
             })
           })
+          // console.log("res========"+res)
+          for (let i = 1; i < res.length;) {
+            console.log("res[i]==================", res[i])
+            if (res[i].name === res[i-1].name) {
+              res[i].children = res[i-1].children.concat(res[i].children)
+              res.splice(i-1, 1)
+            } else {
+              i++;
+            }
+          }
           commit('SET_ROUTES', res)
           resolve(res)
         }).catch(error => {

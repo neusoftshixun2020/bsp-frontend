@@ -352,7 +352,7 @@ export default {
       this.BrandData.name_en = ''
     },
     showAddInfo() {
-      this.$router.push({path: "mvo-myInfo"})
+      this.$router.push({path: "mvo/myInfo"})
     },
     addBrand(){
     this.$refs.BrandData.validate(valid => {
