@@ -96,7 +96,7 @@
         <br>
       <el-button type="primary" @click="showaddBrand" plain icon="el-icon-plus" style="margin-left:90px">Add</el-button>
     <el-button type="primary"  size="small" style="margin-left:50px" @click="deleteAll" :disabled="orders.length===0">DeleteAll</el-button>
-      
+
 
     <!--修改company弹窗-->
     <el-dialog title='Edit Company Information' :visible.sync = 'dialogVisible' width = '50%' :close-on-lick-modal = 'false'>
@@ -297,7 +297,7 @@ export default {
         // 改变默认的页数
         this.currentPage=val
       },
-    loadData () {  
+    loadData () {
       this.ProductData.user_id=this.$store.getters.userid
       console.log( 'this.ProductData')
       console.log(this.ProductData)
@@ -349,9 +349,10 @@ export default {
     },
     showaddBrand(){
       this.dialogVisible1 = true
+      this.BrandData.name_en = ''
     },
     showAddInfo() {
-      this.$router.push({path: "mvo-myInfo"})
+      this.$router.push({path: "mvo/myInfo"})
     },
     addBrand(){
     this.$refs.BrandData.validate(valid => {

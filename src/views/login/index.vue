@@ -1,5 +1,6 @@
 <template>
-  <div class="login-container">
+  <div >
+    <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
@@ -45,22 +46,88 @@
         </el-form-item>
       </el-tooltip>
 
+      <div>
+        <span style="width: 70px; float: left"><el-button type="primary" :disabled="verifyInputDisable" @click="checkVerifyCode">verify</el-button></span>
+        <span style="float: left; margin-left: 10px"><el-input type="text" id="verifyCodeInput" v-model="verifyCode" :disabled="verifyInputDisable"></el-input></span>
+        <span style="margin-left: 20px"><img  title="click to refresh" @click="refresh_img" :src="img_src"/></span>
+      </div>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
-      <div style="position:relative">      
-      <br>
+      <div style="position:relative">
+        <div class="tips">
+          <span>Username : superadmin</span>
+          <span>Password : 111111</span>
+        </div>
+        <div class="tips">
+          <span>Username : admin</span>
+          <span>Password : 111111</span>
+        </div>
+        <div class="tips">
+          <span>Username : mvo</span>
+          <span>Password : 111111</span>
+        </div>
+        <div class="tips">
+          <span>Username : bvo</span>
+          <span>Password : 111111</span>
+        </div>
+
         <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
+          sign up
         </el-button>
       </div>
     </el-form>
+    </div>
+    <el-dialog title="Create Your Account" :visible.sync="showDialog">
+      <el-form :model='signUpUserForm'  ref='signUpUserForm'  class='' :rules="signUpUserFormRule">
 
-    <el-dialog title="Or connect with" :visible.sync="showDialog">
-      Can not be simulated on local, so please combine you own business simulation! ! !
-      <br>
-      <br>
-      <br>
-      <social-sign />
+        <el-form-item label="user name" label-width="130px" prop="username">
+          <el-col :span="12">
+            <el-input type="text" v-model="signUpUserForm.username" autocomplete="off" placeholder="User Name">
+            </el-input>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="password" label-width="130px"  prop='password'>
+          <el-col :span="12">
+            <el-input type="text" v-model="signUpUserForm.password" autocomplete="off" placeholder="Password" show-password>
+            </el-input>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="real name" label-width="130px"  prop='real name'>
+          <el-col :span="12">
+            <el-input type="text" v-model="signUpUserForm.name" autocomplete="off" placeholder="Real Name" >
+            </el-input>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="role" label-width="130px"  prop='role_id'>
+          <el-col :span="12">
+            <el-cascader
+              :options="roleList"
+              v-model='signUpUserForm.role_id'
+              style="float: left"
+            ></el-cascader>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="email" label-width="130px"  prop='email'>
+          <el-col :span="12">
+            <el-input type="text" v-model="signUpUserForm.email" autocomplete="off" placeholder="Email">
+            </el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="phone" label-width="130px"  prop='phone'>
+          <el-col :span="12">
+            <el-input type="text" v-model="signUpUserForm.phone" autocomplete="off" placeholder="Phone">
+            </el-input>
+          </el-col>
+        </el-form-item>
+      </el-form>
+      <span slot = 'footer' class = 'dialog-footer'>
+        <el-button type = 'primary' size='small' @click="addUser">Sign Up</el-button>
+        <el-button type = 'danger' size='small' @click.native = "showDialog = false">Close</el-button>
+       </span>
     </el-dialog>
   </div>
 </template>
@@ -68,6 +135,7 @@
 <script>
 // import { validUsername } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
+import { getAllRoles } from '@/api/role_permission'
 
 export default {
   name: 'Login',
@@ -93,15 +161,33 @@ export default {
         password: '111111'
       },
       loginRules: {
-        // username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        // password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [{ required: true, trigger: 'blur', message: 'username cannot be empty' }],
+        password: [{ required: true, trigger: 'blur', message: 'password cannot be empty'}]
       },
+      img_src: 'http://localhost:8088/user/getVerifyCode',
+      roleList: [],
       passwordType: 'password',
       capsTooltip: false,
       loading: false,
       showDialog: false,
       redirect: undefined,
-      otherQuery: {}
+      otherQuery: {},
+      signUpUserForm: {
+        username: '',
+        password: '',
+        name: '',
+        role_id: '',
+        email: '',
+        phone: ''
+      },
+      signUpUserFormRule: {
+        username: [{ required: true, message: 'username cannot be null', trigger: 'blur' }],
+        password: [{ required: true, message: 'password cannot be null', trigger: 'blur' }],
+        role_id: [{ required: true, message: 'role cannot be null', trigger: 'blur' }],
+      },
+      verifyCode: '',
+      verifyInputDisable: false,
+      verifyPass: false
     }
   },
   watch: {
@@ -118,6 +204,8 @@ export default {
   },
   created() {
     // window.addEventListener('storage', this.afterQRScan)
+    this.getAllRoles()
+    this.refresh_img()
   },
   mounted() {
     if (this.loginForm.username === '') {
@@ -130,6 +218,7 @@ export default {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
+
     checkCapslock(e) {
       const { key } = e
       this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
@@ -145,6 +234,13 @@ export default {
       })
     },
     handleLogin() {
+      if (!this.verifyPass) {
+        this.$message({
+          type: 'error',
+          message: 'You need to verify first'
+        })
+        return
+      }
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
@@ -169,6 +265,74 @@ export default {
         }
         return acc
       }, {})
+    },
+    getAllRoles() {
+      this.$store.dispatch('role_permission/getAllRoles').then((result) => {
+       // console.log("1===================", result)
+        let list = result.data
+        for (let i = 0; i < list.length; i++) {
+          let role = new Object()
+          role.value = list[i].role_id
+          role.label = list[i].role_name
+          // console.log("2================", role)
+          this.roleList.push(role)
+        }
+      })
+      // console.log(this.roleList)
+    },
+    addUser() {
+      if (Array.isArray(this.signUpUserForm.role_id))
+        this.signUpUserForm.role_id = this.signUpUserForm.role_id[0]
+      this.$refs.signUpUserForm.validate(valid => {
+        if (valid) {
+          this.$store.dispatch("user/addUser", this.signUpUserForm).then(result => {
+            if (result.code == 200) {
+              this.$message({
+                type: 'info',
+                message: `Succeeded`
+              })
+              this.showDialog = false
+              this.signUpUserForm = {
+                username: '',
+                password: '',
+                name: '',
+                role_id: '',
+                email: '',
+                phone: ''
+              }
+            } else {
+              this.$message({
+                type: 'error',
+                message: result.message
+              })
+            }
+          })
+        }
+      })
+    },
+    refresh_img() {
+      console.log("1111111111111111")
+      let num=Math.ceil(Math.random()*10);
+      this.img_src = 'http://localhost:8088/user/getVerifyCode?' + num
+    },
+    checkVerifyCode() {
+      this.$store.dispatch("user/getVerifyCodeNumber").then(result => {
+        console.log(result)
+        if (this.verifyCode.toLowerCase() === result.data.toLowerCase()) {
+          this.verifyInputDisable = true
+          this.verifyPass = true
+          this.$message({
+            type: 'success',
+            message: 'verify success'
+          })
+        } else {
+          this.refresh_img()
+          this.$message({
+            type: 'error',
+            message: 'wrong verify code'
+          })
+        }
+      })
     }
     // afterQRScan() {
     //   if (e.key === 'x-admin-oauth-code') {
@@ -204,6 +368,16 @@ $cursor: #fff;
   .login-container .el-input input {
     color: $cursor;
   }
+}
+
+#verifyCodeInput {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin-left: 10px;
+  float: left;
+  width: 240px;
+  height: 40px;
 }
 
 /* reset element-ui css */

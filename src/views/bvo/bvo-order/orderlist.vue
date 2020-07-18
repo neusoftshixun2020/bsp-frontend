@@ -471,12 +471,15 @@
      // this.loadGetAwaitingPaymentData();
     },
     methods: {
+      closeDialog() {
+      this.dialogVisible = false
+    },
       track(rowData,rowindex){
         this.dialogVisible = true
         this.$store.dispatch('GetTrack',rowData).then((result) => {
           console.log('result.data')
-          console.log(result.data)
-          this.ruleForm=result.data[0]
+          console.log(result[0].data[0])
+          this.ruleForm=result[0].data[0]
           console.log("ruleForm")
           console.log(this.ruleForm)
         })

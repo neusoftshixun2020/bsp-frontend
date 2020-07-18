@@ -16,12 +16,21 @@ export function login(data) {
   })
 }
 
+// export function getInfo(token) {
+//   return request({
+//     url: '/vue-element-admin/user/info',
+//     method: 'get',
+//     params: { token }
+//   })
+// }
 
 export function getInfo(token) {
   return request({
-    url: 'user/getInfo',
-    method: 'get',
-    params: { token }
+    url: '/user/getInfo',
+    method: 'post',
+    headers: {
+      token
+    }
   })
 }
 
@@ -32,6 +41,26 @@ export function logout() {
   })
 }
 
+export function addUser(data) {
+  return request({
+    url: '/user/addUser',
+    method: 'post',
+    data
+  })
+}
+
+// export function logout() {
+//   return request({
+//     url: 'user/logout',
+//     method: 'post'
+//   })
+// }
+export function getVerifyCode() {
+  return request({
+    url: '/user/getVerifyCodeNumber',
+    method: 'post'
+  })
+}
 
 export function fetchList(query) {
   return request({
@@ -49,6 +78,7 @@ export function fetchUser(data) {
 
   })
 }
+
 export function updateUser(data) {
   return request({
     url: 'user/updateUser',

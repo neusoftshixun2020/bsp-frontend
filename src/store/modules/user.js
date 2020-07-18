@@ -1,34 +1,25 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, addUser,getVerifyCode } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
-// import store from '../index'
-import store from './store'
+import { addOrUpdateRole } from '@/api/role_permission'
 
 const state = {
   role: '',
   username: '',
   response_status: '',
-  userid: '',
-  token: ''
+  user_id: '',
+  token: getToken()
 }
 
 const mutations = {
-  SET_TOKEN: (state, role_id) => {
-    if (role_id == 0) {
-      state.token = 'Super Admin'
-    } else if (role_id == 1) {
-      state.token = 'GVO'
-    } else if (role_id == 2) {
-      state.token = 'BVO'
-    } else if (role_id == 3) {
-      state.token = 'MVO'
-    }
+  SET_TOKEN: (state, token) => {
+    state.token = token
   },
   SET_ROLE: (state, role) => {
     state.role = role
   },
-  SET_USERID: (state, userid) => {
-    state.userid = userid
+  SET_USERID: (state, user_id) => {
+    state.user_id = user_id
   }
 }
 
@@ -38,10 +29,12 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        console.log(data)
-        commit('SET_TOKEN', data.role_id)
-        commit('SET_USERID', data.user_id)
+        const { token, data } = response
+        // console.log("++++++++token+++++++++"+token)
+        // console.log(data)
+        commit('SET_TOKEN', token)
+        // console.log("++++++++role+++++++++"+state.role)
+        // console.log("++++++++user_id+++++++++"+state.user_id)
         setToken(state.token)
         resolve()
       }).catch(error => {
@@ -49,6 +42,23 @@ const actions = {
       })
     })
   },
+
+  getInfo({ commit }, token) {
+    return new Promise((resolve, reject) => {
+      getInfo(token).then(response => {
+        // console.log("++++response+++++", response)
+        const { data } = response
+        console.log("data==================", data)
+        commit('SET_ROLE', data.role)
+        commit('SET_USERID', data.user_id)
+        console.log(state.user_id)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
 
   // user logout
   logout({ commit, state, dispatch }) {
@@ -75,6 +85,26 @@ const actions = {
       commit('SET_ROLE', '')
       removeToken()
       resolve()
+    })
+  },
+
+  addUser({}, data) {
+    return new Promise((resolve, reject) => {
+      addUser(data).then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  getVerifyCodeNumber({}) {
+    return new Promise((resolve, reject) => {
+      getVerifyCode().then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
 

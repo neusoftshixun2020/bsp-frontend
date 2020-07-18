@@ -49,6 +49,7 @@
                 <el-table-column align="center" label="Create Time"  >
                   <template slot-scope="scope">
                     {{scope.row.create_time | dateFmt('YYYY-MM-DD HH:mm:ss')}}
+
                   </template>
                 </el-table-column>
                 <el-table-column label="State"  align="center">

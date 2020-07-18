@@ -6,10 +6,10 @@
          Withdrawal Audit
         </h1>
       </div>
-     
+
     </el-header>
        <el-main>
-        
+
       <el-table
         ref="multipleTable"
         v-loading="listLoading"
@@ -32,7 +32,7 @@
             <el-button v-if="scope.row.transaction_type===1" type="text">Recharge</el-button>
              <el-button v-else-if="scope.row.transaction_type===2" type="text">Withdraw </el-button>
                <el-button v-else-if="scope.row.transaction_type===3" type="text">Consume  </el-button>
-             <el-button v-else type="text"> Refund</el-button>   
+             <el-button v-else type="text"> Refund</el-button>
           </template>
         </el-table-column>
         <el-table-column align="center" label="Transaction Money" >
@@ -47,16 +47,16 @@
           </template>
         </el-table-column>
         <el-table-column label="Status"  align="center" >
-          <template slot-scope="scope">     
+          <template slot-scope="scope">
               <el-button v-if="scope.row.status===2" type="text">Waiting Audit</el-button>
              <el-button v-else-if="scope.row.status===1" type="text">Failed</el-button>
-             <el-button v-else type="text" > Audited</el-button>  
+             <el-button v-else type="text" > Audited</el-button>
           </template>
         </el-table-column>
 
        <el-table-column label="Operation" >
             <template slot-scope="scope">
-              <el-button type="primary"  @click="audit(scope.row,scope.$index)" >Audit</el-button>        
+              <el-button type="primary"  @click="audit(scope.row,scope.$index)" >Audit</el-button>
           </template>
           </el-table-column>
         </el-table>
@@ -150,10 +150,11 @@
           status:'',
         }
         },
-         
+
       }
     },
     mounted() {
+      console.log("userid=================", this.$store.getters)
       this.loadData()
     },
     methods: {
@@ -248,5 +249,5 @@
 </script>
 
 <style scoped>
- 
+
 </style>

@@ -57,7 +57,7 @@ export const constantRoutes = [
     component: () => import('@/views/login/auth-redirect'),
     hidden: true
   },
- 
+
   {
     path: '/',
     component: Layout,
@@ -71,31 +71,8 @@ export const constantRoutes = [
         meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
       }
     ]
-  },
-  {
-    path: '/mvo-myInfo',
-    component: Layout,
-    hidden: true,
-    children: [{
-      path: '/mvo-myInfo',
-      component: () => import('@/views/mvo/mvo-myInfo'),
-      name: 'mvo-myInfo',
-      meta: { title: 'My Infomation',icon: 'edit' }
-    }]
-  },
-
-  {
-    path: '/mvo-mycompany',
-    component: Layout,
-    hidden: true,
-    children: [{
-      path: '',
-      component: () => import('@/views/mvo/mvo-mycompany'),
-      name: '',
-      meta: { title: 'Company Information', icon: 'edit' }
-    }]
   }
- 
+
 ]
 
 /**
@@ -103,14 +80,14 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
- 
+
  {
-    path: '/Administrator',
+    path: '/admin',
     component: Layout,
-    name: 'Administrator',
+    name: 'admin',
     meta: {
-      title: 'Administrator',
-      icon: 'excel'
+      title: 'admin',
+      icon: 'people'
     },
     children: [
       {
@@ -119,7 +96,19 @@ export const asyncRoutes = [
         name: 'adminAudit',
         meta: { title: 'Money Audit' }
       },
- 
+      {
+        path: 'roleMenu',
+        component: () => import('@/views/admin/roleMenu/role_menu'),
+        name: 'roleMenu',
+        meta: { title: 'role menu' }
+      },
+      {
+        path: 'rolePath',
+        component: () => import('@/views/admin/roleMenu/role_path'),
+        name: 'rolePath',
+        hidden: true,
+        meta: { title: 'role permission' }
+      }
     ]
   },
 
@@ -137,6 +126,13 @@ export const asyncRoutes = [
         component: () => import('@/views/mvo/mvo-myInfo'),
         name: 'myinfo',
         meta: { title: 'My Infomation' }
+      },
+      {
+        path: '/mvo-mycompany',
+        component: () => import('@/views/mvo/mvo-mycompany'),
+        name: 'mvo-mycompany',
+        hidden: true,
+        meta: { title: 'Company Information', icon: 'edit' }
       },
       {
         path: 'goodsInput',
@@ -181,13 +177,6 @@ export const asyncRoutes = [
         component: () => import('@/views/mvo/mvo-myWalletBalance'),
         name: 'mvo-myWalletBalance',
         meta: { title: 'My Balance' },
-        hidden:true
-      },
-      {
-        path: 'mvo-myWalletRecord',
-        component: () => import('@/views/mvo/mvo-myWalletRecord'),
-        name: 'mvo-myWalletRecord',
-        meta: { title: 'Withdraw Record' },
         hidden:true
       }
     ]

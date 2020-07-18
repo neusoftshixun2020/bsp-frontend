@@ -38,12 +38,12 @@ module.exports = {
       warnings: false,
       errors: true
     },
-  proxy:{
+  proxy: {
     [process.env.VUE_APP_BASE_API]:{
       target: process.env.VUE_APP_BASE_API,
       changeOrigin: true,
-      pathRewrite:{
-        ['^' +process.env.VUE_APP_BASE_API]: ''
+      pathRewrite: {
+        ['^' + process.env.VUE_APP_BASE_API]: ''
       }
     }
   },
