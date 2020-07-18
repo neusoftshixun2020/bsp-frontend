@@ -129,14 +129,10 @@ export const asyncRoutes = [
       },
       {
         path: '/mvo-mycompany',
-        component: Layout,
+        component: () => import('@/views/mvo/mvo-mycompany'),
+        name: 'mvo-mycompany',
         hidden: true,
-        children: [{
-          path: '',
-          component: () => import('@/views/mvo/mvo-mycompany'),
-          name: '',
-          meta: { title: 'Company Information', icon: 'edit' }
-        }]
+        meta: { title: 'Company Information', icon: 'edit' }
       },
       {
         path: 'goodsInput',
