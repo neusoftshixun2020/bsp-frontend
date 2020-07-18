@@ -157,6 +157,13 @@ export const asyncRoutes = [
         meta: { title: 'Order Management' }
       },
       {
+        path: '/mvo-product',
+        component: () => import('@/views/mvo/mvo-productDetail'),
+        name: 'mvo-product',
+        hidden: true,
+        meta: { title: 'Company Information', icon: 'edit' }
+      },
+      {
         path: 'mvo-myWallet',
         component: () => import('@/views/mvo/mvo-myWallet'),
         name: 'mvo-myWallet',

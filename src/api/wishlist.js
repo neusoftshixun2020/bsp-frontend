@@ -16,9 +16,8 @@ export function removeWishlist(wit_id) {
   return request({
     url: '/bvo/deleteWishList',
     method: 'post',
-    data:{
-      wit_id
-    }
+    data: wit_id
+    
   })
 }
 

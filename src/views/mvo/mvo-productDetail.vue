@@ -15,8 +15,8 @@
         <div style="margin-top: 20px">
           <el-row style="width: 1000px;">
             <el-button type="success" size="mini" class="productproperty" @click="dropShip()"  round>Dropship Now</el-button>
-            <el-button icon="el-icon-star-on" type="success" size="mini" class="productproperty" @click="addToWishlist()"  round >Add to Wish List</el-button>
-
+            <el-button v-if="this.isAddBtn===true" icon="el-icon-star-on" type="success" size="mini" class="productproperty"  round >Add to Wish List</el-button>
+            <el-button v-else type="success" icon="el-icon-s-goods" size="mini" class="productproperty" @click="addToWishlist()"  round plain>Add to Wish List</el-button>
           </el-row>
         </div>
       </div>
@@ -39,13 +39,10 @@ export default {
     return {
       productDetail:[],
       title:'',
+      isAddBtn:true,
       activeName: 'first',
-      wishList:[],
-      data:{
-        user_id:'',
-      },
       wishlistData:{
-        dsr_id:'',
+        dsr_id:'12',
         pro_id:'',
       }
     }
@@ -56,8 +53,6 @@ export default {
   },
   mounted(){
     this.loadProductDetailByPRO_ID();
-    this.getWishListData();
-    this.getDsr_id();
   },
   watch:{
       '$route': 'getParams'
@@ -66,27 +61,6 @@ export default {
     getParams(){
       var routerParams = this.$route.query.pro_id
       this.wishlistData.pro_id = routerParams
-      //this.wishList = this.$route.query.wishList
-    },
-    getWishListData(){
-      /**
-       * PRO_ID,TITLE,RETAIL_PRICE,SKU_CD
-       */
-      const user_id = this.$store.getters.userid;
-      console.log("----user_id----"+user_id);
-      this.$store.dispatch('GetWishListProducts',parseInt(this.wishlistData.dsr_id)).then((result) => {
-        this.wishList = result.data
-      })
-    },
-    getDsr_id(){
-      this.data.user_id = this.$store.getters.userid;
-      // this.data.user_id = 2;
-      console.log("哈哈哈哈哈哈user_id:"+ this.data.user_id);
-      this.$store.dispatch('GetDsrId',this.data.user_id).then((result) => {
-        console.log("-------getDsr_id--result-------");
-        console.log(JSON.stringify(result));
-        this.wishlistData.dsr_id =  result.data[0].dsr_id;
-      })
     },
     loadProductDetailByPRO_ID(){
       /**
@@ -121,39 +95,20 @@ export default {
         }
       })
     },
-    addToWishlist(){
-      console.log("----wishlist----");
-      console.log(JSON.stringify(this.wishList));
-      let flag = 0;
-      for(let i = 0;i<this.wishList.length;i++){
-        console.log("----product-title----")
-        console.log(JSON.stringify(this.wishList[i].product.title));
-        if(this.wishList[i].product.title==this.title){
+    addToWishList(){
+      this.$store.dispatch('AddToWishList',this.wishlistData).then((result) => {
+        if(result.code===200){
           this.$message({
             type: 'info',
-            message: 'Already in wish list！'
+            message: 'Add Succeed！'
           })
-          flag = 1;
-          break;
+        }else{
+          this.$message({
+            type:'info',
+            message:'Add Failed！'
+          })
         }
-      }
-      if(flag==0){
-        console.log("----要传送的wishlistData-----");
-        console.log(JSON.stringify(this.wishlistData))
-         this.$store.dispatch('AddToWishList',this.wishlistData).then((result) => {
-           if(result.code===200){
-             this.$message({
-               type: 'info',
-               message: 'Add Succeed！'
-             })
-           }else{
-             this.$message({
-               type:'info',
-               message:'Add Failed！'
-             })
-           }
-         })
-      }
+      })
     }
   }
 }

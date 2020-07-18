@@ -9,7 +9,7 @@
     <el-row :gutter="20" style="margin-top:30px;">
       <div v-for="product in wishList" :key="product.product.title">
         <el-col :span="13">
-          <el-card class="box-card":body-style="{ padding: '10px' }">
+          <el-card class="box-card" :body-style="{ padding: '10px' }">
 
             <div style="height:150px;">
 
@@ -21,7 +21,7 @@
                 <div class="sku">Brand: {{product.product.brand.name_en }}</div>
                 <div class="sku">Stock: {{ product.product.stock }}</div>
                 <el-button  icon="el-icon-delete" style="float: right; padding: 5px 3px 5px 3px; margin-top:20px; margin-right: 0px"
-                            type="success" plain round @click="remove(product.wit_id)">remove</el-button>
+                            type="success" plain round @click="remove(product)">remove</el-button>
               </div>
 
             </div>
@@ -44,6 +44,7 @@ export default {
   },
   mounted() {
     this.loadData();
+    this.getDsr_id();
   },
   data() {
     return {
@@ -51,7 +52,8 @@ export default {
       category:[],
       user_id:'',
       wishlistData:{
-        dsr_id:'12',
+        wit_id:'',
+        dsr_id:'',
         pro_id:'',
       }
     }
@@ -73,6 +75,16 @@ export default {
         this.wishList = result.data
       })
     },
+    getDsr_id(){
+      this.data.user_id = this.$store.getters.userid;
+      // this.data.user_id = 2;
+      console.log("哈哈哈哈哈哈user_id:"+ this.data.user_id);
+      this.$store.dispatch('GetDsrId',this.data.user_id).then((result) => {
+        console.log("----bvo-wishList---getDsr_id--result-------");
+        console.log(JSON.stringify(result));
+        this.wishlistData.dsr_id =  result.data[0].dsr_id;
+      })
+    },
     showDetail(title,pro_id) {
       console.log("传递title:"+title)
       console.log("传递pro_id:"+pro_id)
@@ -81,16 +93,17 @@ export default {
         query: {
           'title': title,
           'pro_id':pro_id,
-          isAddBtn:false
+          'wishList':this.wishList
         }
       })
     },
-    remove(wit_id){
+    remove(product){
       this.$confirm('Are you sure to remove this product from wishlist?', '提示', {
         type: 'warning'
       }).then(() => {
-        console.log("remove-----"+wit_id)
-        this.$store.dispatch('RemoveWishlist',parseInt(wit_id)).then((result) => {
+        this.wishlistData.wit_id = parseInt(product.wit_id);
+        console.log("remove-----"+this.wishlistData.wit_id)
+        this.$store.dispatch('RemoveWishlist',this.wishlistData).then((result) => {
           if(result.code===200){
             this.$message({
               type: 'info',
@@ -128,7 +141,6 @@ export default {
 .title{
   font-weight: bold;
   font-size:18px;
-//vertical-align: top;
   color:#66CDAA;
   font-weight: bold;
 }
