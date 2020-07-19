@@ -117,7 +117,7 @@ export default {
         name: 'storechoose',
         query: {
            pro_id: this.wishlistData.pro_id,
-           dsr_id: '12',
+           dsr_id: this.wishlistData.dsr_id
         }
       })
     },

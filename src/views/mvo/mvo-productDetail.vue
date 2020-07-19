@@ -10,15 +10,6 @@
         <div class="productproperty" style="color:#F56C6C">{{'Price: $'+productDetail[0].price.price }}</div>
         <div class="productproperty" style="color:#808080">SKU:  {{ productDetail[0].sku_cd }}</div>
         <div class="productproperty" style="color:#808080">Brand: {{ productDetail[0].brand.name_en }}</div>
-        <div class="productproperty" style="color:#808080">Stock: {{ productDetail[0].stock }}</div>
-
-        <div style="margin-top: 20px">
-          <el-row style="width: 1000px;">
-            <el-button type="success" size="mini" class="productproperty" @click="dropShip()"  round>Dropship Now</el-button>
-            <el-button v-if="this.isAddBtn===true" icon="el-icon-star-on" type="success" size="mini" class="productproperty"  round >Add to Wish List</el-button>
-            <el-button v-else type="success" icon="el-icon-s-goods" size="mini" class="productproperty" @click="addToWishlist()"  round plain>Add to Wish List</el-button>
-          </el-row>
-        </div>
       </div>
 
     </div>
@@ -34,15 +25,18 @@
 
 <script>
 export default {
-  name: 'WishListDetail',
+  // name: 'WishListDetail',
   data() {
     return {
       productDetail:[],
       title:'',
-      isAddBtn:true,
       activeName: 'first',
+      wishList:[],
+      data:{
+        user_id:'',
+      },
       wishlistData:{
-        dsr_id:'12',
+        dsr_id:'',
         pro_id:'',
       }
     }
@@ -53,6 +47,8 @@ export default {
   },
   mounted(){
     this.loadProductDetailByPRO_ID();
+    this.getWishListData();
+    this.getDsr_id();
   },
   watch:{
       '$route': 'getParams'
@@ -61,6 +57,27 @@ export default {
     getParams(){
       var routerParams = this.$route.query.pro_id
       this.wishlistData.pro_id = routerParams
+      //this.wishList = this.$route.query.wishList
+    },
+    getWishListData(){
+      /**
+       * PRO_ID,TITLE,RETAIL_PRICE,SKU_CD
+       */
+      const user_id = this.$store.getters.userid;
+      console.log("----user_id----"+user_id);
+      this.$store.dispatch('GetWishListProducts',parseInt(this.wishlistData.dsr_id)).then((result) => {
+        this.wishList = result.data
+      })
+    },
+    getDsr_id(){
+      this.data.user_id = this.$store.getters.userid;
+      // this.data.user_id = 2;
+      console.log("哈哈哈哈哈哈user_id:"+ this.data.user_id);
+      this.$store.dispatch('GetDsrId',this.data.user_id).then((result) => {
+        console.log("-------getDsr_id--result-------");
+        console.log(JSON.stringify(result));
+        this.wishlistData.dsr_id =  result.data[0].dsr_id;
+      })
     },
     loadProductDetailByPRO_ID(){
       /**
@@ -84,32 +101,7 @@ export default {
         this.productDetail = result.data.list;
       })
     },
-    dropShip(){
-      console.log("dripship")
-      console.log("传给storechoose的pro_id："+this.wishlistData.pro_id);
-      this.$router.push({
-        name: 'storechoose',
-        query: {
-           pro_id: this.wishlistData.pro_id,
-           dsr_id: '12',
-        }
-      })
-    },
-    addToWishList(){
-      this.$store.dispatch('AddToWishList',this.wishlistData).then((result) => {
-        if(result.code===200){
-          this.$message({
-            type: 'info',
-            message: 'Add Succeed！'
-          })
-        }else{
-          this.$message({
-            type:'info',
-            message:'Add Failed！'
-          })
-        }
-      })
-    }
+    
   }
 }
 </script>

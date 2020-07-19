@@ -48,8 +48,7 @@
                 </el-table-column>
                 <el-table-column align="center" label="Create Time"  >
                   <template slot-scope="scope">
-                    {{scope.row.create_time | dateFmt('YYYY-MM-DD HH:mm:ss')}}
-
+                    {{scope.row.create_time}}
                   </template>
                 </el-table-column>
                 <el-table-column label="State"  align="center">
@@ -130,7 +129,6 @@
 <script>
 export default {
   name: "bvo_wallet_fund",
-
   data(){
     const pwdAgainCheck = async(rule, value, callback) => {
       if(this.changePasswordData.newpassword != this.changePasswordData.passwordAgain){
@@ -174,7 +172,6 @@ export default {
       transactionRecords:[],
       changeFlag: 0,
       changeAgainFlag: 0,
-
       // 默认显示第几页
       currentPage:1,
       // 总条数，根据接口获取数据长度(注意：这里不能为空)
@@ -183,7 +180,6 @@ export default {
       pageSizes:[1,2,3,4],
       // 默认每页显示的条数（可修改）
       PageSize:1,
-
       //validation
       ruleValidate: {
         password:[
@@ -312,14 +308,12 @@ export default {
     margin-top: 50px;
     margin-left: 80px;
   }
-
   .item {
     font-size: 18px;
     margin-bottom: 18px;
     margin-top: 25px;
     margin-left: 25px;
   }
-
   .clearfix:before,
   .clearfix:after {
     display: table;
@@ -328,7 +322,6 @@ export default {
   .clearfix:after {
     clear: both
   }
-
   .box-card {
     width: 1000px;
   }
@@ -364,7 +357,6 @@ export default {
   }
   .container{
     margin-left:20px;
-
   }
   .top {
     display: flex;
@@ -374,8 +366,6 @@ export default {
     font-weight: bold;
     justify-content: space-between;
   }
-
-
   .el-col {
     border-radius: 4px ;
   }

@@ -153,11 +153,11 @@ export const asyncRoutes = [
         meta: { title: 'Order Management' }
       },
       {
-        path: '/mvo-product',
+        path: '/mvoProduct',
         component: () => import('@/views/mvo/mvo-productDetail'),
-        name: 'mvo-product',
+        name: 'mvoproduct',
         hidden: true,
-        meta: { title: 'Company Information', icon: 'edit' }
+        meta: { title: 'Product Detail', icon: 'edit' }
       },
       {
         path: 'mvo-myWallet',

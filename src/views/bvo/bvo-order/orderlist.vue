@@ -413,10 +413,10 @@
                  </div>
                </el-col>
              </el-row>
-             <el-form-item  >
-               <el-button  align="center" type="info" @click.native="closeDialog">Close</el-button>
-             </el-form-item>
            </el-form>
+            <span slot = 'footer' class = 'dialog-footer'>
+           <el-button  style="" type="info" @click.native="closeDialog">Close</el-button>
+       </span>
          </el-dialog>
     </el-main>
 

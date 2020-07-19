@@ -409,10 +409,14 @@
             </div>
           </el-col>
         </el-row>
-          <el-form-item  >
-          <el-button  align="center" type="info" @click.native="closeDialog">Close</el-button>
-        </el-form-item> 
+          <!-- <el-form-item  >
+          <el-button  style="" type="info" @click.native="closeDialog">Close</el-button>
+        </el-form-item>  -->
   </el-form>
+   <span slot = 'footer' class = 'dialog-footer'>
+         <!-- <el-button size='small' @click="resetForm('BrandData')">Reset</el-button> -->
+           <el-button  style="" type="info" @click.native="closeDialog">Close</el-button>
+       </span>
     </el-dialog>
     </el-main>
 </el-container>
@@ -517,7 +521,7 @@
       }, 
        seeProduct(rowData){
       this.$router.push({
-        name: 'productDetail',
+        name: 'mvoproduct',
         query: {       
           'title':rowData.products[0].title
         }
