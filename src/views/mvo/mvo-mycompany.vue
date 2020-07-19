@@ -55,11 +55,12 @@
         element-loading-text="Loading"
         fit
         border
-         @selection-change="selschange"
+        @selection-change="selschange"
+     
         highlight-current-row
         width="80%"
       >
-      <el-table-column type="selection" v-model="orders"/>
+      <el-table-column type="selection"/>
         <!-- <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
         </el-table-column> -->
          <el-table-column align="center" prop = 'name_en' label = 'Brand Name(EN)'>
@@ -95,7 +96,7 @@
     </div>
         <br>
       <el-button type="primary" @click="showaddBrand" plain icon="el-icon-plus" style="margin-left:90px">Add</el-button>
-    <el-button type="primary"  size="small" style="margin-left:50px" @click="deleteAll" :disabled="orders.length===0">DeleteAll</el-button>
+    <el-button type="primary"  size="small" style="margin-left:50px"  @click="deleteAll" >DeleteAll</el-button>
 
 
     <!--修改company弹窗-->
@@ -279,11 +280,21 @@ export default {
     this.loadData()
   },
   methods: {
-     selschange(orders){
-        this.orders=orders
-        console.log("orders")
-        console.log( this.orders)
-       },
+     selschange (rows) {
+      this.orders = []
+      if (rows) {
+        for (let i = 0; i < rows.length; i++) {
+          const item = {}
+          item.man_id = rows[i].man_id
+          item.brd_id = rows[i].brd_id
+          item.name_en = rows[i].name_en
+          item.image_url = rows[i].image_url
+          this.orders.push(item)
+        }
+      }
+      console.log('selschange')
+      console.log(this.orders)
+    },
       // 分页
       // 每页显示的条数
       handleSizeChange(val) {
@@ -440,6 +451,8 @@ export default {
     },
     deleteAll(){
     console.log("进入deleteAll")
+
+     console.log(this.orders)
         this.$confirm('Are you sure to delete the brands?', 'Brands Delete', {
         confirmButtonText: 'Confirm',
         cancelButtonText: 'Cancel',
