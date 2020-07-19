@@ -94,13 +94,13 @@ export const asyncRoutes = [
         path: 'adminAudit',
         component: () => import('@/views/admin/adminAudit'),
         name: 'adminAudit',
-        meta: { title: 'Money Audit' }
+        meta: { title: 'Money Audit' , icon:'Wallet' }
       },
       {
         path: 'roleMenu',
         component: () => import('@/views/admin/roleMenu/role_menu'),
         name: 'roleMenu',
-        meta: { title: 'role menu' }
+        meta: { title: 'role menu',icon:'menu' }
       },
       {
         path: 'rolePath',
@@ -118,52 +118,52 @@ export const asyncRoutes = [
     name: 'MVO',
     meta: {
       title: 'MVO',
-      icon: 'excel'
+      icon: 'conpany information'
     },
     children: [
       {
         path: 'myInfo',
         component: () => import('@/views/mvo/mvo-myInfo'),
         name: 'myinfo',
-        meta: { title: 'My Infomation' }
+        meta: { title: 'My Infomation',icon:'companyreg' }
       },
       {
         path: '/mvo-mycompany',
         component: () => import('@/views/mvo/mvo-mycompany'),
         name: 'mvo-mycompany',
         hidden: true,
-        meta: { title: 'Company Information', icon: 'edit' }
+        meta: { title: 'Company Information' }
       },
       {
         path: 'goodsInput',
         component: () => import('@/views/mvo/mvo-productInput'),
         name: 'goodsinput',
-        meta: { title: 'Product Input' }
+        meta: { title: 'Product Input', icon: 'products'  }
       },
       {
         path: 'goodsCategory',
         component: () => import('@/views/mvo/mvo-product-category'),
         name: 'productCategory',
-        meta: { title: 'Product Category' }
+        meta: { title: 'Product Category', icon: 'category'  }
       },
       {
         path: 'myorder',
         component: () => import('@/views/mvo/mvo-order'),
         name: 'MVOOrderManagement',
-        meta: { title: 'Order Management' }
+        meta: { title: 'Order Management',icon:'shopping' }
       },
       {
         path: '/mvoProduct',
         component: () => import('@/views/mvo/mvo-productDetail'),
         name: 'mvoproduct',
         hidden: true,
-        meta: { title: 'Product Detail', icon: 'edit' }
+        meta: { title: 'Product Detail'}
       },
       {
         path: 'mvo-myWallet',
         component: () => import('@/views/mvo/mvo-myWallet'),
         name: 'mvo-myWallet',
-        meta: { title: 'My Wallet' }
+        meta: { title: 'My Wallet',icon:'Wallet' }
       },
       {
         path: 'mvo-myWalletRegister',
@@ -187,39 +187,39 @@ export const asyncRoutes = [
     name: 'BVO',
     meta: {
       title: 'BVO',
-      icon: 'excel'
+      icon: 'icon_ customer'
     },
     children: [
       {
         path: 'myInfo',
         component: () => import('@/views/bvo/bvo-myinfo/bvo-myInfo'),
         name: 'myInfo',
-        meta: { title: 'My Infomation' }
+        meta: { title: 'My Infomation',icon:'information' }
       },
       {
         path: 'myStore',
         component: () => import('@/views/bvo/bvo-store/component/bvo-myStore'),
         name: 'mystore',
-        meta: { title: 'My Store' }
+        meta: { title: 'My Store',icon:'store' }
       },
       {
         path: 'goodslist',
         component: () => import('@/views/bvo/bvo-productScan/bvo-productScan'),
         name: 'goodslist',
-        meta: { title: 'Goods List' }
+        meta: { title: 'Goods List' ,icon:'Products_in_basket'}
       },
       {
         path: 'wishlist',
         component: () => import('@/views/bvo/bvo-wish/bvo-wishList'),
         name: 'wishlist',
-        meta: { title: 'Wishlist' }
-        // meta: { title: 'Wishlist', icon: 'list' }
+        meta: { title: 'Wishlist' ,icon:'wishlist'}
+     
       },
       {
         path: 'orderlist',
         component: () => import('@/views/bvo/bvo-order/orderlist'),
         name: 'orderlist',
-        meta: { title: 'Order List' }
+        meta: { title: 'Order List', icon:'shopping' }
         // meta: { title: 'Wishlist', icon: 'list' }
       },
       {
@@ -258,7 +258,7 @@ export const asyncRoutes = [
         path: 'bvo_wallet_login',
         component: () => import('@/views/bvo/bvo-wallet/bvo_wallet_login'),
         name: 'bvo_wallet_login',
-        meta: { title: 'My Wallet' }
+        meta: { title: 'My Wallet', icon: 'money' ,icon:'Wallet'}
       },
       {
         path: 'bvo_wallet_register',

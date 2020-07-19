@@ -339,7 +339,7 @@
           <el-col :span="6">
             <div class="grid-content">
                <el-form-item  prop="Start Time :" label-width="150px">
-                  <el-button type="text" v-model="ruleForm.start_time" >{{this.ruleForm.start_time}} </el-button>
+                  <el-button type="text" v-model="ruleForm.start_time" >{{this.ruleForm.start_time }} </el-button>
                 </el-form-item>
             </div>
           </el-col>
@@ -387,7 +387,7 @@
           <el-col :span="6">
             <div class="grid-content">
                <el-form-item prop="update_time3" label-width="150px">
-                <el-button type="text"   v-model="ruleForm.update_time3">{{this.ruleForm.update_time3}} </el-button>
+                <el-button type="text"   v-model="ruleForm.update_time3">{{this.ruleForm.update_time3 }} </el-button>
                </el-form-item>
             </div>
           </el-col>
@@ -404,17 +404,13 @@
           <el-col :span="6">
             <div class="grid-content">
                <el-form-item  prop="Arrive Time" label-width="150px">
-                  <el-button type="text"  v-model="ruleForm.end_time">{{this.ruleForm.end_time}} </el-button>
+                  <el-button type="text"  v-model="ruleForm.end_time">{{this.ruleForm.end_time }} </el-button>
                 </el-form-item>
             </div>
           </el-col>
         </el-row>
-          <!-- <el-form-item  >
-          <el-button  style="" type="info" @click.native="closeDialog">Close</el-button>
-        </el-form-item>  -->
   </el-form>
    <span slot = 'footer' class = 'dialog-footer'>
-         <!-- <el-button size='small' @click="resetForm('BrandData')">Reset</el-button> -->
            <el-button  style="" type="info" @click.native="closeDialog">Close</el-button>
        </span>
     </el-dialog>

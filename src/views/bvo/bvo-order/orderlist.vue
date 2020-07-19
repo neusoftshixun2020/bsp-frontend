@@ -343,7 +343,7 @@
                <el-col :span="6">
                  <div class="grid-content">
                    <el-form-item  prop="Start Time :" label-width="150px">
-                     <el-button type="text" v-model="ruleForm.start_time" >{{this.ruleForm.start_time}} </el-button>
+                     <el-button type="text" v-model="ruleForm.start_time" >{{this.ruleForm.start_time }} </el-button>
                    </el-form-item>
                  </div>
                </el-col>
@@ -359,7 +359,7 @@
                <el-col :span="6">
                  <div class="grid-content">
                    <el-form-item  prop="update_time1" label-width="150px">
-                     <el-button type="text" v-model="ruleForm.update_time1" >{{this.ruleForm.update_time1}} </el-button>
+                     <el-button type="text" v-model="ruleForm.update_time1" >{{this.ruleForm.update_time1 }} </el-button>
                    </el-form-item>
                  </div>
                </el-col>
@@ -375,7 +375,7 @@
                <el-col :span="6">
                  <div class="grid-content">
                    <el-form-item prop="update_time2" label-width="150px">
-                     <el-button type="text" v-model="ruleForm.update_time2" >{{this.ruleForm.update_time2}} </el-button>
+                     <el-button type="text" v-model="ruleForm.update_time2" >{{this.ruleForm.update_time2 }} </el-button>
                    </el-form-item>
                  </div>
                </el-col>
