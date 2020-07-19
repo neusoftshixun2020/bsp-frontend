@@ -37,6 +37,14 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
+    path: '/',
+    component: Layout,
+    meta: {
+      title: 'E-Commerce Platform',
+      icon: 'AliCloud-Computing Platform'
+    }
+  }, 
+  {
     path: '/redirect',
     component: Layout,
     hidden: true,
@@ -80,7 +88,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-
+ 
  {
     path: '/admin',
     component: Layout,
