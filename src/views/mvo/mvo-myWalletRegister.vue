@@ -2,7 +2,7 @@
   <el-container id="main-content" class="clearfix">
     <el-main>
       <el-form  class="register-container" ref="registerForm" :model="registerForm" :rules="ruleValidate" status-icon >
-        <el-form-item label="Account Name" label-width="14%" prop="account_name" style="margin-left: 30%;margin-top: 8%; ">
+        <el-form-item label="Account Name" label-width="20%" prop="account_name" style="margin-left: 25%;margin-top: 8%; ">
           <el-input v-model="registerForm.account_name" style="width:25%" clearable></el-input>
         </el-form-item>
         <el-form-item label="Email" label-width="14%" prop="email" style="margin-left: 30%">
