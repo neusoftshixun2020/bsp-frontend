@@ -6,7 +6,7 @@
          Order Management
         </h1>
       </div>
-       <el-input type='text' v-model='scondition' autocomplete='off' placeholder='please enter the order title' style='width:40%' ></el-input>
+       <el-input type='text' v-model='sCondition' autocomplete='off' placeholder='please enter the order title' style='width:40%' ></el-input>
       <el-button type="primary"  size="small" style="margin-left:50px" @click="deliverall" :disabled="orders.length===0">DeliverAll</el-button>
        <el-button type="primary"  size="small" style="margin-left:60px" @click="cancelAll" :disabled="corders.length===0">CancelAll</el-button>
 
@@ -18,8 +18,7 @@
       <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        v-for="adata in AwaitingPaymentData" v-bind:key="adata.id"
-        :data="adata"
+        :data="FilteredAwaitingPaymentData"
         element-loading-text="Loading"
         fit
         highlight-current-row
@@ -76,8 +75,7 @@
        <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        v-for="adata in AwaitingShipmentData" v-bind:key="adata.id"
-        :data="adata"
+        :data="FilteredAwaitingShipmentData"
         element-loading-text="Loading"
         fit
         highlight-current-row
@@ -140,8 +138,7 @@
        <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        v-for="adata in ShipedData" v-bind:key="adata.id"
-        :data="adata"
+        :data="FilteredShipedData"
         element-loading-text="Loading"
         fit
         highlight-current-row
@@ -209,8 +206,7 @@
          <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        v-for="adata in CompletedData" v-bind:key="adata.id"
-        :data="adata"
+        :data="FilteredCompletedData"
         element-loading-text="Loading"
         fit
         highlight-current-row
@@ -271,8 +267,7 @@
          <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        v-for="adata in CancelledData" v-bind:key="adata.id"
-        :data="adata"
+        :data="FilteredCancelledData"
         element-loading-text="Loading"
         fit
         highlight-current-row
@@ -428,7 +423,7 @@
         orders1:[],
         corders1:[],
         resultList: [],
-        scondition:'',
+        sCondition:'',
         dialogVisible:false,
         AwaitingPaymentData:[],  
         AwaitingShipmentData:[],
@@ -490,28 +485,53 @@
           console.log(this.ProductData)
         this.$store.dispatch('GetAwaitingPayment',this.ProductData).then((result) => {
           console.log("AwaitingPaymentData")
-         this.AwaitingPaymentData = result.data
-         console.log("AwaitingPaymentData", this.AwaitingPaymentData)
+            const temp = result.data;
+             for(let i=0;i<temp.length;i++){
+              if(temp[i]!=null){
+                this.AwaitingPaymentData.push(temp[i]);
+                console.log(this.AwaitingPaymentData)
+            }
+             }
       })
        this.$store.dispatch('GetAwaitingShipment',this.ProductData).then((result) => {
           console.log("GetAwaitingShipment")
-           this.AwaitingShipmentData=result.data
-          console.log("GetAwaitingShipment", this.AwaitingShipmentData)
+           const temp = result.data;
+             for(let i=0;i<temp.length;i++){
+              if(temp[i]!=null){
+                this.AwaitingShipmentData.push(temp[i]);
+                console.log(this.AwaitingPaymentData)
+            }
+             }
       })
          this.$store.dispatch('GetShiped',this.ProductData).then((result) => {
           console.log("getShiped")
-         this.ShipedData = result.data
-         console.log("getShiped", this.ShipedData)
+           const temp = result.data;
+           for(let i=0;i<temp.length;i++){
+              if(temp[i]!=null){
+                this.ShipedData.push(temp[i]);
+                console.log(this.ShipedData)
+            }
+             }
       })
       this.$store.dispatch('GetCompleted',this.ProductData).then((result) => {
           console.log("GetCompleted")
-         this.CompletedData = result.data
-         console.log("CompletedData", this.CompletedData)
+           const temp = result.data;
+          for(let i=0;i<temp.length;i++){
+              if(temp[i]!=null){
+                this.CompletedData.push(temp[i]);
+                console.log(this.CompletedData)
+            }
+             }
       })
        this.$store.dispatch('GetCancelled',this.ProductData).then((result) => {
           console.log("GetCancelled")
-         this.CancelledData = result.data
-         console.log("CancelledData", this.CancelledData)
+           const temp = result.data;
+           for(let i=0;i<temp.length;i++){
+              if(temp[i]!=null){
+                this.CancelledData.push(temp[i]);
+                console.log(this.CancelledData)
+            }
+             }
       })
       adata()
       }, 
@@ -654,58 +674,60 @@
        },
 },
    computed: {
-      adata () {
-        console.log("进入adata")
-      // const search = this.scondition
-      // return this.AwaitingPaymentData.filter(data => {
-      //   return Object.keys(data).some(key => {
-      //     return (
-      //       String(data[key])
-      //         .toLowerCase()
-      //         .indexOf(search) > -1
-      //     )
-      //   })
-      // })
-
-      //  return this.AwaitingShipmentData.filter(data => {
-      //   return Object.keys(data).some(key => {
-      //     return (
-      //       String(data[key])
-      //         .toLowerCase()
-      //         .indexOf(search) > -1
-      //     )
-      //   })
-      // })
-      //  return this.ShipedData.filter(data => {
-      //   return Object.keys(data).some(key => {
-      //     return (
-      //       String(data[key])
-      //         .toLowerCase()
-      //         .indexOf(search) > -1
-      //     )
-      //   })
-      // })
-      //  return this.CompletedData.filter(data => {
-      //   return Object.keys(data).some(key => {
-      //     return (
-      //       String(data[key])
-      //         .toLowerCase()
-      //         .indexOf(search) > -1
-      //     )
-      //   })
-      // })
-       return this.CancelledData.filter(data => {
-        return Object.keys(data).some(key => {
-          return (
-            String(data[key])
-              .toLowerCase()
-              .indexOf(search) > -1
-          )
-        })
-      })
-      // return this.tableDataDisease
-    }
-        
+     FilteredAwaitingPaymentData() {
+       for(let i=0;i<this.AwaitingPaymentData.length;i++){
+        return this.AwaitingPaymentData[i].filter(value => {
+          
+         const a = value.products[0].title.match(this.sCondition);
+         const b = value.products[0].sku_cd.match(this.sCondition);
+         const c = value.order_no.match(this.sCondition);
+        return a||b||c
+       })
+       }
+       
+     },
+      FilteredAwaitingShipmentData() {
+         for(let i=0;i<this.AwaitingShipmentData.length;i++){
+       return this.AwaitingShipmentData[i].filter(value => {
+         console.log("this.AwaitingShipmentData[i]")
+         console.log(this.AwaitingShipmentData[i])
+         const a = value.products[0].title.match(this.sCondition);
+         const b = value.products[0].sku_cd.match(this.sCondition);
+         const c = value.order_no.match(this.sCondition);
+        return a||b||c
+       })
+       }
+     },
+    FilteredShipedData() {
+       for(let i=0;i<this.ShipedData.length;i++){
+       return this.ShipedData[i].filter(value => {
+         const a = value.products[0].title.match(this.sCondition);
+         const b = value.products[0].sku_cd.match(this.sCondition);
+         const c = value.order_no.match(this.sCondition);
+        return a||b||c
+       })
+       }
+     },
+  FilteredCompletedData() {
+    for(let i=0;i<this.CompletedData.length;i++){
+       return this.CompletedData[i].filter(value => {
+         const a = value.products[0].title.match(this.sCondition);
+         const b = value.products[0].sku_cd.match(this.sCondition);
+         const c = value.order_no.match(this.sCondition);
+        return a||b||c
+       })
+       }
+     },
+       FilteredCancelledData() {
+      for(let i=0;i<this.CancelledData.length;i++){
+       return this.CancelledData[i].filter(value => {
+         const a = value.products[0].title.match(this.sCondition);
+         const b = value.products[0].sku_cd.match(this.sCondition);
+         const c = value.order_no.match(this.sCondition);
+        return a||b||c
+       })
+       }
+     }
     }
 }
 </script>

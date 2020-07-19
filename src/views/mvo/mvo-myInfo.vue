@@ -157,11 +157,6 @@ export default {
   methods: {
     submitForm(){
        this.ruleForm.user_id=this.$store.getters.userid
-        console.log( this.ruleForm.decription)
-       this.ruleForm.decription.replace("<p>", "");
-       this.ruleForm.decription.replace("</p>", "");
-      console.log( 'this.ruleForm.decription')
-      console.log( this.ruleForm.decription)
        this.$refs.ruleForm.validate(valid => {
         if(valid) {
           // console.log('valid');

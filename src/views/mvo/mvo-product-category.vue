@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-col :span = '20' class = 'toolbar'>
       <p v-text ='head'></p>
-      <el-input type='text' v-model='sCondition' autocomplete='off' placeholder='please enter the product name' style='width:20%' ></el-input>
+      <el-input type='text' v-model='sCondition' autocomplete='off' placeholder='please enter the product name' style='width:30%' ></el-input>
       <el-button type = 'primary' size="small" style="margin-left:15px" @click="search">Search</el-button>
       <el-button type = 'primary' size="small"  style="margin-left:20px"  @click="addBtn">添加</el-button>
     </el-col>
@@ -378,6 +378,7 @@
     },
     computed: {
       filteredProductCategoryData () {
+          console.log("进入filteredProductCategoryData")
         const search = this.sCondition
         return this.resultList.filter(data => {
           const a =  Object.keys(data.product).some(key => {
@@ -394,11 +395,9 @@
                   .indexOf(search) > -1
               )
             })
-          // console.log("a:", a)
-          // console.log("b:" ,b)
           return (a || b)
         })
-        // return this.tableDataDisease
+    
       }
     }
 
