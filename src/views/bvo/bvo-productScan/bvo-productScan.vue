@@ -125,12 +125,12 @@ export default {
     margin-bottom: 10px;
     font-size: 15px;
     font-weight: bold;
-    color:mediumpurple
+    color: #000000;
   }
    .progress-item1 {
     margin-bottom: 10px;
     font-size: 18px;
-    color:orangered
+    color: #b3450e;
   }
   @media only screen and (max-width: 1510px){
     .mallki-text{

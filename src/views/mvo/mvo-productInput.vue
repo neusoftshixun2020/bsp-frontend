@@ -19,7 +19,7 @@
         </el-row>
 
         <el-table  :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'15px'}" :data="filteredProductData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-                   :header-cell-style="{background:'#f0f9eb', fontFamily:'Helvetica',fontSize:'14px'}" style="width: 100%; margin-top: 2%">
+                   :header-cell-style="{background:'#000000', fontFamily:'Helvetica',fontSize:'14px'}" style="width: 100%; margin-top: 2%">
           <el-table-column prop="pro_id" sortable label="Product ID" />
           <el-table-column prop="sku_cd" label="SKU Code" />
           <el-table-column prop="title" label="Title" />

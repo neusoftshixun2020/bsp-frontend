@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <el-card class="box-card">
+    <el-card class="box-card" shadow="always">
       <div slot="header" class="clearfix">
         <!--        <div class="icon">-->
         <!--          <i class="el-icon-bank-card" style="size:100px"></i>-->
@@ -308,12 +308,14 @@ export default {
     margin-top: 50px;
     margin-left: 80px;
   }
+
   .item {
     font-size: 18px;
     margin-bottom: 18px;
     margin-top: 25px;
     margin-left: 25px;
   }
+
   .clearfix:before,
   .clearfix:after {
     display: table;
@@ -322,13 +324,15 @@ export default {
   .clearfix:after {
     clear: both
   }
+
   .box-card {
     width: 1000px;
+    background-color: #000000;
   }
   .title{
     /*font-family: "Helvetica Neue";*/
     font-size: 28px;
-    color:#3CB371;
+    color:#DEB887;
     font-weight: bold;
   }
   .footer{
@@ -342,38 +346,11 @@ export default {
     margin-right: 20px;
   }
   .view{
+    color: #DEB887;
     font-size: 14px;
     margin-left: 25px;
   }
-  .el-container {
-    margin: 0;
-    padding: 8px 20px 24px;
-  }
-  .el-main {
-    padding-bottom: 0;
-    font-family: "Open Sans";
-    font-size: 13px;
-    min-height: 100%;
-  }
-  .container{
-    margin-left:20px;
-  }
-  .top {
-    display: flex;
-    flex-direction: row;
-    width: 20%;
-    font-size: 15px;
-    font-weight: bold;
-    justify-content: space-between;
-  }
-  .el-col {
-    border-radius: 4px ;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
-  .row-bg {
-    padding: 10px 0;
+  .el-collapse-item__header{
+    background-color: #000000;
   }
 </style>
