@@ -1,18 +1,18 @@
 <template>
  <el-container id="main-content" class="clearfix">
     <el-header>
-      <div class="page-header position-relative">
-        <h1 style="color: #2679b5;">
-         Order Management
-        </h1>
-      </div>
+<!--      <div class="page-header position-relative">-->
+<!--        <h1 style="color: #2679b5;">-->
+<!--         Order Management-->
+<!--        </h1>-->
+<!--      </div>-->
        <el-input type='text' v-model='sCondition' autocomplete='off' placeholder='please enter the product name' style='width:20%' ></el-input>
       <el-button type = 'primary' size="small" style="margin-left:30px">Search</el-button>
     </el-header>
        <el-main>
 
          <!-- <待支付 Awating payment> -->
-      <el-tabs style="margin-top:70px">
+      <el-tabs style="margin-top:20px">
       <el-tab-pane label="Awaiting Payment" >
           <el-table
             ref="multipleTable"

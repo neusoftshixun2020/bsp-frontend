@@ -1,6 +1,6 @@
 <template>
 <div class="card">
-  <el-card class="box-card">
+  <el-card class="box-card" shadow="always">
     <div slot="header" class="clearfix">
 <!--        <div class="icon">-->
 <!--          <i class="el-icon-bank-card" style="size:100px"></i>-->
@@ -15,7 +15,7 @@
         <el-button style="float: right;" type="primary" size="mini" round plain @click="changePasswordBtn">Change Password</el-button>
       </div>
     </div>
-    <div>
+    <div class="collapse">
       <el-collapse accordion>
         <el-collapse-item>
           <template slot="title">
@@ -378,11 +378,12 @@
 
   .box-card {
     width: 1000px;
+    background-color: #000000;
   }
   .title{
     /*font-family: "Helvetica Neue";*/
     font-size: 28px;
-    color:#3CB371;
+    color:#DEB887;
     font-weight: bold;
   }
   .footer{
@@ -396,7 +397,11 @@
     margin-right: 20px;
   }
   .view{
+    color: #DEB887;
     font-size: 14px;
     margin-left: 25px;
+  }
+  .el-collapse-item__header{
+    background-color: #000000;
   }
 </style>

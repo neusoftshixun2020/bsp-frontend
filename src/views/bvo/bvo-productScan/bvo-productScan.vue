@@ -1,10 +1,10 @@
 <template>
 <div class="app-container">
-   <div class="page-header position-relative">
-        <h1 style="color: #2679b5;">
-          Feature Products
-        </h1>
-      </div>
+<!--   <div class="page-header position-relative">-->
+<!--        <h1 style="color: #2679b5;">-->
+<!--          Feature Products-->
+<!--        </h1>-->
+<!--      </div>-->
 
  <el-row :gutter="10" class="panel-group">
     <div>

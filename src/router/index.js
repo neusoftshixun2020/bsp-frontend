@@ -43,7 +43,7 @@ export const constantRoutes = [
       title: 'E-Commerce Platform',
       icon: 'AliCloud-Computing Platform'
     }
-  }, 
+  },
   {
     path: '/redirect',
     component: Layout,
@@ -88,7 +88,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
- 
+
  {
     path: '/admin',
     component: Layout,
@@ -221,7 +221,7 @@ export const asyncRoutes = [
         component: () => import('@/views/bvo/bvo-wish/bvo-wishList'),
         name: 'wishlist',
         meta: { title: 'Wishlist' ,icon:'wishlist'}
-     
+
       },
       {
         path: 'orderlist',
@@ -266,7 +266,7 @@ export const asyncRoutes = [
         path: 'bvo_wallet_login',
         component: () => import('@/views/bvo/bvo-wallet/bvo_wallet_login'),
         name: 'bvo_wallet_login',
-        meta: { title: 'My Wallet', icon: 'money' ,icon:'Wallet'}
+        meta: { title: 'My Wallet',icon:'Wallet'}
       },
       {
         path: 'bvo_wallet_register',
@@ -282,6 +282,15 @@ export const asyncRoutes = [
         hidden:true,
         meta: { title: 'bvo_wallet_fund' }
       },
+      //
+      // {
+      //   path: 'theme',
+      //   component: () => import('@/views/theme/index'),
+      //   name: 'Theme',
+      //   meta: { title: 'Theme', icon: 'theme' }
+      // }
+
+
     ]
   }
 ]

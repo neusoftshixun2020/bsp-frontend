@@ -2,7 +2,7 @@
   <el-container id="main-content" class="clearfix">
     <el-main>
       <el-form class="login-container" label-position="left" label-width="0px">
-        <h3 class="login_title">钱包登录</h3>
+        <h3 class="login_title">Wallet Login</h3>
         <el-form-item>
           <el-input type="text" v-model="loginForm.account_name" auto-complete="off" placeholder="Account Name" clearable></el-input>
         </el-form-item>
