@@ -9,19 +9,22 @@
     <el-row :gutter="20" style="margin-top:30px;">
       <div v-for="product in wishList" :key="product.product.title">
         <el-col :span="13">
-          <el-card class="box-card" :body-style="{ padding: '10px' }">
+          <el-card class="box-card":body-style="{ padding: '10px' }">
 
             <div style="height:150px;">
 
               <img :src="product.product.productCategory.img_url" class="img" width="220" height="220" @click="showDetail(product.product.title,product.product.pro_id)">
-              <div class="info" span="6" >
+              <div class="info" span="15" >
                 <div class="title" >{{product.product.title}}</div>
                 <div class="price">{{'Price: $'+product.product.price.price}}</div>
                 <div class="sku">{{'SKU:'+product.product.sku_cd}}</div>
                 <div class="sku">Brand: {{product.product.brand.name_en }}</div>
                 <div class="sku">Stock: {{ product.product.stock }}</div>
-                <el-button  icon="el-icon-delete" style="float: right; padding: 5px 3px 5px 3px; margin-top:20px; margin-right: 0px"
-                            type="success" plain round @click="remove(product)">remove</el-button>
+<!--                style="float: right; padding: 5px 3px 5px 3px; margin-top:20px; margin-right: 0px"-->
+                <div class="button" style="float: right; padding: 5px 3px 5px 3px; margin-top:20px; margin-right: 0px">
+                  <el-button  icon="el-icon-delete"
+                              type="success" plain round @click="remove(product)">remove</el-button>
+                </div>
               </div>
 
             </div>
@@ -141,6 +144,7 @@ export default {
 .title{
   font-weight: bold;
   font-size:18px;
+//vertical-align: top;
   color:#66CDAA;
   font-weight: bold;
 }
@@ -157,6 +161,15 @@ export default {
 .info{
   float: right;
   padding: 30px 180px 30px 0px;
+  margin-right: 250px;
+}
+.button{
+  float: left;
+  /*padding: 30px 180px 30px 0px;*/
+  padding: 5px 3px 5px 3px;
+  margin-top:50px;
+  margin-right: 100px;
+  /*margin-left: 10px;*/
 }
 .list{
   margin-top: 0px;

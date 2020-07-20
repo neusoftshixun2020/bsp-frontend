@@ -15,12 +15,12 @@
       <img :src="product.productCategory.img_url" class="image" @click="showDetail(product)">
     </div>
     <div style="position:relative;">
-    
+
       <div style="padding-top:5px;" class="progress-item">
         <span>{{product.title }}({{product.productCategory.category_name}})</span>
       </div>
       <div class="progress-item">
-        <span>{{product.sku_cd}}</span>    
+        <span>{{product.sku_cd}}</span>
       </div>
       <div class="progress-item1">
         <span>$ {{product.price.price}}</span>
@@ -69,7 +69,7 @@ export default {
         name: 'productDetail',
         query: {
           'pro_id': rowData.pro_id,
-          'title':rowData.title
+          'title':rowData.title,
         }
       })
     },
@@ -105,7 +105,7 @@ export default {
       }
     }
   }
- 
+
   .panThumb {
     z-index: 100;
     height: 70px!important;

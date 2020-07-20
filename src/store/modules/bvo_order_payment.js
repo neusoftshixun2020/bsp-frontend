@@ -16,7 +16,7 @@ const bvo_order_payment = {
     },
     Pay({commit},data){
       return new Promise((resolve,reject)=>{
-        pay(data).then(response => {
+        pay(data.WalletAccount,data.man_id).then(response => {
           commit('')
           resolve(response)
         }).catch(error => {

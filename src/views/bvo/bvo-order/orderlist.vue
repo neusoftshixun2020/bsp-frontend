@@ -17,8 +17,7 @@
           <el-table
             ref="multipleTable"
             v-loading="listLoading"
-            v-for="adata in AwaitingPaymentData" v-bind:key="adata.id"
-            :data="adata"
+            :data="FilteredAwaitingPaymentData"
             element-loading-text="Loading"
             fit
             highlight-current-row
@@ -83,8 +82,7 @@
       <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        v-for="adata in AwaitingShipmentData" v-bind:key="adata.id"
-        :data="adata"
+        :data="FilteredAwaitingShipmentData"
         element-loading-text="Loading"
         fit
         highlight-current-row
@@ -142,8 +140,7 @@
        <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        v-for="adata in ShipmentData" v-bind:key="adata.id"
-        :data="adata"
+        :data="FilteredShipmentData"
         element-loading-text="Loading"
         fit
         highlight-current-row
@@ -205,8 +202,7 @@
          <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        v-for="adata in CompletedData" v-bind:key="adata.id"
-        :data="adata"
+        :data="FilteredCompletedData"
         element-loading-text="Loading"
         fit
         highlight-current-row
@@ -271,8 +267,7 @@
          <el-table
         ref="multipleTable"
         v-loading="listLoading"
-        v-for="adata in CanceledData" v-bind:key="adata.id"
-        :data="adata"
+        :data="FilteredCanceledData"
         element-loading-text="Loading"
         fit
         highlight-current-row
@@ -343,7 +338,7 @@
                <el-col :span="6">
                  <div class="grid-content">
                    <el-form-item  prop="Start Time :" label-width="150px">
-                     <el-button type="text" v-model="ruleForm.start_time" >{{this.ruleForm.start_time }} </el-button>
+                     <el-button type="text" v-model="ruleForm.start_time" >{{this.ruleForm.start_time}} </el-button>
                    </el-form-item>
                  </div>
                </el-col>
@@ -359,7 +354,7 @@
                <el-col :span="6">
                  <div class="grid-content">
                    <el-form-item  prop="update_time1" label-width="150px">
-                     <el-button type="text" v-model="ruleForm.update_time1" >{{this.ruleForm.update_time1 }} </el-button>
+                     <el-button type="text" v-model="ruleForm.update_time1" >{{this.ruleForm.update_time1}} </el-button>
                    </el-form-item>
                  </div>
                </el-col>
@@ -375,7 +370,7 @@
                <el-col :span="6">
                  <div class="grid-content">
                    <el-form-item prop="update_time2" label-width="150px">
-                     <el-button type="text" v-model="ruleForm.update_time2" >{{this.ruleForm.update_time2 }} </el-button>
+                     <el-button type="text" v-model="ruleForm.update_time2" >{{this.ruleForm.update_time2}} </el-button>
                    </el-form-item>
                  </div>
                </el-col>
@@ -413,10 +408,10 @@
                  </div>
                </el-col>
              </el-row>
+             <el-form-item  >
+               <el-button  align="center" type="info" @click.native="closeDialog">Close</el-button>
+             </el-form-item>
            </el-form>
-            <span slot = 'footer' class = 'dialog-footer'>
-           <el-button  style="" type="info" @click.native="closeDialog">Close</el-button>
-       </span>
          </el-dialog>
     </el-main>
 
@@ -503,8 +498,10 @@
           name: 'order-payment',
           query: {
             'sto_id': rowData.sto_id,
+            'man_id':rowData.man_id,
             'freight_cost': rowData.freight_cost,
-            'product_amount':rowData.product_amount
+            'product_amount':rowData.product_amount,
+            'orderInfo':rowData
           }
         })
       },
@@ -527,7 +524,6 @@
           }
         })*/
       },
-
       current_change:function(currentPage){
         this.currentPage = currentPage;
       },
@@ -536,6 +532,8 @@
        // this.data.user_id = 2;
         console.log("哈哈哈哈哈哈user_id:"+ this.data.user_id);
         this.$store.dispatch('GetDsrId',this.data.user_id).then((result) => {
+          console.log("-------getDsr_id--result-------");
+          console.log(JSON.stringify(result));
           this.data.dsr_id =  result.data[0].dsr_id;
           this.loadGetAwaitingPaymentData();
           this.loadGetAwaitingShipmentData();
@@ -548,24 +546,32 @@
         console.log("dsr_id"+this.data.dsr_id);
         this.$store.dispatch('GetAwaitingPaymentData',this.data.dsr_id).then((result) => {
           const temp = result.data;
+          console.log("------loadGetAwaitingPaymentData------")
+          console.log(JSON.stringify(result.data))
           //console.log(JSON.stringify(temp.length));
           for(let i=0;i<temp.length;i++){
-            if(temp[i][0]!=null){
-              this.AwaitingPaymentData.push(temp[i]);
-             // console.log("temp:"+JSON.stringify(temp[i]))
-           }
-          }
+            for(let j=0;j<temp[i].length;j++){
+              if(temp[i][j]!=null){
+                this.AwaitingPaymentData.push(temp[i][j]);
+                console.log("temp:"+JSON.stringify(temp[i]))
+              }
+            }
 
+          }
         })
       },
       loadGetAwaitingShipmentData(){
         this.$store.dispatch('GetAwaitingShipmentData',this.data.dsr_id).then((result) => {
           const temp = result.data;
+          console.log("------loadGetAwaitingShipmentData------")
+          console.log(JSON.stringify(result.data))
           //console.log(JSON.stringify(temp.length))
           for(let i=0;i<temp.length;i++){
-            if(temp[i][0]!=null){
-              this.AwaitingShipmentData.push(temp[i]);
-             // console.log("temp:"+JSON.stringify(temp[i]))
+            for(let j=0;j<temp[i].length;j++){
+              if(temp[i][j]!=null){
+                this.AwaitingShipmentData.push(temp[i][j]);
+                console.log("temp:"+JSON.stringify(temp[i][j]))
+              }
             }
           }
         })
@@ -573,10 +579,14 @@
       loadGetShipmentData(){
         this.$store.dispatch('GetShipmentData',this.data.dsr_id).then((result) => {
           const temp = result.data;
+          console.log("------loadGetShipmentData------")
+          console.log(JSON.stringify(result.data))
           for(let i=0;i<temp.length;i++){
-            if(temp[i][0]!=null){
-              this.ShipmentData.push(temp[i]);
-             // console.log("temp:"+JSON.stringify(temp[i]))
+            for(let j=0;j<temp[i].length;j++){
+              if(temp[i][j]!=null){
+                this.ShipmentData.push(temp[i][j]);
+                console.log("temp:"+JSON.stringify(temp[i]))
+              }
             }
           }
         })
@@ -584,11 +594,14 @@
       loadGetCompletedData(){
         this.$store.dispatch('GetCompletedData',this.data.dsr_id).then((result) => {
           const temp = result.data;
-          console.log(JSON.stringify(temp.length))
+          console.log("------loadGetCompletedData------")
+          console.log(JSON.stringify(result.data))
           for(let i=0;i<temp.length;i++){
-            if(temp[i][0]!=null){
-              this.CompletedData.push(temp[i]);
-              this.total=this.total+1;
+            for(let j=0;j<temp[i].length;j++){
+              if(temp[i][j]!=null){
+                this.CompletedData.push(temp[i][j]);
+                console.log("temp:"+JSON.stringify(temp[i]))
+              }
             }
           }
 
@@ -603,9 +616,11 @@
           const temp = result.data;
           console.log(JSON.stringify(temp.length))
           for(let i=0;i<temp.length;i++){
-            if(temp[i][0]!=null){
-              this.CanceledData.push(temp[i]);
-              console.log("temp:"+JSON.stringify(temp[i]))
+            for(let j=0;j<temp[i].length;j++){
+              if(temp[i][j]!=null){
+                this.CanceledData.push(temp[i][j]);
+                console.log("temp:"+JSON.stringify(temp[i]))
+              }
             }
           }
 
@@ -613,33 +628,51 @@
       }
   },
    computed: {
-      AwaitingPaymentData () {
-        const search = this.sCondition
-        return this.AwaitingPaymentData.filter(data => {
-          const a =  Object.keys(data.products[0]).some(key => {
-            return (
-              String(data.products[0][key])
-                .toLowerCase()
-                .indexOf(search) > -1
-            )
-          })
-          const b = Object.keys(data).some(key => {
-              return (
-                String(data[key])
-                  .toLowerCase()
-                  .indexOf(search) > -1
-              )
-            })
-          // console.log("a:", a)
-          // console.log("b:" ,b)
-          return (a || b)
-        })
-        // return this.tableDataDisease
-      }
+     FilteredAwaitingPaymentData() {
+       return this.AwaitingPaymentData.filter(value => {
+         const a = value.products[0].title.match(this.sCondition);
+         const b = value.products[0].sku_cd.match(this.sCondition);
+         const c = value.order_no.match(this.sCondition);
+        return a||b||c
+       })
+     },
+     FilteredAwaitingShipmentData() {
+       return this.AwaitingShipmentData.filter(value => {
+         const a = value.products[0].title.match(this.sCondition);
+         const b = value.products[0].sku_cd.match(this.sCondition);
+         const c = value.order_no.match(this.sCondition);
+         return a||b||c
+       })
+     },
+     FilteredShipmentData() {
+       return this.ShipmentData.filter(value => {
+         const a = value.products[0].title.match(this.sCondition);
+         const b = value.products[0].sku_cd.match(this.sCondition);
+         const c = value.order_no.match(this.sCondition);
+         return a||b||c
+       })
+      },
+     FilteredCompletedData() {
+       return this.CompletedData.filter(value => {
+         const a = value.products[0].title.match(this.sCondition);
+         const b = value.products[0].sku_cd.match(this.sCondition);
+         const c = value.order_no.match(this.sCondition);
+         return a||b||c
+       })
+     },
+     FilteredCanceledData() {
+       return this.CompletedData.filter(value => {
+         const a = value.products[0].title.match(this.sCondition);
+         const b = value.products[0].sku_cd.match(this.sCondition);
+         const c = value.order_no.match(this.sCondition);
+         return a||b||c
+       })
+     }
+
     }
 }
 </script>
 
 <style>
- 
+
 </style>

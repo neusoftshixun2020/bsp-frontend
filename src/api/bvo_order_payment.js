@@ -9,10 +9,13 @@ export function loadAddressData(sto_id) {
   })
 }
 
-export function pay(data) {
+export function pay(data,man_id) {
   return request({
     url: '/wallet/pay',
     method: 'post',
-    data: data
+    data: data,
+    params: {
+      'man_id': man_id
+    }
   })
 }

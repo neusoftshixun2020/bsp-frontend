@@ -58,7 +58,7 @@
         </el-form-item>
 
         <el-form-item label="Should pay for" style="margin-left:20px;">
-          {{"￥"+this.payData.walletAccountFund.withdrawing_money}}
+          {{"￥"+this.payData.WalletAccount.walletAccountFund.withdrawing_money}}
         </el-form-item>
 
         <el-form-item style="margin-left:20px;">
@@ -80,11 +80,11 @@
           </el-form-item>
 
           <el-form-item label="Account Name" label-width="130px"  prop='sid'>
-            <el-input v-model="payData.account_name" style="width:200px" />
+            <el-input v-model="payData.WalletAccount.account_name" style="width:200px" />
           </el-form-item>
 
           <el-form-item label="Password" label-width="130px"  prop='sid'>
-            <el-input v-model="payData.password" style="width:200px" />
+            <el-input v-model="payData.WalletAccount.password" style="width:200px" />
           </el-form-item>
 
 
@@ -113,6 +113,7 @@
     data() {
       return {
         visible:false,
+        order:[],
         //账户信息
         accountData:{
           balance:'',
@@ -137,14 +138,17 @@
           password:''
         },
         payData:{
-          account_name:'',
-          password:'',
-          walletAccountFund:{
-            available_money:'',
-            depositing_money:0,
-            withdrawing_money:'',
-            currency:'RMB'
-          }
+          WalletAccount:{
+            account_name:'',
+            password:'',
+            walletAccountFund:{
+              available_money:'',
+              depositing_money:0,
+              withdrawing_money:'',
+              currency:'RMB'
+            }
+          },
+          man_id:''
         },
         province:[
           {
@@ -208,10 +212,16 @@
         this.sao_order.sto_id = routerParams;
         this.sao_order.freight_cost = this.$route.query.freight_cost;
         this.sao_order.product_amount = this.$route.query.product_amount;
-        this.payData.walletAccountFund.withdrawing_money = parseFloat(this.$route.query.product_amount);
+        this.payData.WalletAccount.walletAccountFund.withdrawing_money = parseFloat(this.$route.query.product_amount);
+        this.payData.man_id = parseInt(this.$route.query.man_id);
+        const temp = this.$route.query.orderInfo;
+        temp.order_sts = 2;
+        this.order.push(temp);
         console.log("获取的sto_id:"+this.sao_order.sto_id);
         console.log("获取的freight_cost:"+this.sao_order.freight_cost);
+        console.log("获取的man_id:"+this.payData.man_id );
         console.log("获取的product_amount:"+this.sao_order.product_amount);
+        console.log("获取的orderInfo:"+JSON.stringify(this.order));
       },
       /*getBalance(){
         console.log("获取的buyer_id:"+this.wafData.buyer_id);
@@ -259,8 +269,9 @@
             //console.log(this.accountData.balance);
             console.log("运费");
             console.log(this.ruleForm.shipping_method);
-            console.log(this.payData.walletAccountFund.withdrawing_money);
-           // if(parseFloat(this.accountData.balance>parseFloat(this.payData.walletAccountFund.withdrawing_money))){
+            console.log(this.payData.WalletAccount.walletAccountFund.withdrawing_money);
+            console.log("-----------PayData-------");
+            console.log(JSON.stringify(this.payData))
               this.$store.dispatch('Pay',this.payData).then((result) => {
                 // console.log(result.code)
                 if (result.code==200){
@@ -276,8 +287,24 @@
                     message: `Insufficient Balance`
                   })
                 }
-
-              })
+              });
+            /**
+             * 修改订单状态
+             */
+            this.$store.dispatch('Deliver',this.order).then((result) => {
+              if (result.code==200){
+                this.$message({
+                  type: 'info',
+                  message: `pay operation succeeded`
+                })
+              }else{
+                this.$message({
+                  type: 'info',
+                  message: `pay operation failed`
+                })
+              }
+              this.loadData()
+            })
            /* }else{
               this.$message({
                 type: 'info',
