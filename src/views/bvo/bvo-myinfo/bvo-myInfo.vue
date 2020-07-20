@@ -1,14 +1,14 @@
 <template>
   <el-container id="main-content" class="clearfix">
     <el-header>
-      <div class="page-header position-relative">
-        <h1 style="color: #2679b5;">
-          BVO
-          <small>
-            <i class="icon-double-angle-right" /> My Information
-          </small>
-        </h1>
-      </div>
+<!--      <div class="page-header position-relative">-->
+<!--        <h1 style="color: #2679b5;">-->
+<!--          BVO-->
+<!--          <small>-->
+<!--            <i class="icon-double-angle-right" /> My Information-->
+<!--          </small>-->
+<!--        </h1>-->
+<!--      </div>-->
     </el-header>
     <el-main>
 
@@ -32,7 +32,7 @@
     </el-form-item>
   </el-form>
       </el-main>
-    
+
   </el-container>
 </template>
 
@@ -50,7 +50,7 @@ data() {
         email: '',
         phone: ''
       }
-    }   
+    }
  },
 
 
@@ -64,7 +64,7 @@ data() {
       console.log(this.ProductData)
       searchUser(this.ProductData).then((result) => {
       console.log("ruleForm:")
-    
+
       this.ruleForm = result.data
         console.log(ruleForm)
       })
@@ -99,7 +99,7 @@ data() {
      myshop() {
       this.$router.push({
         name: 'mystore',
-        
+
       })
     }
   }
