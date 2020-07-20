@@ -1,15 +1,5 @@
 <template>
   <el-container id="main-content" class="clearfix">
-    <el-header>
-      <div class="page-header position-relative">
-        <h1 style="color: #2679b5;">
-          MVO
-          <small>
-            <i class="icon-double-angle-right" /> My Information
-          </small>
-        </h1>
-      </div>
-    </el-header>
     <el-main>
     <el-form ref="ruleForm" :model="ruleForm" status-icon :rules="rules" class="ruleForm">
 

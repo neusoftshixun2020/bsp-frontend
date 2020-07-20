@@ -441,7 +441,6 @@ export default {
           )
         })
       })
-      // return this.tableDataDisease
     }
   },
 }

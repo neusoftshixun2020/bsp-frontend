@@ -1,17 +1,12 @@
 <template>
  <el-container id="main-content" class="clearfix">
-    <el-header>
-      <div class="page-header position-relative">
-        <h1 style="color: #2679b5;">
-         Order Management
-        </h1>
-      </div>
+ 
+       <el-main>
+         
        <el-input type='text' v-model='sCondition' autocomplete='off' placeholder='please enter the order title' style='width:40%' ></el-input>
       <el-button type="primary"  size="small" style="margin-left:50px" @click="deliverall" :disabled="orders.length===0">DeliverAll</el-button>
        <el-button type="primary"  size="small" style="margin-left:60px" @click="cancelAll" :disabled="corders.length===0">CancelAll</el-button>
 
-    </el-header>
-       <el-main>
             <!-- <待支付> -->
       <el-tabs style="margin-top:70px">
       <el-tab-pane label="Awaiting Payment" >

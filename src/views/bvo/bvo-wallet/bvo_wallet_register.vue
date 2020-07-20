@@ -9,7 +9,7 @@
           <el-input  v-model="registerForm.email" style="width:25%" clearable></el-input>
         </el-form-item>
 
-        <el-form-item label="Password" label-width="14%"prop="password" style="margin-left:30%">
+        <el-form-item label="Password" label-width="14%" prop="password" style="margin-left:30%">
           <el-input type="password" v-model="registerForm.password" style="width:25%" clearable></el-input>
         </el-form-item>
         <el-form-item label="Enter Password Again" label-width="20%" prop="againPassword" style="margin-left:25%">
