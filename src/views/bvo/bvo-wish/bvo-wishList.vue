@@ -22,7 +22,7 @@
                 <div class="sku">Stock: {{ product.product.stock }}</div>
 <!--                style="float: right; padding: 5px 3px 5px 3px; margin-top:20px; margin-right: 0px"-->
                 <div class="button" style="float: right;  margin-top:20px; margin-right: 10px">
-                  <el-button  icon="el-icon-delete"
+                  <el-button   icon="el-icon-delete"
                               type="success" plain round size="mini" @click="remove(product)">remove</el-button>
                 </div>
               </div>
@@ -145,11 +145,11 @@ export default {
   font-weight: bold;
   font-size:18px;
 //vertical-align: top;
-  color:#66CDAA;
+  color: #3a835d;
   font-weight: bold;
 }
 .price{
-  color:#F56C6C;
+  color:#b3450e;
   font-size:16px;
   margin-top:12px;
 }

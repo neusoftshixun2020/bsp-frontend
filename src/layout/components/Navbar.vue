@@ -87,14 +87,14 @@ export default {
     }
   },
   created() {
-    this.role = this.$store.getters.role
-    if(this.role == 'Super Admin'){
+    this.role = this.$store.getters.role.role_id
+    if(this.role == 0){
       this.role_img = require('@/assets/role/super.png')
-    }else if(this.role == 'MVO'){
+    }else if(this.role == 2){
       this.role_img = require('@/assets/role/mvo.png')
-    }else if(this.role == 'BVO'){
+    }else if(this.role == 3){
       this.role_img = require('@/assets/role/bvo.png')
-    }else if(this.role == 'GVO'){
+    }else if(this.role == 1){
       this.role_img = require('@/assets/role/gvo.png')
     }
   }
