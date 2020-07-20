@@ -459,12 +459,14 @@ export default {
         cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
+        if(this.orders.length!=0){
         this.$store.dispatch('DeleteAllBrand',this.orders).then((result) => {
           if (result.code==200){
             this.$message({
               type: 'info',
               message: `delete operation succeeded`
             })
+          
           }else{
             this.$message({
               type: 'info',
@@ -473,6 +475,13 @@ export default {
           }
           this.loadData()
         })
+        }else{
+           this.$message({
+              type: 'info',
+              message: `delete operation failed`
+            })
+        }
+
       }).catch(() => {
       });
     },

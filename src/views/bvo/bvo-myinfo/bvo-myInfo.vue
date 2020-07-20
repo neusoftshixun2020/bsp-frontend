@@ -69,13 +69,13 @@ data() {
             if (result.code==200){
               this.$message({
                 type: 'info',
-                message: `add operation succeeded`
+                message: `update operation succeeded`
               })
              //     this.loadData()
             }else{
               this.$message({
                 type: 'info',
-                message: `add operation failed`
+                message: `update operation failed`
               })
             }
 
