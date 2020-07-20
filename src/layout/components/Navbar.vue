@@ -20,7 +20,7 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">    
+          <img :src="role_img" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -55,6 +55,12 @@ import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
 
 export default {
+  data(){
+    return{
+      role_img:'',
+      role:''
+    }
+  },
   components: {
     Breadcrumb,
     Hamburger,
@@ -68,7 +74,8 @@ export default {
       'sidebar',
       'avatar',
       'device'
-    ])
+    ]),
+
   },
   methods: {
     toggleSideBar() {
@@ -77,6 +84,18 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    }
+  },
+  created() {
+    this.role = this.$store.getters.role
+    if(this.role == 'Super Admin'){
+      this.role_img = require('@/assets/role/super.png')
+    }else if(this.role == 'MVO'){
+      this.role_img = require('@/assets/role/mvo.png')
+    }else if(this.role == 'BVO'){
+      this.role_img = require('@/assets/role/bvo.png')
+    }else if(this.role == 'GVO'){
+      this.role_img = require('@/assets/role/gvo.png')
     }
   }
 }

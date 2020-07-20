@@ -100,6 +100,7 @@ export default {
       amazonStoreList: [],
       ebayStoreList: [],
       user_id:'',
+      role:'',
       dsrid:'',
       dialogVisible: false,
       total1:'',
@@ -148,12 +149,14 @@ export default {
   methods: {
     loadData() {
       this.user_id = this.$store.getters.userid
+      this.role= this.$store.getters.role
       this.$store.dispatch('GetDsr',this.user_id).then((result) =>{
         this.amazonStore.dsr_id = result.data[0].dsr_id
         this.ebayStore.dsr_id = result.data[0].dsr_id
         console.log(result.data)
         console.log(result.data[0])
         console.log(result.data[0].dsr_id)
+        console.log(this.role)
         this.amazonStore.dsr_id = parseInt(this.amazonStore.dsr_id)
         this.ebayStore.dsr_id = parseInt(this.ebayStore.dsr_id)
         this.$store.dispatch('GetAmazonStores',this.amazonStore).then((result) => {
