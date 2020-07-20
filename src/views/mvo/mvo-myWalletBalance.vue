@@ -100,7 +100,7 @@
     <el-dialog  :visible.sync = 'visible_withdraw' width = '40%'  :close-on-lick-modal = 'false'>
       <el-form :model='withdrawData'  ref='withdrawData' label-width='0px' class=''>
 
-        <el-form-item label="withdraw Amount:$" label-width="180px" prop="sid">
+        <el-form-item label="withdraw Amount: ¥" label-width="180px" prop="sid">
           <el-col :span="12">
             <el-input type="text" v-model="withdrawData.walletAccountFund.withdrawing_money" autocomplete="off" >
             </el-input>
