@@ -23,7 +23,7 @@
     </el-form-item>
   </el-form>
       </el-main>
-    
+
   </el-container>
 </template>
 
@@ -41,7 +41,7 @@ data() {
         email: '',
         phone: ''
       }
-    }   
+    }
  },
 
 
@@ -55,7 +55,7 @@ data() {
       console.log(this.ProductData)
       searchUser(this.ProductData).then((result) => {
       console.log("ruleForm:")
-    
+
       this.ruleForm = result.data
         console.log(ruleForm)
       })
@@ -90,7 +90,7 @@ data() {
      myshop() {
       this.$router.push({
         name: 'mystore',
-        
+
       })
     }
   }

@@ -1,29 +1,29 @@
 <template>
   <div class="mixin-components-container">
-    <el-header>
-        <h1 style="color: #2679b5;">
-          Wish List
-        </h1>
-    </el-header>
+<!--    <el-header>-->
+<!--        <h1 style="color: #2679b5;">-->
+<!--          Wish List-->
+<!--        </h1>-->
+<!--    </el-header>-->
     <div class="list">
     <el-row :gutter="20" style="margin-top:30px;">
       <div v-for="product in wishList" :key="product.product.title">
         <el-col :span="13">
-          <el-card class="box-card":body-style="{ padding: '10px' }">
+          <el-card class="box-card1":body-style="{ padding: '10px' }">
 
-            <div style="height:150px;">
+            <div style="height:200px;">
 
               <img :src="product.product.productCategory.img_url" class="img" width="220" height="220" @click="showDetail(product.product.title,product.product.pro_id)">
-              <div class="info" span="15" >
+              <div class="info"  >
                 <div class="title" >{{product.product.title}}</div>
                 <div class="price">{{'Price: $'+product.product.price.price}}</div>
                 <div class="sku">{{'SKU:'+product.product.sku_cd}}</div>
                 <div class="sku">Brand: {{product.product.brand.name_en }}</div>
                 <div class="sku">Stock: {{ product.product.stock }}</div>
 <!--                style="float: right; padding: 5px 3px 5px 3px; margin-top:20px; margin-right: 0px"-->
-                <div class="button" style="float: right; padding: 5px 3px 5px 3px; margin-top:20px; margin-right: 0px">
+                <div class="button" style="float: right;  margin-top:20px; margin-right: 10px">
                   <el-button  icon="el-icon-delete"
-                              type="success" plain round @click="remove(product)">remove</el-button>
+                              type="success" plain round size="mini" @click="remove(product)">remove</el-button>
                 </div>
               </div>
 
@@ -136,7 +136,7 @@ export default {
 .component-item{
   min-height: 100px;
 }
-.box-card{
+.box-card1{
   height:240px;
   width: 850px;
   margin-top: 10px;
@@ -161,7 +161,7 @@ export default {
 .info{
   float: right;
   padding: 30px 180px 30px 0px;
-  margin-right: 250px;
+  margin-right: 230px;
 }
 .button{
   float: left;
