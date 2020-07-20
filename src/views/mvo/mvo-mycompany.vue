@@ -15,8 +15,8 @@
         highlight-current-row
         width="80%"
       >
-      <!-- <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
-        </el-table-column> -->
+      <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
+        </el-table-column>
         <el-table-column align="center" prop = 'name_cn' label = 'Company Name(CN)'>
         </el-table-column>
         <el-table-column align="center" prop = 'name_en' label = 'Company Name(EN)'>
@@ -61,8 +61,8 @@
         width="80%"
       >
       <el-table-column type="selection"/>
-        <!-- <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
-        </el-table-column> -->
+        <el-table-column align="center" prop = 'man_id' label = 'Company ID'>
+        </el-table-column>
          <el-table-column align="center" prop = 'name_en' label = 'Brand Name(EN)'>
         </el-table-column>
           <el-table-column align="center" label="image"  >
@@ -144,12 +144,12 @@
  <!--添加brand弹窗-->
     <el-dialog title='Add Brand' :visible.sync = 'dialogVisible1' width = '50%' :close-on-lick-modal = 'false'>
       <el-form :model = 'BrandData'  ref = 'BrandData' label-width = '0px' class = ''>
-         <!-- <el-form-item label="Company ID" label-width="130px"  prop='man_id'>
+         <el-form-item label="Company ID" label-width="130px"  prop='man_id'>
           <el-col :span="8">
             <el-input type='text' v-model='BrandData.man_id'  autocomplete='off' placeholder='Title'>
             </el-input>
           </el-col>
-        </el-form-item> -->
+        </el-form-item>
         <el-form-item label="Brand Name(EN)" label-width="130px"  prop='name_en'>
           <el-col :span="8">
             <el-input type='text' v-model='BrandData.name_en'  autocomplete='off' placeholder='Title'>
@@ -179,6 +179,7 @@
         <!-- <el-button size='small' @click="resetForm('BrandData')">Reset</el-button> -->
           <el-button type = 'primary' size='small' @click="addBrand">Save</el-button>
           <el-button type = 'danger' size='small' @click.native = "dialogVisible1 = false, BrandData = {
+                    man_id:'',
                     name_en:'',
                     image_url:'' }">Close</el-button>
        </span>
@@ -188,12 +189,12 @@
 <!--修改brand弹窗-->
     <el-dialog title='Edit Brand' :visible.sync = 'dialogVisible2' width = '50%' :close-on-lick-modal = 'false'>
       <el-form :model = 'BrandData'  ref = 'BrandData' label-width = '0px' class = ''>
-        <!-- <el-form-item label="Company ID" label-width="130px"  prop='man_id'>
+        <el-form-item label="Company ID" label-width="130px"  prop='man_id'>
           <el-col :span="8">
             <el-input type='text' v-model='BrandData.man_id'  autocomplete='off' placeholder='Title'>
             </el-input>
           </el-col>
-        </el-form-item> -->
+        </el-form-item>
         <el-form-item label="Brand Name(EN)" label-width="130px"  prop='name_en'>
           <el-col :span="8">
             <el-input type='text' v-model='BrandData.name_en'  autocomplete='off' placeholder='Title'>
@@ -316,8 +317,8 @@ export default {
       console.log("result.data.list-----companylist")
       this.companylist = result.data.list
       console.log(this.companylist)
-       this.ProductData.man_id=this.companylist[0].man_id
-      console.log(this.ProductData)
+      //  this.ProductData.man_id=this.companylist[0].man_id
+      // console.log(this.ProductData)
        this.$store.dispatch('GetBrandByFilter',this.ProductData).then((result) => {
       this.total = result.data.length;
       this.brandList = result.data//此处有问题，brandlist显示的还是所有品牌，报错是brandList is undefined
@@ -369,7 +370,7 @@ export default {
     this.$refs.BrandData.validate(valid => {
         if(valid) {
           this.BrandData.img_url = this.dialogImageUrl
-          this.BrandData.man_id=this.ProductData.man_id
+          
           console.log( this.BrandData.man_id)
           this.$store.dispatch('AddBrand',this.BrandData).then((result) => {
             if (result.code==200){

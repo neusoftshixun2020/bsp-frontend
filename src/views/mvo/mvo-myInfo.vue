@@ -74,7 +74,7 @@
     </el-form-item>
 <br>
 <br>
-    <el-form-item label="GMC Report Type(1-TUV , 2-UL)"  style="margin-left:20px;" prop='gmc_report_type'>
+    <el-form-item label="GMC Report Type"  style="margin-left:20px;" prop='gmc_report_type'>
       <!-- <el-cascader
             v-model="options.value"
             :options="options"></el-cascader> -->
