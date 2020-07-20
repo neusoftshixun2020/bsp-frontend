@@ -405,7 +405,7 @@ $light_gray:#eee;
   min-height: 100%;
   height:100%;
   width: 100%;
-  background-image: url('../../assets/login/photo3.jpg');
+  background-image: url('../../assets/login/photo.jpg');
   background-repeat:no-repeat;
   width:100%;
   height:100%;
