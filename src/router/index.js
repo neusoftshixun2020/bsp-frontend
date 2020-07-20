@@ -36,14 +36,7 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
-  {
-    path: '/',
-    component: Layout,
-    meta: {
-      title: 'E-Commerce Platform',
-      icon: 'AliCloud-Computing Platform'
-    }
-  },
+  
   {
     path: '/redirect',
     component: Layout,
