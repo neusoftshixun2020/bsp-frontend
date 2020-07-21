@@ -36,14 +36,7 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
-  {
-    path: '/',
-    component: Layout,
-    meta: {
-      title: 'E-Commerce Platform',
-      icon: 'AliCloud-Computing Platform'
-    }
-  },
+  
   {
     path: '/redirect',
     component: Layout,
@@ -141,6 +134,13 @@ export const asyncRoutes = [
         name: 'mvo-mycompany',
         hidden: true,
         meta: { title: 'Company Information' }
+      },
+      {
+        path: '/mvo-brand',
+        component: () => import('@/views/mvo/mvo-brand'),
+        name: 'brandDetail',
+        hidden: true,
+        meta: { title: 'Brand Information' }
       },
       {
         path: 'goodsInput',

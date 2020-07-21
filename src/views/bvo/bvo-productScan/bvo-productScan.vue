@@ -143,6 +143,7 @@ export default {
     font-size: 15px;
     font-weight: bold;
     color:#000000;
+
   }
    .progress-item1 {
     margin-bottom: 10px;
@@ -160,6 +161,7 @@ export default {
     background-position: center center;
     background-repeat:  no-repeat;
     background-size: 100px auto;
+    color: #b3450e;
   }
   @media only screen and (max-width: 1510px){
     .mallki-text{

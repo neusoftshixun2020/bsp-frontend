@@ -3,44 +3,60 @@
     <el-main id="page-content" iv class="clearfix">
       <div style="margin-left:20%; margin-right:20%">
         <div class="store">
+
           <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="amazonStoreList"
                     :header-cell-style="{color: '#000000',fontSize:'18px',fontFamily:'Helvetica'}">
+
             <el-table-column prop="store_name" label="Amazon"/>
           </el-table>
-          <el-row :gutter="20" type="flex">
-            <el-col :span="9"><div class="grid-content" /></el-col>
+          <el-row :gutter="20">
+            <el-col :span="7"><div class="grid-content" /></el-col>
             <el-col :span="8">
               <div class="grid-content">
-                <div class="block">
+                <div class="block" style="alignment: center">
                   <el-pagination
-                    layout="total, prev, pager, next"
-                    :total="10"
-                    :page-count="6"
-                    :page-size="5"/>
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-sizes="[5, 10, 20, 30, 50]"
+                    :page-size="pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total= this.amazonStoreList.length
+                  />
                 </div>
               </div></el-col>
-            <el-col :span="6"><div class="grid-content" /></el-col>
+            <el-col :span="8"><div class="grid-content" /></el-col>
           </el-row>
+
+
         </div>
         <div class="store">
+
           <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="ebayStoreList"
                     :header-cell-style="{color: '#000000',fontSize:'18px',fontFamily:'Helvetica'}">
+
+
             <el-table-column prop="store_name" label="eBay"/>
           </el-table>
           <el-row :gutter="20">
-            <el-col :span="9"><div class="grid-content" /></el-col>
+            <el-col :span="7"><div class="grid-content" /></el-col>
             <el-col :span="8">
               <div class="grid-content">
-                <div class="block">
+                <div class="block" style="alignment: center">
                   <el-pagination
-                    layout="total, prev, pager, next"
-                    :total="10"
-                    :page-count="6"
-                    :page-size="5"/>
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-sizes="[5, 10, 20, 30, 50]"
+                    :page-size="pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total= this.ebayStoreList.length
+                  />
                 </div>
               </div></el-col>
-            <el-col :span="6"><div class="grid-content" /></el-col>
+            <el-col :span="8"><div class="grid-content" /></el-col>
           </el-row>
+
 
         </div>
 
@@ -98,7 +114,12 @@ export default {
     return {
       amazonStoreList: [],
       ebayStoreList: [],
+      // 当前页
+      currentPage: 1,
+      // 每页多少条
+      pageSize: 10,
       user_id:'',
+      role:'',
       dsrid:'',
       dialogVisible: false,
       total1:'',
@@ -147,12 +168,14 @@ export default {
   methods: {
     loadData() {
       this.user_id = this.$store.getters.userid
+      this.role= this.$store.getters.role
       this.$store.dispatch('GetDsr',this.user_id).then((result) =>{
         this.amazonStore.dsr_id = result.data[0].dsr_id
         this.ebayStore.dsr_id = result.data[0].dsr_id
         console.log(result.data)
         console.log(result.data[0])
         console.log(result.data[0].dsr_id)
+        console.log(this.role)
         this.amazonStore.dsr_id = parseInt(this.amazonStore.dsr_id)
         this.ebayStore.dsr_id = parseInt(this.ebayStore.dsr_id)
         this.$store.dispatch('GetAmazonStores',this.amazonStore).then((result) => {
@@ -209,6 +232,14 @@ export default {
           })
         }
       })
+    },
+    // 每页多少条
+    handleSizeChange(val) {
+      this.pageSize = val;
+    },
+    // 当前页
+    handleCurrentChange(val) {
+      this.currentPage = val;
     }
   }
   // computed: {

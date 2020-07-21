@@ -8,6 +8,7 @@
       <div class="info">
         <div class="productproperty" style="font-weight: 700; font-size: 22px;color: #000000">{{ productDetail[0].title }}</div>
         <div class="productproperty" style="color:#F56C6C">{{'Price: $'+productDetail[0].price.price }}</div>
+
         <div class="productproperty" style="color:#808080">SKU:  {{ productDetail[0].sku_cd }}</div>
         <div class="productproperty" style="color:#808080">Brand: {{ productDetail[0].brand.name_en }}</div>
         <div class="productproperty" style="color:#808080">Stock: {{ productDetail[0].stock }}</div>

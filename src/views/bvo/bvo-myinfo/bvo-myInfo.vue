@@ -1,19 +1,10 @@
 <template>
   <el-container id="main-content" class="clearfix">
-    <el-header>
-<!--      <div class="page-header position-relative">-->
-<!--        <h1 style="color: #2679b5;">-->
-<!--          BVO-->
-<!--          <small>-->
-<!--            <i class="icon-double-angle-right" /> My Information-->
-<!--          </small>-->
-<!--        </h1>-->
-<!--      </div>-->
-    </el-header>
+    
     <el-main>
 
     <el-form ref="ruleForm" :model="ruleForm" status-icon  class="ruleForm">
-      <el-form-item label="User Name: " prop="username" style="margin-left:400px;">
+      <el-form-item label="User Name: " prop="username" style="margin-left:400px;margin-top:100px">
       <el-button type="text"  >{{this.ruleForm.username}} </el-button>
     </el-form-item>
     <el-form-item label="Name" prop="name" style="margin-left:434px;">
@@ -78,13 +69,13 @@ data() {
             if (result.code==200){
               this.$message({
                 type: 'info',
-                message: `add operation succeeded`
+                message: `update operation succeeded`
               })
              //     this.loadData()
             }else{
               this.$message({
                 type: 'info',
-                message: `add operation failed`
+                message: `update operation failed`
               })
             }
 
