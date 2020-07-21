@@ -136,6 +136,13 @@ export const asyncRoutes = [
         meta: { title: 'Company Information' }
       },
       {
+        path: '/mvo-brand',
+        component: () => import('@/views/mvo/mvo-brand'),
+        name: 'brandDetail',
+        hidden: true,
+        meta: { title: 'Brand Information' }
+      },
+      {
         path: 'goodsInput',
         component: () => import('@/views/mvo/mvo-productInput'),
         name: 'goodsinput',
