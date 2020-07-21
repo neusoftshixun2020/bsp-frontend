@@ -2,10 +2,9 @@
   <el-container id="main-content" class="clearfix">
     <el-main id="page-content" iv class="clearfix">
       <div style="margin-left:20%; margin-right:20%">
-        <p class="title">My Stores</p>
         <div class="store">
           <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="amazonStoreList"
-                    :header-cell-style="{color: '#409EFF',fontSize:'18px',fontFamily:'Helvetica'}">
+                    :header-cell-style="{color: '#000000',fontSize:'18px',fontFamily:'Helvetica'}">
             <el-table-column prop="store_name" label="Amazon"/>
           </el-table>
           <el-row :gutter="20" type="flex">
@@ -25,7 +24,7 @@
         </div>
         <div class="store">
           <el-table :cell-style="{color: '#666', fontFamily: 'Arial',fontSize:'18px'}" :data="ebayStoreList"
-                    :header-cell-style="{color: '#409EFF',fontSize:'18px',fontFamily:'Helvetica'}">
+                    :header-cell-style="{color: '#000000',fontSize:'18px',fontFamily:'Helvetica'}">
             <el-table-column prop="store_name" label="eBay"/>
           </el-table>
           <el-row :gutter="20">
